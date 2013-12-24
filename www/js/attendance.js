@@ -161,7 +161,7 @@ var userAvatar;
                         
                         var parseFile = new Parse.File("mypic.jpg", {base64:data2});
                         parseFile.save().then(function() {
-                                                            //alert("Got it!");
+                                                            alert("Got it!");
                                                             userAvatar = parseFile.url();
                                                             uploadParsePic(userAvatar);
                                                             //alert (parseFile.url());
@@ -187,7 +187,7 @@ var userAvatar;
          var uploadParsePic = function(url){
             var currentDate = new Date();
             //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-            
+            alert("In uploadParsePic ()");
             if (company == "virtualforce"){
                 var virtualF = new Parse.Object.Extend("VirtualForce");
                 var vf = new virtualF();
