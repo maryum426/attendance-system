@@ -43,7 +43,8 @@ var userAvatar;
                         window.location = "check.html";
                     }
                     else {
-                       console.log("User doesnot exist!");
+                       alert("User doesnot exist!");
+                       $('#codeOk').removeAttr('disabled');
                     }
                 },
                 error:function (error) {
