@@ -165,7 +165,7 @@ var department;
         
         
         function uploadOk(){
-            
+            alert("In Upload!");
             $('#submit').css({'disabled':'disabled'});
             //URL Parsing
                 var loc = window.location.search.substring(1),i, val, params = loc.split("&");
@@ -211,6 +211,7 @@ var department;
                             vf.save(null, {
                                 success:function (virtualf) {
                                     console.log(virtualf + " saved successfully");
+                                    alert("Done Upload!");
                                     window.location = "home.html?checkin=" + checkin;
                                     //cb(pSweet);
                                 },
