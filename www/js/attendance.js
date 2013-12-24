@@ -7,13 +7,45 @@ var department;
         function checkIn(){
             checkin = true;
             console.log('CheckIn');
-            window.location = "picUpload.html?checkin=" + checkin;
+            
+            //URL Parsing
+            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "pin") {
+                        userpin = unescape(val[1]);
+                    }
+                    else if(val[0] == "company"){
+                        company = unescape(val[1]);
+                    }
+                    else{
+                        department = unescape(val[1]);
+                    }
+                }
+                
+            window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
         }
         
         function checkOut(){
             checkin = false;
             console.log('CheckOut');
-            window.location = "picUpload.html?checkin=" + checkin;
+            
+            //URL Parsing
+            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "pin") {
+                        userpin = unescape(val[1]);
+                    }
+                    else if(val[0] == "company"){
+                        company = unescape(val[1]);
+                    }
+                    else{
+                        department = unescape(val[1]);
+                    }
+                }
+                
+            window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
         }
         
         function logout(){
@@ -33,13 +65,14 @@ var department;
                         username = r_auth[0].get("userName");
                         company = r_auth[0].get("company");
                         department = r_auth[0].get("department");
-                        document.cookie = "pin=" + userpin + ";" ; 
-                        document.cookie = "username=" + username + ";" ; 
-                        document.cookie = "company=" + company + ";"  ;
-                        document.cookie = "department=" + department + ";" ;
+                        
+//                        document.cookie = "pin=" + userpin + ";" ; 
+//                        document.cookie = "username=" + username + ";" ; 
+//                        document.cookie = "company=" + company + ";"  ;
+//                        document.cookie = "department=" + department + ";" ;
                         
                         
-                        window.location = "check.html";//?pin=" + userpin + "&company=" + company + "&department=" + department;
+                        window.location = "check.html?pin=" + userpin + "&company=" + company + "&department=" + department;
                     }
                     else {
                        console.log("User doesnot exist!");
@@ -66,16 +99,16 @@ var department;
         var camera = document.getElementById("capture");
         camera.addEventListener("click", function(e) {
             camera.addEventListener("change", function(e) {
-               
+               alert("In change event1");
                 var files = e.target.files || e.dataTransfer.files;
                 file = files[0];
-                //$("#my_image").css({'display':'block'});
-                //$("#my_image").attr("src",URL.createObjectURL(file));
-                 alert("In change event1");
+                $("#my_image").css({'display':'block'});
+                $("#my_image").attr("src",URL.createObjectURL(file));
+                 
                 //var parseFile = new Parse.File("mypic.jpg", {base64:file});
                 
                 //URL Parsing
-                /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
                     val = params[i].split("=");
                     if (val[0] == "pin") {
@@ -87,10 +120,12 @@ var department;
                     else{
                         department = unescape(val[1]);
                     }
-                }*/
-                console.log("Cookie: " + document.cookie);
+                }
+                
+                
+                
                 //Get values from cookie
-                var ca = document.cookie.split(';');
+                /*var ca = document.cookie.split(';');
                 alert("In change event2");
                 for(var i=0; i< ca.length; i++) 
                   {
@@ -112,11 +147,12 @@ var department;
                         department = unescape(department[1]);
                     }
                     
-                  }
+                  }*/
                     alert("User Pin: " + userpin);
                     alert("User Name: " + username);
                     alert("User Company: " + company);
                     alert("User Dept: " + department);
+                    
                 //console.log("URL: " + s);
                 
                 
