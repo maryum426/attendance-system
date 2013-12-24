@@ -94,32 +94,7 @@ var userAvatar;
             //alert("In Upload!");
             $('#submit').attr('disabled','disabled');
             //Get values from cookie
-                var ca = document.cookie.split(';');
-                for(var i=0; i< ca.length; i++) 
-                  {
-                    var c = ca[i].trim();
-                    if (c.indexOf("pin")== 0) {
-                        userpin = (c.substring(c.indexOf("pin").length,c.length)).split("=");
-                        userpin = unescape(userpin[1]);
-                    }
-                    else if (c.indexOf("username")== 0) {
-                        username = (c.substring(c.indexOf("username").length,c.length)).split("=");
-                        username = unescape(username[1]);
-                    }
-                    else if (c.indexOf("company")== 0) {
-                        company = (c.substring(c.indexOf("company").length,c.length)).split("=");
-                        company = unescape(company[1]);
-                    }
-                    else if (c.indexOf("department")== 0) {
-                        department = (c.substring(c.indexOf("department").length,c.length)).split("=");
-                        department = unescape(department[1]);
-                    }
-                    
-                  }
-                    //alert("User Pin: " + userpin);
-                    //alert("User Name: " + username);
-                    //alert("User Company: " + company);
-                    //alert("User Dept: " + department);
+                
                     
             console.log("CheckIn: " + checkin);
                     var thumbnail = 400;
@@ -208,13 +183,41 @@ var userAvatar;
          var uploadParsePic = function(url){
             var currentDate = new Date();
             //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-            //alert("In uploadParsePic ()");
+            alert("In uploadParsePic ()");
+            
+            var ca = document.cookie.split(';');
+                for(var i=0; i< ca.length; i++) 
+                  {
+                    var c = ca[i].trim();
+                    if (c.indexOf("pin")== 0) {
+                        userpin = (c.substring(c.indexOf("pin").length,c.length)).split("=");
+                        userpin = unescape(userpin[1]);
+                    }
+                    else if (c.indexOf("username")== 0) {
+                        username = (c.substring(c.indexOf("username").length,c.length)).split("=");
+                        username = unescape(username[1]);
+                    }
+                    else if (c.indexOf("company")== 0) {
+                        company = (c.substring(c.indexOf("company").length,c.length)).split("=");
+                        company = unescape(company[1]);
+                    }
+                    else if (c.indexOf("department")== 0) {
+                        department = (c.substring(c.indexOf("department").length,c.length)).split("=");
+                        department = unescape(department[1]);
+                    }
+                    
+                  }
+                    alert("User Pin: " + userpin);
+                    alert("User Name: " + username);
+                    alert("User Company: " + company);
+                    alert("User Dept: " + department);
+                    
             if (company == "virtualforce"){
                 var virtualF = new Parse.Object.Extend("VirtualForce");
                 var vf = new virtualF();
                 if (checkin == 'true'){
                         if (company == 'virtualforce'){
-                            
+                            alert("In Virtual Force");
                             var virtualF = Parse.Object.extend("VirtualForce");
                             var vf = new virtualF();
                             vf.set("userPin",userpin);
