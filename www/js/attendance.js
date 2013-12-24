@@ -103,7 +103,7 @@ var department;
                 var files = e.target.files || e.dataTransfer.files;
                 file = files[0];
                 $("#my_image").css({'display':'block'});
-                $("#my_image").attr("src",URL.createObjectURL(file));
+                //$("#my_image").attr("src",URL.createObjectURL(file));
                  
                 //var parseFile = new Parse.File("mypic.jpg", {base64:file});
                 
