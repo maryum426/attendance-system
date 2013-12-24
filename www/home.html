@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <script src="js/attendance.js"></script>
+        <script type="text/javascript" src="js/parse-min.js"></script>
+    </head>
+    <body>
+        
+        
+        <header>
+            <img src="images/kualitatem-logo.png"/>
+        </header>
+        
+        <div id="main-div">
+            <p class="welcome-text">Welcome User!</p>
+            <p class="check-text">You checked in at</p>
+            <p id="time" class="time"></p>
+            <p class="welcome-message">Happy Coding! :)</p>
+        </div>
+        
+        
+        <script>
+            var currentDate = new Date();
+            var hours = currentDate.getHours(); 
+            var minutes = currentDate.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var currentTime = hours + ':' + minutes + ' ' + ampm;
+            console.log("Current Time: " + currentTime);
+            $('#time').text(currentTime);
+            
+            var checkin;
+            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "checkin") {
+                        checkin = unescape(val[1]);
+                    }
+                }
+            console.log("CheckIn: " + checkin);
+            
+            if (checkin == 'false'){
+                $('.welcome-text').text("Goodbye User!");
+                $('.check-text').text("You checked out at");
+                $('.welcome-message').text("Leaving office on time more productivity, good social life, good family relations :)");
+            }
+            
+        </script>
+        
+        <script>
+            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+        </script>
+        
+    </body>
+</html>
