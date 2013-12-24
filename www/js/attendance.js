@@ -21,7 +21,7 @@ var department;
         }
         
         function codePageOk(){
-            $('#codeOk').css({'disabled':'disabled'});
+            $('#codeOk').attr('disabled','disabled');
             userpin = $('.code-holder').val();
             console.log("User Pin: " + userpin);
             var query = new Parse.Query("Users");
@@ -166,7 +166,7 @@ var department;
         
         function uploadOk(){
             alert("In Upload!");
-            $('#submit').css({'disabled':'disabled'});
+            $('#submit').attr('disabled','disabled');
             //URL Parsing
                 var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
