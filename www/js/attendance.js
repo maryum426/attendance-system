@@ -66,7 +66,7 @@ var userAvatar;
                 //alert("HERE!");
                 $('#submit').removeAttr('disabled');
                 var options =   {
-                    quality: 100,
+                    quality: 50,
                     cameraDirection:1,
                     sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
                     correctOrientation: true,
@@ -79,14 +79,14 @@ var userAvatar;
           var onSuccess = function(data3) {
                     
                     //alert("On success called");
-                    $("#my_image").attr("src",data3);
+                    
                     userAvatar = data3;
                     
             };
                 
                 //console.log("File Path: " + file.path);
         var onFail = function(e) {
-            alert("On fail " + e);
+            //alert("On fail " + e);
             //alert("Profile Picture Progress: " + $rootScope.loginInProgress_profile);
         };
         
@@ -152,6 +152,7 @@ var userAvatar;
 
                         
                         var parseFile = new Parse.File("mypic.jpg", {base64:data2});
+                        $("#my_image").attr("src",data2);
                         parseFile.save().then(function() {
                                                             //alert("Got it!");
                                                             userAvatar = parseFile.url();
@@ -179,7 +180,7 @@ var userAvatar;
          var uploadParsePic = function(url){
             var currentDate = new Date();
             //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-            alert("In uploadParsePic ()");
+            //alert("In uploadParsePic ()");
             
             //URL Parsing get checkin value
             var loc = window.location.search.substring(1),i, val, params = loc.split("&");
@@ -213,16 +214,16 @@ var userAvatar;
                     }
                     
                   }
-                    alert("User Pin: " + userpin);
-                    alert("User Name: " + username);
-                    alert("User Company: " + company);
-                    alert("User Dept: " + department);
+                    //alert("User Pin: " + userpin);
+                    //alert("User Name: " + username);
+                    //alert("User Company: " + company);
+                    //alert("User Dept: " + department);
                     
-                    alert("CheckIn: " + checkin);
+                    //alert("CheckIn: " + checkin);
                
                 if (checkin == 'true'){
                         if (company == 'virtualforce'){
-                            alert("In Virtual Force");
+                            //alert("In Virtual Force");
                             var virtualF = Parse.Object.extend("VirtualForce");
                             var vf = new virtualF();
                             vf.set("userPin",userpin);
@@ -234,7 +235,7 @@ var userAvatar;
                             vf.save(null, {
                                 success:function (virtualf) {
                                     console.log(virtualf + " saved successfully");
-                                    alert("Done Upload!");
+                                    //alert("Done Upload!");
                                     window.location = "home.html?checkin=" + checkin;
                                     //cb(pSweet);
                                 },
