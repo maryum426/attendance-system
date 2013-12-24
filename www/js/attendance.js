@@ -9,7 +9,7 @@ var department;
             console.log('CheckIn');
             
             //URL Parsing
-            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+            /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
                     val = params[i].split("=");
                     if (val[0] == "pin") {
@@ -21,9 +21,10 @@ var department;
                     else{
                         department = unescape(val[1]);
                     }
-                }
+                }*/
                 
-            window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
+            //window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
+            window.location = "picUpload.html?checkin=" + checkin;
         }
         
         function checkOut(){
@@ -31,7 +32,7 @@ var department;
             console.log('CheckOut');
             
             //URL Parsing
-            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+            /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
                     val = params[i].split("=");
                     if (val[0] == "pin") {
@@ -43,9 +44,10 @@ var department;
                     else{
                         department = unescape(val[1]);
                     }
-                }
+                }*/
                 
-            window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
+            //window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
+            window.location = "picUpload.html?checkin=" + checkin;
         }
         
         function logout(){
@@ -66,13 +68,14 @@ var department;
                         company = r_auth[0].get("company");
                         department = r_auth[0].get("department");
                         
-//                        document.cookie = "pin=" + userpin + ";" ; 
-//                        document.cookie = "username=" + username + ";" ; 
-//                        document.cookie = "company=" + company + ";"  ;
-//                        document.cookie = "department=" + department + ";" ;
+                        document.cookie = "pin=" + userpin + ";" ; 
+                        document.cookie = "username=" + username + ";" ; 
+                        document.cookie = "company=" + company + ";"  ;
+                        document.cookie = "department=" + department + ";" ;
                         
                         
-                        window.location = "check.html?pin=" + userpin + "&company=" + company + "&department=" + department;
+                        //window.location = "check.html?pin=" + userpin + "&company=" + company + "&department=" + department;
+                        window.location = "check.html";
                     }
                     else {
                        console.log("User doesnot exist!");
@@ -103,12 +106,12 @@ var department;
                 var files = e.target.files || e.dataTransfer.files;
                 file = files[0];
                 $("#my_image").css({'display':'block'});
-                //$("#my_image").attr("src",URL.createObjectURL(file));
+                $("#my_image").attr("src",window.URL.createObjectURL(file));
                  
                 //var parseFile = new Parse.File("mypic.jpg", {base64:file});
                 
                 //URL Parsing
-                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
                     val = params[i].split("=");
                     if (val[0] == "pin") {
@@ -120,13 +123,13 @@ var department;
                     else{
                         department = unescape(val[1]);
                     }
-                }
+                }*/
                 
                 
                 
                 //Get values from cookie
-                /*var ca = document.cookie.split(';');
-                alert("In change event2");
+                var ca = document.cookie.split(';');
+                //alert("In change event2");
                 for(var i=0; i< ca.length; i++) 
                   {
                     var c = ca[i].trim();
@@ -147,9 +150,9 @@ var department;
                         department = unescape(department[1]);
                     }
                     
-                  }*/
-                    //alert("User Pin: " + userpin);
-                    //alert("User Name: " + username);
+                  }
+                    alert("User Pin: " + userpin);
+                    alert("User Name: " + username);
                     //alert("User Company: " + company);
                     //alert("User Dept: " + department);
                     
