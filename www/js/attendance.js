@@ -77,7 +77,7 @@ var userAvatar;
           }
           var onSuccess = function(data3) {
                     
-                    $("#my_image").css({'display':'block'});
+                    alert("On success called");
                     $("#my_image").attr("src",data3);
                     userAvatar = data3;
                     
