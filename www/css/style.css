@@ -72,7 +72,7 @@ header{
 }
 
 #my_image{
-    display: none;
+/*    display: block;*/
     width: 391px;
     height: 236px;
     margin-top: -19px;
