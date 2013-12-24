@@ -3,7 +3,7 @@ var username;
 var userpin;
 var company;
 var department;
-var userAvatar;
+var userAvatar = null;
 
         function checkIn(){
             checkin = true;
@@ -45,6 +45,7 @@ var userAvatar;
                     else {
                        alert("User doesnot exist!");
                        $('#codeOk').removeAttr('disabled');
+                       $('.code-holder').val(null);
                     }
                 },
                 error:function (error) {
@@ -94,6 +95,11 @@ var userAvatar;
         
         function uploadOk(){
             //alert("In Upload!");
+            if (userAvatar == null){
+                alert("Take a picture first!");
+                $('#submit').removeAttr('disabled');
+                
+            }
             $('#submit').attr('disabled','disabled');
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
