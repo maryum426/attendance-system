@@ -63,7 +63,7 @@ var userAvatar;
             }
         }*/
         function capturePicture(){
-                alert("HERE!");
+                //alert("HERE!");
                 var options =   {
                     quality: 100,
                     cameraDirection:1,
@@ -77,7 +77,7 @@ var userAvatar;
           }
           var onSuccess = function(data3) {
                     
-                    alert("On success called");
+                    //alert("On success called");
                     $("#my_image").attr("src",data3);
                     userAvatar = data3;
                     
@@ -90,16 +90,36 @@ var userAvatar;
         };
         
         function uploadOk(){
-            alert("In Upload!");
+            //alert("In Upload!");
             $('#submit').attr('disabled','disabled');
-            //URL Parsing
-                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
-                for (i=0;i<params.length;i++) {
-                    val = params[i].split("=");
-                    if (val[0] == "checkin") {
-                        checkin = unescape(val[1]);
+            //Get values from cookie
+                var ca = document.cookie.split(';');
+                for(var i=0; i< ca.length; i++) 
+                  {
+                    var c = ca[i].trim();
+                    if (c.indexOf("pin")== 0) {
+                        userpin = (c.substring(c.indexOf("pin").length,c.length)).split("=");
+                        userpin = unescape(userpin[1]);
                     }
-                }
+                    else if (c.indexOf("username")== 0) {
+                        username = (c.substring(c.indexOf("username").length,c.length)).split("=");
+                        username = unescape(username[1]);
+                    }
+                    else if (c.indexOf("company")== 0) {
+                        company = (c.substring(c.indexOf("company").length,c.length)).split("=");
+                        company = unescape(company[1]);
+                    }
+                    else if (c.indexOf("department")== 0) {
+                        department = (c.substring(c.indexOf("department").length,c.length)).split("=");
+                        department = unescape(department[1]);
+                    }
+                    
+                  }
+                    //alert("User Pin: " + userpin);
+                    //alert("User Name: " + username);
+                    //alert("User Company: " + company);
+                    //alert("User Dept: " + department);
+                    
             console.log("CheckIn: " + checkin);
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
@@ -161,7 +181,7 @@ var userAvatar;
                         
                         var parseFile = new Parse.File("mypic.jpg", {base64:data2});
                         parseFile.save().then(function() {
-                                                            alert("Got it!");
+                                                            //alert("Got it!");
                                                             userAvatar = parseFile.url();
                                                             uploadParsePic(userAvatar);
                                                             //alert (parseFile.url());
@@ -187,7 +207,7 @@ var userAvatar;
          var uploadParsePic = function(url){
             var currentDate = new Date();
             //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-            alert("In uploadParsePic ()");
+            //alert("In uploadParsePic ()");
             if (company == "virtualforce"){
                 var virtualF = new Parse.Object.Extend("VirtualForce");
                 var vf = new virtualF();
