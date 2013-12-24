@@ -66,11 +66,12 @@ var department;
         var camera = document.getElementById("capture");
         camera.addEventListener("click", function(e) {
             camera.addEventListener("change", function(e) {
-                alert("In change event1");
+               
                 var files = e.target.files || e.dataTransfer.files;
                 file = files[0];
                 $("#my_image").css({'display':'block'});
                 $("#my_image").attr("src",URL.createObjectURL(file));
+                 alert("In change event1");
                 //var parseFile = new Parse.File("mypic.jpg", {base64:file});
                 
                 //URL Parsing
