@@ -148,10 +148,10 @@ var department;
                     }
                     
                   }*/
-                    alert("User Pin: " + userpin);
-                    alert("User Name: " + username);
-                    alert("User Company: " + company);
-                    alert("User Dept: " + department);
+                    //alert("User Pin: " + userpin);
+                    //alert("User Name: " + username);
+                    //alert("User Company: " + company);
+                    //alert("User Dept: " + department);
                     
                 //console.log("URL: " + s);
                 
