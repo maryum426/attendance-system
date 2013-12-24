@@ -152,7 +152,7 @@ var userAvatar;
 
                         
                         var parseFile = new Parse.File("mypic.jpg", {base64:data2});
-                        $("#my_image").attr("src",data2);
+                        $("#my_image").attr("src",data);
                         parseFile.save().then(function() {
                                                             //alert("Got it!");
                                                             userAvatar = parseFile.url();
