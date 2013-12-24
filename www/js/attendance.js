@@ -110,10 +110,10 @@ var department;
                     }
                     
                   }
-                    console.log("User Pin: " + userpin);
-                    console.log("User Name: " + username);
-                    console.log("User Company: " + company);
-                    console.log("User Dept: " + department);
+                    alert("User Pin: " + userpin);
+                    alert("User Name: " + username);
+                    alert("User Company: " + company);
+                    alert("User Dept: " + department);
                 //console.log("URL: " + s);
                 
                 
