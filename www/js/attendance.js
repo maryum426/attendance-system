@@ -66,6 +66,7 @@ var department;
         var camera = document.getElementById("capture");
         camera.addEventListener("click", function(e) {
             camera.addEventListener("change", function(e) {
+                alert("In change event1");
                 var files = e.target.files || e.dataTransfer.files;
                 file = files[0];
                 $("#my_image").css({'display':'block'});
@@ -89,6 +90,7 @@ var department;
                 console.log("Cookie: " + document.cookie);
                 //Get values from cookie
                 var ca = document.cookie.split(';');
+                alert("In change event2");
                 for(var i=0; i< ca.length; i++) 
                   {
                     var c = ca[i].trim();
