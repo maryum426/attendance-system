@@ -93,10 +93,6 @@ var userAvatar;
         function uploadOk(){
             //alert("In Upload!");
             $('#submit').attr('disabled','disabled');
-            //Get values from cookie
-                
-                    
-            console.log("CheckIn: " + checkin);
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
                     var data;
@@ -185,6 +181,16 @@ var userAvatar;
             //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
             alert("In uploadParsePic ()");
             
+            //URL Parsing get checkin value
+            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "checkin") {
+                        checkin = unescape(val[1]);
+                    }
+                }
+            
+            //Get values from cookie
             var ca = document.cookie.split(';');
                 for(var i=0; i< ca.length; i++) 
                   {
@@ -212,9 +218,8 @@ var userAvatar;
                     alert("User Company: " + company);
                     alert("User Dept: " + department);
                     
-            if (company == "virtualforce"){
-                var virtualF = new Parse.Object.Extend("VirtualForce");
-                var vf = new virtualF();
+                    alert("CheckIn: " + checkin);
+               
                 if (checkin == 'true'){
                         if (company == 'virtualforce'){
                             alert("In Virtual Force");
@@ -312,7 +317,7 @@ var userAvatar;
                         }
                     }
         
-            }
+            
         }
         
         /*var file;
