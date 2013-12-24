@@ -77,11 +77,12 @@ var userAvatar;
                 navigator.camera.getPicture(onSuccess,onFail,options);
           }
           var onSuccess = function(data3) {
-                    
                     //alert("On success called");
-                    
                     userAvatar = data3;
-                    
+                    var data;
+                    data = "data:image/jpeg;base64," + userAvatar;
+                    $("#my_image").attr("src",data);
+                    userAvatar = data;
             };
                 
                 //console.log("File Path: " + file.path);
@@ -95,12 +96,11 @@ var userAvatar;
             $('#submit').attr('disabled','disabled');
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
-                    var data;
-                    data = "data:image/jpeg;base64," + userAvatar;
+                   
 
                     //alert("Image: " + data);
                     var image = new Image();
-                    image.src = data;
+                    image.src = userAvatar;
 
                     var canvas = document.createElement('canvas');
 
@@ -152,7 +152,7 @@ var userAvatar;
 
                         
                         var parseFile = new Parse.File("mypic.jpg", {base64:data2});
-                        $("#my_image").attr("src",data);
+                        
                         parseFile.save().then(function() {
                                                             //alert("Got it!");
                                                             userAvatar = parseFile.url();
