@@ -63,7 +63,7 @@ var userAvatar;
             }
         }*/
         function capturePicture(){
-                
+                alert("HERE!");
                 var options =   {
                     quality: 100,
                     cameraDirection:1,
