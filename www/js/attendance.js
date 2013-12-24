@@ -3,50 +3,17 @@ var username;
 var userpin;
 var company;
 var department;
+var userAvatar;
 
         function checkIn(){
             checkin = true;
             console.log('CheckIn');
-            
-            //URL Parsing
-            /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
-                for (i=0;i<params.length;i++) {
-                    val = params[i].split("=");
-                    if (val[0] == "pin") {
-                        userpin = unescape(val[1]);
-                    }
-                    else if(val[0] == "company"){
-                        company = unescape(val[1]);
-                    }
-                    else{
-                        department = unescape(val[1]);
-                    }
-                }*/
-                
-            //window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
         function checkOut(){
             checkin = false;
             console.log('CheckOut');
-            
-            //URL Parsing
-            /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
-                for (i=0;i<params.length;i++) {
-                    val = params[i].split("=");
-                    if (val[0] == "pin") {
-                        userpin = unescape(val[1]);
-                    }
-                    else if(val[0] == "company"){
-                        company = unescape(val[1]);
-                    }
-                    else{
-                        department = unescape(val[1]);
-                    }
-                }*/
-                
-            //window.location = "picUpload.html?checkin=" + checkin + "&pin=" + userpin + "&company=" + company + "&department=" + department;
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
@@ -72,9 +39,7 @@ var department;
                         document.cookie = "username=" + username + ";" ; 
                         document.cookie = "company=" + company + ";"  ;
                         document.cookie = "department=" + department + ";" ;
-                        
-                        
-                        //window.location = "check.html?pin=" + userpin + "&company=" + company + "&department=" + department;
+
                         window.location = "check.html";
                     }
                     else {
@@ -97,8 +62,236 @@ var department;
                 window.location = "index.html";
             }
         }*/
+        function capturePicture(){
+                
+                var options =   {
+                    quality: 100,
+                    cameraDirection:1,
+                    sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+                    correctOrientation: true,
+                    destinationType: navigator.camera.DestinationType.DATA_URL,
+                    allowEdit: true
+                };
+                // Take picture using device camera and retrieve image as base64-encoded string
+                navigator.camera.getPicture(onSuccess,onFail,options);
+          }
+          var onSuccess = function(data3) {
+                    
+                    $("#my_image").css({'display':'block'});
+                    $("#my_image").attr("src",data3);
+                    userAvatar = data3;
+                    
+            };
+                
+                //console.log("File Path: " + file.path);
+        var onFail = function(e) {
+            alert("On fail " + e);
+            //alert("Profile Picture Progress: " + $rootScope.loginInProgress_profile);
+        };
         
-        var file;
+        function uploadOk(){
+            alert("In Upload!");
+            $('#submit').attr('disabled','disabled');
+            //URL Parsing
+                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "checkin") {
+                        checkin = unescape(val[1]);
+                    }
+                }
+            console.log("CheckIn: " + checkin);
+                    var thumbnail = 400;
+                    var ppWidth, ppHeight;
+                    var data;
+                    data = "data:image/jpeg;base64," + userAvatar;
+
+                    //alert("Image: " + data);
+                    var image = new Image();
+                    image.src = data;
+
+                    var canvas = document.createElement('canvas');
+
+                    canvas.width = thumbnail;
+                    canvas.height = thumbnail;
+
+
+                    image.onload = function(){
+                        ppWidth = image.width;
+                        ppHeight = image.height;
+
+                        //alert('Width: ' + ppWidth);
+                        //alert('Height: ' + ppHeight);
+
+                        var context = canvas.getContext('2d');
+                        context.clearRect(0, 0, thumbnail, thumbnail);
+                        var imageWidth;
+                        var imageHeight;
+                        var offsetX = 0;
+                        var offsetY = 0;
+
+
+
+                        if (image.width > image.height) {
+                            imageWidth = Math.round(thumbnail * image.width / image.height);
+                            imageHeight = thumbnail;
+                            offsetX = - Math.round((imageWidth - thumbnail) / 2);
+                            //alert("IF");
+                        } else {
+                            imageHeight = Math.round(thumbnail * image.height / image.width);
+                            imageWidth = thumbnail;    
+                            offsetY = - Math.round((imageHeight - thumbnail) / 2);            
+                            //alert("ELSE");
+                        }
+
+                        context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
+                        //alert("Image Drawn");
+                        //}
+                        var data2 = canvas.toDataURL('image/jpeg');
+
+                        //alert ("Data2.1: " + data2);
+                        data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
+                        //alert ("Data2.2: " + data2);
+
+                        //alert("Source Set!");
+
+                        //Initialize Parse
+                        Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+
+                        
+                        var parseFile = new Parse.File("mypic.jpg", {base64:data2});
+                        parseFile.save().then(function() {
+                                                            //alert("Got it!");
+                                                            userAvatar = parseFile.url();
+                                                            uploadParsePic(userAvatar);
+                                                            //alert (parseFile.url());
+                                                            console.log("Ok");
+
+                                                        }, function(error) {
+                                                            console.log("Error");
+                                                            console.log(error);
+                                                        });
+                    }
+                    
+                    
+                    
+                    
+        }
+        
+        
+        
+        function uploadBack(){
+            window.location = "check.html";
+        }
+        
+         var uploadParsePic = function(url){
+            var currentDate = new Date();
+            //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+            
+            if (company == "virtualforce"){
+                var virtualF = new Parse.Object.Extend("VirtualForce");
+                var vf = new virtualF();
+                if (checkin == 'true'){
+                        if (company == 'virtualforce'){
+                            
+                            var virtualF = Parse.Object.extend("VirtualForce");
+                            var vf = new virtualF();
+                            vf.set("userPin",userpin);
+                            vf.set("userAvatar",url);
+                            vf.set("checkInOutTime",currentDate);
+                            vf.set("department",department);
+                            vf.set("check","checkin")
+                            vf.set("createdAt",currentDate);
+                            vf.save(null, {
+                                success:function (virtualf) {
+                                    console.log(virtualf + " saved successfully");
+                                    alert("Done Upload!");
+                                    window.location = "home.html?checkin=" + checkin;
+                                    //cb(pSweet);
+                                },
+                                error:function (pSweet, error) {
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                }
+
+                            });
+                        }
+                        else if (company == 'kualitatem'){
+                            
+                            var kualitatem = Parse.Object.extend("Kualitatem");
+                            var km = new kualitatem();
+                            km.set("userPin",userpin);
+                            km.set("userAvatar",url);
+                            km.set("checkInOutTime",currentDate);
+                            km.set("department",department);
+                            km.set("check","checkin");
+                            km.set("createdAt",currentDate);
+                            km.save(null, {
+                                success:function (kuali) {
+                                    console.log(kuali + " saved successfully");
+                                    window.location = "home.html?checkin=" + checkin;
+                                    //cb(pSweet);
+                                },
+                                error:function (pSweet, error) {
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                }
+
+                            });
+                        }
+                    }
+                    else{
+                        
+                        if (company == 'virtualforce'){
+                            
+                            var virtualF = Parse.Object.extend("VirtualForce");
+                            var vf = new virtualF();
+                            vf.set("userPin",userpin);
+                            vf.set("userAvatar",url);
+                            vf.set("checkInOutTime",currentDate);
+                            vf.set("department",department);
+                            vf.set("check","checkout")
+                            vf.set("createdAt",currentDate);
+                            vf.save(null, {
+                                success:function (virtualf) {
+                                    console.log(virtualf + " saved successfully");
+                                    window.location = "home.html?checkin=" + checkin;
+                                    //cb(pSweet);
+                                },
+                                error:function (pSweet, error) {
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                }
+
+                            });
+                            
+                            
+                        }
+                        else if (company == 'kualitatem'){
+                            
+                            var kualitatem = Parse.Object.extend("Kualitatem");
+                            var km = new kualitatem();
+                            km.set("userPin",userpin);
+                            km.set("userAvatar",url);
+                            km.set("checkInOutTime",currentDate);
+                            km.set("department",department);
+                            km.set("check","checkout");
+                            km.set("createdAt",currentDate);
+                            km.save(null, {
+                                success:function (kuali) {
+                                    console.log(kuali + " saved successfully");
+                                    window.location = "home.html?checkin=" + checkin;
+                                    //cb(pSweet);
+                                },
+                                error:function (pSweet, error) {
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                }
+
+                            });
+                        }
+                    }
+        
+            }
+        }
+        
+        /*var file;
         var camera = document.getElementById("capture");
         camera.addEventListener("click", function(e) {
             camera.addEventListener("change", function(e) {
@@ -108,10 +301,10 @@ var department;
                 $("#my_image").css({'display':'block'});
                 //$("#my_image").attr("src",window.URL.createObjectURL(file));
                  
-                //var parseFile = new Parse.File("mypic.jpg", {base64:file});
+                
                 
                 //URL Parsing
-                /*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                *//*var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                 for (i=0;i<params.length;i++) {
                     val = params[i].split("=");
                     if (val[0] == "pin") {
@@ -123,13 +316,10 @@ var department;
                     else{
                         department = unescape(val[1]);
                     }
-                }*/
-                
-                
+                }*//*
                 
                 //Get values from cookie
                 var ca = document.cookie.split(';');
-                //alert("In change event2");
                 for(var i=0; i< ca.length; i++) 
                   {
                     var c = ca[i].trim();
@@ -151,62 +341,18 @@ var department;
                     }
                     
                   }
-                    alert("User Pin: " + userpin);
-                    alert("User Name: " + username);
+                    //alert("User Pin: " + userpin);
+                    //alert("User Name: " + username);
                     //alert("User Company: " + company);
                     //alert("User Dept: " + department);
                     
                 //console.log("URL: " + s);
-                
-                
-                
-                
-//                parseFile.save().then(function() {
-//                                                    //alert("Got it!");
-//                                                    userAvatar = parseFile.url();
-//                                                    uploadParsePic(userAvatar);
-//                                                    //alert (parseFile.url());
-//                                                    console.log("Ok");
-//                                                    window
-//
-//                                                }, function(error) {
-//                                                    console.log("Error");
-//                                                    console.log(error);
-//                                                });
-//                console.log("File Path: " + file.path);
                
             });
-        });
-        
-        var uploadParsePic = function(url){
-            var currentDate = new Date();
-            //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-            
-            if (company == "virtualforce"){
-                var virtualF = new Parse.Object.Extend("VirtualForce");
-                var vf = new virtualF();
-                vf.set("userPin",userpin);
-                vf.set("userAvatar",url);
-                vf.set("checkInTime",currentDate);
-                vf.set("department",department);
-                vf.set("createdAt",currentDate);
-                vf.save(null, {
-                    success:function (virtualf) {
-                        console.log(virtualf + " saved successfully");
-                        //cb(pSweet);
-                    },
-                    error:function (pSweet, error) {
-                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                    }
-
-                });
-            }
+        });*/
         
         
-        }
-        
-        
-        function uploadOk(){
+        /*function uploadOk(){
             alert("In Upload!");
             $('#submit').attr('disabled','disabled');
             //URL Parsing
@@ -342,10 +488,5 @@ var department;
                     }
                     })
             
-        }
+        }*/
         
-        function uploadBack(){
-            window.location = "check.html";
-        }
-
-
