@@ -64,6 +64,7 @@ var userAvatar;
         }*/
         function capturePicture(){
                 //alert("HERE!");
+                $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 100,
                     cameraDirection:1,
