@@ -186,7 +186,7 @@ var userAvatar = null;
         
          var uploadParsePic = function(url){
             var currentDate = new Date();
-            //var currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             //alert("In uploadParsePic ()");
             
             //URL Parsing get checkin value
@@ -235,7 +235,7 @@ var userAvatar = null;
                             var vf = new virtualF();
                             vf.set("userPin",userpin);
                             vf.set("userAvatar",url);
-                            vf.set("checkInOutTime",currentDate);
+                            vf.set("checkInOutTime",currentTime);
                             vf.set("department",department);
                             vf.set("check","checkin")
                             vf.set("createdAt",currentDate);
@@ -258,7 +258,7 @@ var userAvatar = null;
                             var km = new kualitatem();
                             km.set("userPin",userpin);
                             km.set("userAvatar",url);
-                            km.set("checkInOutTime",currentDate);
+                            km.set("checkInOutTime",currentTime);
                             km.set("department",department);
                             km.set("check","checkin");
                             km.set("createdAt",currentDate);
@@ -283,7 +283,7 @@ var userAvatar = null;
                             var vf = new virtualF();
                             vf.set("userPin",userpin);
                             vf.set("userAvatar",url);
-                            vf.set("checkInOutTime",currentDate);
+                            vf.set("checkInOutTime",currentTime);
                             vf.set("department",department);
                             vf.set("check","checkout")
                             vf.set("createdAt",currentDate);
@@ -307,7 +307,7 @@ var userAvatar = null;
                             var km = new kualitatem();
                             km.set("userPin",userpin);
                             km.set("userAvatar",url);
-                            km.set("checkInOutTime",currentDate);
+                            km.set("checkInOutTime",currentTime);
                             km.set("department",department);
                             km.set("check","checkout");
                             km.set("createdAt",currentDate);
@@ -329,8 +329,86 @@ var userAvatar = null;
         }
         
         function backToLogin(){
-            window.location = "index.html";
+            setTimeout(function(){
+                window.location = "index.html";
+            },2000);
+            
         }
+        
+        
+        function sendEmail(){
+            var currentDate = new Date();
+            var yesterday = new Date();
+            yesterday.setDate(currentDate.getDate()-1);
+            //console.log("Yesterday's Date: " + yesterday);
+            console.log("In sendEmail");
+            //if (company == "virtualforce")
+            //{
+                var query = new Parse.Query("VirtualForce");
+		 
+                query.ascending("checkInOutTime");
+                query.containedIn("checkInOutTime", yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate());
+                //query.equalTo("checkInOutTime", currentDate);
+               //query.limit(1000);
+               //query.skip(limit);
+               query.find({
+                       success:function (results) {
+                               console.log("results =--> " + results.length);
+
+                               //$('#myGrid').empty();
+                               //$("#myGrid").append(results);
+                               if(results.length == 0) {
+                                       //var txt = "<div>No Result Found</div>";					
+                                       //$("#myGrid").append(txt);
+                                       alert("No Results!");
+
+                               } else {	
+                                       var table = '<table class="table table-bordered">';				
+                                       for(var i=0; i < results.length; i++){
+                                               //console.log(results[i].get("placename") + '  ' + results[i].get("receiverName") );
+                                               console.log("results pair =--> " + _.pairs(results[i]['createdAt']));
+                                               console.log(table += '<tr>');
+                                               console.log(table += '<td>' + i  + '</td>');
+                                               console.log(table += '<td>' + username  + '</td>');
+                                               console.log(table += '<td>' + yesterday  + '</td>');
+                                               //console.log(table += '<td>' + results[i].get("receiverName")  + '</td>');
+                                               //moment.lang('en');
+                                               //table += '<td>' + moment(results[i]['createdAt']).format('YYYY-MM-DD 00:mm:ss')  + '</td>';
+                                               //results[i]['createdAt']=moment(results[i]['createdAt']).utc().format('MM/DD/YYYY HH:mm') ;
+                                               //table += '<td>' + results[i]['createdAt']  + '</td>';
+                                               table += '<tr>';
+                                               //var txt = "<div><span class='name'>" + results[i].get("placename") +"</span><span class='count'>"+ results[i].get("receiverName")+"</span>			<span class='date'>" + results[i]['createdAt'] + "</span></div>";	
+                                               //$("#myGrid").append(txt);
+                                       }
+                                       table += '</table>';
+                               }		
+                               //report.placeName, report.filter , sResults , eResults , limit
+                               
+                       },
+                       error:function (error) {
+                               // $(".error").show();
+                       }
+               });
+           // }
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         /*var file;
         var camera = document.getElementById("capture");

@@ -21,6 +21,7 @@
             <p class="check-text">You checked in at</p>
             <p id="time" class="time"></p>
             <p class="welcome-message">Happy Coding! :)</p>
+            <div class="welcome-message" onclick="sendEmail()">Send Email</div>
         </div>
         
         
@@ -28,7 +29,7 @@
             var currentDate = new Date();
             var hours = currentDate.getHours(); 
             var minutes = currentDate.getMinutes();
-            var ampm = hours >= 12 ? 'PM' : 'AM';
+            var ampm = hours >= var12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
             minutes = minutes < 10 ? '0'+minutes : minutes;
@@ -51,7 +52,8 @@
                 $('.check-text').text("You checked out at");
                 $('.welcome-message').text("Leaving office on time more productivity, good social life, good family relations :)");
             }
-            setTimeout(backToLogin(),5000);
+            //backToLogin();
+            
         </script>
         
         <script>
