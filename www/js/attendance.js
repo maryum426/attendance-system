@@ -328,6 +328,10 @@ var userAvatar = null;
             
         }
         
+        function backToLogin(){
+            window.location = "index.html";
+        }
+        
         /*var file;
         var camera = document.getElementById("capture");
         camera.addEventListener("click", function(e) {
