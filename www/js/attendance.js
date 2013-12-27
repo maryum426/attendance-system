@@ -23,7 +23,7 @@ var userAvatar = null;
         
         function codePageOk(){
             $('#codeOk').attr('disabled','disabled');
-            userpin = $('.code-holder').val();
+            userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             var query = new Parse.Query("Users");
             //var query = new Auth();
