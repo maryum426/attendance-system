@@ -17,8 +17,8 @@
         </header>
         
         <div id="main-div">
-            <p class="welcome-text">Welcome User!</p>
-            <p class="check-text">You checked in at</p>
+            <p class="welcome-text"></p>
+            <p class="check-text"></p>
             <p id="time" class="time"></p>
             <p class="welcome-message"></p>
             <div class="send-email" onclick="sendEmail()">Send Email</div>
@@ -28,6 +28,17 @@
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
         </script>
         <script>
+            var checkin;
+            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                for (i=0;i<params.length;i++) {
+                    val = params[i].split("=");
+                    if (val[0] == "checkin") {
+                        checkin = unescape(val[1]);
+                    }
+                }
+            console.log("CheckIn: " + checkin);
+            setMessages(checkin);
+            
             var currentDate = new Date();
             var hours = currentDate.getHours(); 
             var minutes = currentDate.getMinutes();
@@ -39,20 +50,11 @@
             console.log("Current Time: " + currentTime);
             $('#time').text(currentTime);
             
-            var checkin;
-            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
-                for (i=0;i<params.length;i++) {
-                    val = params[i].split("=");
-                    if (val[0] == "checkin") {
-                        checkin = unescape(val[1]);
-                    }
-                }
-            console.log("CheckIn: " + checkin);
-            setMessages(checkin);
-            if (checkin == 'false'){
-                $('.welcome-text').text("Goodbye User!");
-                $('.check-text').text("You checked out at");
-            }
+            
+//            if (checkin == 'false'){
+//                $('.welcome-text').text("Goodbye User!");
+//                $('.check-text').text("You checked out at");
+//            }
             //backToLogin();
             
         </script>

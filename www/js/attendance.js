@@ -567,7 +567,18 @@ var userAvatar = null;
         
         function setMessages(check){
             
+            
+            var ca = document.cookie.split(';');
+                for(var i=0; i< ca.length; i++) 
+                  {
+                      var c = ca[i].trim();
+                        if (c.indexOf("username")== 0) {
+                             username = (c.substring(c.indexOf("username").length,c.length)).split("=");
+                             username = unescape(username[1]);
+                         }
+                  }
             var currentDate = new Date();
+            
             if (check == 'true'){
                 var query = new Parse.Query("MessageConfig");
                 query.equalTo("messageType", 'checkin');
@@ -575,6 +586,8 @@ var userAvatar = null;
                 query.find({
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
+                        $('.welcome-text').text('Welcome ' + username + '!');
+                        $('.check-text').text("You checked in at");
                     },
                     error: function (error){
 
@@ -588,6 +601,8 @@ var userAvatar = null;
                 query.find({
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
+                        $('.welcome-text').text('Goodbye ' + username + '!');
+                        $('.check-text').text("You checked out at");
                     },
                     error: function (error){
 
