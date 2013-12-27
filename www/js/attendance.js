@@ -563,6 +563,8 @@ var userAvatar = null;
         }
         
         
+        
+        
         function setMessages(check){
             
             var currentDate = new Date();
