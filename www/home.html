@@ -24,12 +24,14 @@
             <div class="welcome-message" onclick="sendEmail()">Send Email</div>
         </div>
         
-        
+        <script>
+            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+        </script>
         <script>
             var currentDate = new Date();
             var hours = currentDate.getHours(); 
             var minutes = currentDate.getMinutes();
-            var ampm = hours >= var12 ? 'PM' : 'AM';
+            var ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
             minutes = minutes < 10 ? '0'+minutes : minutes;
@@ -46,19 +48,16 @@
                     }
                 }
             console.log("CheckIn: " + checkin);
-            
+            setMessages(checkin);
             if (checkin == 'false'){
                 $('.welcome-text').text("Goodbye User!");
                 $('.check-text').text("You checked out at");
-                $('.welcome-message').text("Leaving office on time more productivity, good social life, good family relations :)");
             }
             //backToLogin();
             
         </script>
         
-        <script>
-            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
-        </script>
+        
         
     </body>
 </html>
