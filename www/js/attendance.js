@@ -504,7 +504,7 @@ var userAvatar = null;
                                                                }
                                                                console.log(table += '</table>');
                                                                msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
-                                                               sendEmailTo('maryum.babar@gmail.com','maryum.babar@virtual-force.com','Attendance Report', msg, function (success) {
+                                                               sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','tanzeel@virtual-force.com','Attendance Report', msg, function (success) {
                                                                     if (success) {
                                                                         console.log("Email Bcc successfuly");
                                                                         return true;
@@ -532,18 +532,19 @@ var userAvatar = null;
                
         }
         
-        function sendEmailTo(fromEmail,receiverEmail,subject,m_phone){
+        function sendEmailTo(fromEmail,receiverEmail,ccEmail,subject,m_phone){
             
                 console.log("fromEmail" + fromEmail);
                 console.log("receiverEmail" + receiverEmail);
                 console.log("subject" + subject);
                 console.log("body" + m_phone);
             
-            Parse.Cloud.run("sendEmail",
+            Parse.Cloud.run("sendEmailCc",
                     {
                         //key:"key-96p0dt86t-obp8eq1wzgh2aal1l371m3",
                         fromEmail:fromEmail,
                         toEmail:receiverEmail,
+                        ccEmail:ccEmail,
                         subject:subject,
                         html:m_phone
                         //fromName:'sweetness',
@@ -551,6 +552,7 @@ var userAvatar = null;
                     },
                     {
                         success:function (msg) {
+                            backToLogin2();
                             return true;
                         },
                         error:function () {
@@ -592,4 +594,8 @@ var userAvatar = null;
             }
         }
         
+        function backToLogin2(){
+            alert("Email Sent!");
+                window.location = "index.html";
+        }
       
