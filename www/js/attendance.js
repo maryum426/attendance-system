@@ -185,10 +185,23 @@ var userAvatar = null;
         }
         
          var uploadParsePic = function(url){
-            var currentDate = new Date();
-            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+             var currentDate = new Date();
+             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+             var checkStatus = new Date();
+             checkStatus.setHours(9);
+             checkStatus.setMinutes(30);
+             checkStatus.setSeconds(59);
+             var status;
+             console.log("Check Status: " + checkStatus.toString());
+             console.log("Current Date: " + currentDate.toString());
+             if ((currentDate < checkStatus || currentDate == checkStatus)){
+                 status = 'ontime';
+             }
+             else{
+                 status = 'late';
+             }
             
-            //alert("In uploadParsePic ()");
+           
             
             //URL Parsing get checkin value
             var loc = window.location.search.substring(1),i, val, params = loc.split("&");
@@ -241,6 +254,7 @@ var userAvatar = null;
                             vf.set("check","checkin");
                             vf.set("createdAt",currentDate);
                             vf.set("userName",username);
+                            vf.set("status",status);
                             vf.save(null, {
                                 success:function (virtualf) {
                                     console.log(virtualf + " saved successfully");
@@ -265,6 +279,7 @@ var userAvatar = null;
                             km.set("check","checkin");
                             km.set("createdAt",currentDate);
                             km.set("userName",username);
+                            km.set("status",status);
                             km.save(null, {
                                 success:function (kuali) {
                                     console.log(kuali + " saved successfully");
@@ -324,7 +339,8 @@ var userAvatar = null;
                                         vf.set("check","checkout");
                                         vf.set("createdAt",currentDate);
                                         vf.set("workingHours",workHours);
-                                        vf.set("userName",username);    
+                                        vf.set("userName",username); 
+                                        vf.set("status",status);
                                         vf.save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
@@ -384,6 +400,7 @@ var userAvatar = null;
                                                     km.set("createdAt",currentDate);
                                                     km.set("workingHours",workHours);
                                                     km.set("userName",username);
+                                                    km.set("status",status);
                                                     km.save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
@@ -422,15 +439,16 @@ var userAvatar = null;
             yesterday.setDate(currentDate.getDate()-1);
             var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
             table += '<tr style="border:1px solid #000">';
-            table += '<th style="border:1px solid #000">' + 'User Code'  + '</th>';
-            table += '<th style="border:1px solid #000">' + 'Name'  + '</th>';
-            table += '<th style="border:1px solid #000">' + 'Date'  + '</th>';
-            table += '<th style="border:1px solid #000">' + 'Working Hours'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'User Code'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Name'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Working Hours'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Status'  + '</th>';
             table += '<tr>';
             //console.log("Yesterday's Date: " + yesterday);
             console.log("In sendEmail");
             var newLine = "<br>";
             var msg = '';
+            var reportDate;
                 var query = new Parse.Query("VirtualForce");
                 query.ascending("checkInOutTime");
                 query.startsWith("checkInOutTime", yesterday.toDateString());
@@ -450,10 +468,10 @@ var userAvatar = null;
                                        
                                        for(var i=0; i < results.length; i++){
                                                table += '<tr style="border:1px solid #000">';
-                                               table += '<td style="border:1px solid #000">' + results[i].get("userPin")  + '</td>';
-                                               table += '<td style="border:1px solid #000">' + results[i].get("userName")  + '</td>';
-                                               table += '<td style="border:1px solid #000">' + results[i].get("checkInOutTime")  + '</td>';
-                                               table += '<td style="border:1px solid #000">' + results[i].get("workingHours")  + '</td>';
+                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
+                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
+                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
                                                table += '<tr>';
                                        }
                                        //console.log(table += '</table>');
@@ -477,14 +495,15 @@ var userAvatar = null;
 
                                                                for(var i=0; i < results.length; i++){
                                                                        table += '<tr style="border:1px solid #000">';
-                                                                       table += '<td style="border:1px solid #000">' + results[i].get("userPin")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000">' + results[i].get("userName")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000">' + results[i].get("checkInOutTime")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000">' + results[i].get("workingHours")  + '</td>';
+                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
+                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
+                                                                       reportDate = results[i].get("checkInOutTime").substr (0,15);
+                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
                                                                        table += '<tr>';
                                                                }
                                                                console.log(table += '</table>');
-                                                               msg = newLine + table + newLine + newLine;
+                                                               msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
                                                                sendEmailTo('maryum.babar@gmail.com','maryum.babar@virtual-force.com','Attendance Report', msg, function (success) {
                                                                     if (success) {
                                                                         console.log("Email Bcc successfuly");
