@@ -129,6 +129,9 @@ var userAvatar = null;
         }*/
         function capturePicture(){
                 //alert("HERE!");
+                $('.pic_upload').css({'display':'block'});
+                $('.btn-holder2').css({'display':'block'});
+                $('.pic-text').css({'display':'none'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
@@ -143,9 +146,7 @@ var userAvatar = null;
           }
           var onSuccess = function(data3) {
                     //alert("On success called");
-                    $('.pic_upload').css({'display':'block'});
-                    $('.btn-holder2').css({'display':'block'});
-                    $('.pic-text').css({'display':'none'});
+                    
                     userAvatar = data3;
                     var data;
                     data = "data:image/jpeg;base64," + userAvatar;
