@@ -55,17 +55,17 @@ var userAvatar = null;
 
                                             if (results[0].get("check") == 'checkin')
                                                 {
-                                                    $('.main-btn-in').attr('disabled','disabled');
+                                                    $('#in').attr('disabled','disabled');
                                                     window.location = "check.html";
                                                 }
                                             else if (results[0].get("check") == 'checkout')
                                                 {
-                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    $('#out').attr('disabled','disabled');
                                                     window.location = "check.html";
                                                 }
                                             else if (results.length == 0)
                                                 {
-                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    $('#out').attr('disabled','disabled');
                                                     window.location = "check.html";
                                                 }    
                                         },
@@ -325,6 +325,7 @@ var userAvatar = null;
                                 success:function (virtualf) {
                                     console.log(virtualf + " saved successfully");
                                     //alert("Done Upload!");
+                                    $('.pic_upload').css({'display':'block'});
                                     window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                     //cb(pSweet);
                                 },
@@ -349,6 +350,7 @@ var userAvatar = null;
                             km.save(null, {
                                 success:function (kuali) {
                                     console.log(kuali + " saved successfully");
+                                    $('.pic_upload').css({'display':'block'});
                                     window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                     //cb(pSweet);
                                 },
@@ -411,6 +413,7 @@ var userAvatar = null;
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
+                                                $('.pic_upload').css({'display':'block'});
                                                 window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                 //cb(pSweet);
                                             },
@@ -472,6 +475,7 @@ var userAvatar = null;
                                                     results[0].save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
+                                                            $('.pic_upload').css({'display':'block'});
                                                             window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                             //cb(pSweet);
                                                         },
