@@ -66,6 +66,8 @@ var userAvatar = null;
         }*/
         function capturePicture(){
                 //alert("HERE!");
+                $('.pic_upload').css({'display':'block'});
+                $('.btn-holder2').css({'display':'block'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
@@ -431,6 +433,13 @@ var userAvatar = null;
             setTimeout(function(){
                 window.location = "index.html";
             },5000);
+            
+        }
+        
+        function takePicture(){
+            setTimeout(function(){
+                capturePicture();
+            },3000);
             
         }
         
