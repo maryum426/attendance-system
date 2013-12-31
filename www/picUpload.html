@@ -9,7 +9,8 @@
     </head>
     <body>
         <header>
-            <img src="images/kualitatem-logo.png"/>
+            <p class="welcome-text"></p>
+            <p class="welcome-text2"></p>
         </header>
         <div id="main-div">
             
@@ -19,14 +20,24 @@
             </div>
             
             <div class="btn-holder2">
-                <input class="code-btn ios-btn" type="button" value="Back" onclick="uploadBack()">
-                <input id ="submit" class="code-btn ios-btn" type="button" value="Submit" onclick="uploadOk()">
+                <input class="code-btn-cancel ios-btn" type="button" value="Back" onclick="uploadBack()">
+                <input id ="submit" class="code-btn-ok ios-btn" type="button" value="Submit" onclick="uploadOk()">
             </div>
         </div>
             <script src="js/attendance.js"></script>
             <script type="text/javascript" src="js/parse-min.js"></script>
             <script>
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+                var checkin;
+                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                    for (i=0;i<params.length;i++) {
+                        val = params[i].split("=");
+                        if (val[0] == "checkin") {
+                            checkin = unescape(val[1]);
+                        }
+                    }
+                $('body').css({'background-image':'url(images/background-3.png)'});
+                setMessages(checkin);
             </script>
     </body>
 </html>

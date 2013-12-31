@@ -248,8 +248,8 @@ var userAvatar = null;
                             var virtualF = Parse.Object.extend("VirtualForce");
                             var vf = new virtualF();
                             vf.set("userPin",userpin);
-                            vf.set("userAvatar",url);
-                            vf.set("checkInOutTime",currentTime);
+                            vf.set("userAvatarIn",url);
+                            vf.set("checkInTime",currentTime);
                             vf.set("department",department);
                             vf.set("check","checkin");
                             vf.set("createdAt",currentDate);
@@ -273,8 +273,8 @@ var userAvatar = null;
                             var kualitatem = Parse.Object.extend("Kualitatem");
                             var km = new kualitatem();
                             km.set("userPin",userpin);
-                            km.set("userAvatar",url);
-                            km.set("checkInOutTime",currentTime);
+                            km.set("userAvatarIn",url);
+                            km.set("checkInTime",currentTime);
                             km.set("department",department);
                             km.set("check","checkin");
                             km.set("createdAt",currentDate);
@@ -304,12 +304,12 @@ var userAvatar = null;
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
-                            query.equalTo("check", 'checkin');
-                            query.startsWith("checkInOutTime", currentDate.toDateString());
+                            //query.equalTo("check", 'checkin');
+                            query.startsWith("checkInTime", currentDate.toDateString());
                             query.find({
                                 success:function (results) {
                                     console.log("Results Length: " + results.length);
-                                      time2 = results[0].get("checkInOutTime");
+                                      time2 = results[0].get("checkInTime");
                                       time2 = time2.substr(time2.length -5);
                                       time = time2.split(":");
                                       checkinHr = time[0];
@@ -324,24 +324,25 @@ var userAvatar = null;
                                             h = '0' + Math.floor( (hours - d * cd) / ch),
                                             m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
                                         hours = [h.substr(-2), m.substr(-2)].join(':');
+                                        //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
                                       
                                       workHours = hours.toString();
                                       //console.log("Working Hours " + workHours);
                                       
                                      
                                         //console.log("Working Hours2 " + workHours);
-                                        var virtualF = Parse.Object.extend("VirtualForce");
-                                        var vf = new virtualF();
-                                        vf.set("userPin",userpin);
-                                        vf.set("userAvatar",url);
-                                        vf.set("checkInOutTime",currentTime);
-                                        vf.set("department",department);
-                                        vf.set("check","checkout");
-                                        vf.set("createdAt",currentDate);
-                                        vf.set("workingHours",workHours);
-                                        vf.set("userName",username); 
-                                        vf.set("status",status);
-                                        vf.save(null, {
+                                        //var virtualF = Parse.Object.extend("VirtualForce");
+                                        //var vf = new virtualF();
+                                        //vf.set("userPin",userpin);
+                                        results[0].set("userAvatarOut",url);
+                                        results[0].set("checkOutTime",currentTime);
+                                        //vf.set("department",department);
+                                        //vf.set("check","checkout");
+                                        //vf.set("createdAt",currentDate);
+                                        results[0].set("workingHours",workHours);
+                                        //vf.set("userName",username);    
+                                        //vf.set("status",status);
+                                        results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
                                                 window.location = "home.html?checkin=" + checkin;
@@ -363,12 +364,12 @@ var userAvatar = null;
                                         var query = new Parse.Query("Kualitatem");
                                         //query.ascending("checkInOutTime");
                                         query.equalTo("userPin", userpin);
-                                        query.equalTo("check", 'checkin');
-                                        query.startsWith("checkInOutTime", currentDate.toDateString());
+                                        //query.equalTo("check", 'checkin');
+                                        query.startsWith("checkInTime", currentDate.toDateString());
                                         query.find({
                                             success:function (results) {
                                                 console.log("Results Length: " + results.length);
-                                                  time2 = results[0].get("checkInOutTime");
+                                                  time2 = results[0].get("checkInTime");
                                                   time2 = time2.substr(time2.length -5);
                                                   time = time2.split(":");
                                                   checkinHr = time[0];
@@ -383,6 +384,7 @@ var userAvatar = null;
                                                         h = '0' + Math.floor( (hours - d * cd) / ch),
                                                         m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
                                                     hours = [h.substr(-2), m.substr(-2)].join(':');
+                                                    //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
 
                                                   workHours = hours.toString();
                                                   console.log("Working Hours " + workHours);
@@ -390,18 +392,18 @@ var userAvatar = null;
                                      
                                                     //console.log("Working Hours2 " + workHours);
                                                   
-                                                    var kualitatem = Parse.Object.extend("Kualitatem");
-                                                    var km = new kualitatem();
-                                                    km.set("userPin",userpin);
-                                                    km.set("userAvatar",url);
-                                                    km.set("checkInOutTime",currentTime);
-                                                    km.set("department",department);
-                                                    km.set("check","checkout");
-                                                    km.set("createdAt",currentDate);
-                                                    km.set("workingHours",workHours);
-                                                    km.set("userName",username);
-                                                    km.set("status",status);
-                                                    km.save(null, {
+                                                    //var kualitatem = Parse.Object.extend("Kualitatem");
+                                                    //var km = new kualitatem();
+                                                    //km.set("userPin",userpin);
+                                                    results[0].set("userAvatarOut",url);
+                                                    results[0].set("checkOutTime",currentTime);
+                                                    //km.set("department",department);
+                                                    //km.set("check","checkout");
+                                                    //km.set("createdAt",currentDate);
+                                                    results[0].set("workingHours",workHours);
+                                                    //km.set("userName",username);
+                                                    //km.set("status",status);
+                                                    results[0].save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
                                                             window.location = "home.html?checkin=" + checkin;
@@ -572,10 +574,10 @@ var userAvatar = null;
                 for(var i=0; i< ca.length; i++) 
                   {
                       var c = ca[i].trim();
-                        if (c.indexOf("username")== 0) {
-                             username = (c.substring(c.indexOf("username").length,c.length)).split("=");
-                             username = unescape(username[1]);
-                         }
+                   if (c.indexOf("username")== 0) {
+                        username = (c.substring(c.indexOf("username").length,c.length)).split("=");
+                        username = unescape(username[1]);
+                    }
                   }
             var currentDate = new Date();
             
@@ -586,7 +588,8 @@ var userAvatar = null;
                 query.find({
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
-                        $('.welcome-text').text('Welcome ' + username + '!');
+                        $('.welcome-text').text('Welcome ');
+                        $('.welcome-text2').text(username + '!');
                         $('.check-text').text("You checked in at");
                     },
                     error: function (error){
@@ -601,7 +604,8 @@ var userAvatar = null;
                 query.find({
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
-                        $('.welcome-text').text('Goodbye ' + username + '!');
+                        $('.welcome-text').text('Goodbye ');
+                        $('.welcome-text2').text(username + '!');
                         $('.check-text').text("You checked out at");
                     },
                     error: function (error){

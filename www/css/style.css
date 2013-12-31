@@ -5,47 +5,85 @@
     Description:
         Purpose of the stylesheet follows.
 */
+
+@font-face
+{
+font-family: chalkBoard;
+src: url(chalkboard-bold.ttf);
+}
 body{
     height: 1024px;
     width: 768px;
     margin: 0 auto;
-    font-family: sans-serif;
-    -webkit-box-shadow:
-    inset #0574b9 0 0 0 5px;
+    font-family: chalkBoard;
+/*    -webkit-box-shadow:
+    inset #0574b9 0 0 0 5px;*/
+/*    background-position: 470px;*/
+    background-repeat: no-repeat;
 }
 
 #main-div{
     text-align: center;
-    margin-top: 150px;
+    margin-top: 120px;
+    font-family: chalkBoard;
+}
+#home-div{
+    text-align: center;
+    margin-top: 60px;
+    font-family: chalkBoard;
 }
 header{
     text-align: center;
-    padding-top: 70px;
+    padding-top: 50px;
 }
 
-.main-btn{
+.main-btn-in{
     display: block;
-    padding: 20px 23px;
-    background-color: #0574b9;
+    padding: 10px 23px;
+    background-color: rgb(146,217,51);
+    font-family: chalkBoard;
     color: #fff;
-    border: none;
-    margin: 10px auto;
-    font-size: 35px;
-    width: 500px;
+    font-size: 45px;
+    width: 285px;
+    border : solid;
+}
+.main-btn-out{
+    display: block;
+    padding: 10px 23px;
+    background-color: rgb(80,80,80);
+    font-family: chalkBoard;
+    color: #fff;
+    font-size: 45px;
+    margin-top: 15px;
+    width: 285px;
+    border : solid;
 }
 
-.code-btn{
-    padding: 20px 23px;
-    background-color: #0574b9;
+.code-btn-ok{
+    padding: 10px 23px;
+    background-color: rgb(146,217,51);
+    font-family: chalkBoard;
     color: #fff;
-    border: none;
+    margin: 10px 5px auto;
+    font-size: 45px;
+    width: 220px;
+    border : solid;
+}
+
+.code-btn-cancel{
+    padding: 10px 23px;
+    background-color: rgb(80,80,80);
+    font-family: chalkBoard;
+    color: #fff;
     margin: 10px auto;
-    font-size: 35px;
-    width: 274px;
+    font-size: 45px;
+    width: 220px;
+    border : solid;
 }
 
 .btn-holder{
-    margin-top: 150px;
+    margin-top: 255px;
+    margin-left: 32%;
 }
 .btn-holder2{
     margin-top: 10px;
@@ -53,19 +91,21 @@ header{
 
 .code-holder{
     padding: 20px 23px;
-    color: #d4d4d4;
+    font-family: chalkBoard;
+    color: #fff;
     margin: 10px auto;
+    background-color: rgb(48,48,48);
     font-size: 35px;
     width: 500px;
-    border-color: #0574b9;
-    border-width: 4px;
+    border : solid;
+    border-radius: 15px;
 }
 .pic_upload{
 /*    height: 100px;*/
-    width: 400px;
+    width: 275px;
     height: 244px;
      -webkit-box-shadow:
-    inset #0574b9 0 0 0 5px;
+    inset #fff 0 0 0 5px;
      margin: 5px auto 25px;
 /*     padding: 100px;*/
      overflow: hidden;
@@ -81,39 +121,55 @@ header{
 }
 
 .welcome-text{
-    font-family: sans-serif;
-    font-size: 50px;
+    font-family: chalkBoard;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: -50px;
+    margin-right: 8px;
+    color: rgb(240,35,30);
+}
+
+.welcome-text2{
+    font-family: chalkBoard;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: -50px;
+    color: rgb(32,114,255);
 }
 
 .welcome-message{
-    font-family: sans-serif;
-    font-size: 40px;
-    margin-top: 60px;
+    font-family: chalkBoard;
+    font-size: 20px;
+    margin-top: 78px;
+    margin-left: -106px;
+    color: rgb(240,35,30);
 }
 
 .send-email{
-    font-family: sans-serif;
-    font-size: 40px;
-    margin-top: 60px;
+    font-family: chalkBoard;
+    font-size: 18px;
+    margin-top: 118px;
+    margin-right: 35px;
+    float:right;
 }
 
 .time{
-    font-family: sans-serif;
+    font-family: chalkBoard;
     font-size: 80px;
-    margin-top: 60px;
+    margin :0;
+    color: rgb(240,35,30);
 }
 
 .check-text{
-    font-family: sans-serif;
-    font-size: 40px;
-    margin-top: 60px;
+    font-family: chalkBoard;
+    font-size: 45px;
+    margin :0;
 }
 
 .ios-btn {
-    border: none;
     -webkit-appearance: none;
     border-radius: 0;
-    -webkit-border-radius: 0px;
+    -webkit-border-radius: 25px;
     -webkit-box-sizing: border-box; /* Android â‰¤ 2.3, iOS â‰¤ 4 */
     -moz-box-sizing: border-box; /* Firefox 1+ */
     box-sizing: border-box;
