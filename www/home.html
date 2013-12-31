@@ -56,10 +56,10 @@
             var currentTime = hours + ':' + minutes + ' ' + ampm;
             console.log("Current Time: " + currentTime);
             $('#time').text(currentTime);
-           
+            backToLogin();
             if(checkin == 'true'){
                 $('.send-email').css({'display':'none'});
-                backToLogin();
+                
             }
             
         </script>
