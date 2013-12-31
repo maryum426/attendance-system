@@ -128,7 +128,7 @@ var userAvatar = null;
                 //alert("HERE!");
                 $('.pic_upload').css({'display':'block'});
                 $('.btn-holder2').css({'display':'block'});
-                $('.pic-text').css({'display':'none'});
+                $('.pic-text').css({'display':'none','margin':'0'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
@@ -402,6 +402,7 @@ var userAvatar = null;
                                         //vf.set("userPin",userpin);
                                         results[0].set("userAvatarOut",url);
                                         results[0].set("checkOutTime",currentTime);
+                                        results[0].set("check","checkout");
                                         //vf.set("department",department);
                                         //vf.set("check","checkout");
                                         //vf.set("createdAt",currentDate);
@@ -464,6 +465,7 @@ var userAvatar = null;
                                                     //km.set("userPin",userpin);
                                                     results[0].set("userAvatarOut",url);
                                                     results[0].set("checkOutTime",currentTime);
+                                                    results[0].set("check","checkout");
                                                     //km.set("department",department);
                                                     //km.set("check","checkout");
                                                     //km.set("createdAt",currentDate);
