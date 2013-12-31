@@ -8,12 +8,16 @@ var userAvatar = null;
         function checkIn(){
             checkin = true;
             console.log('CheckIn');
+            $('.pic_upload').hide();
+            $('.btn-holder2').hide();
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
         function checkOut(){
             checkin = false;
             console.log('CheckOut');
+            $('.pic_upload').hide();
+            $('.btn-holder2').hide();
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
@@ -66,8 +70,8 @@ var userAvatar = null;
         }*/
         function capturePicture(){
                 //alert("HERE!");
-                $('.pic_upload').css({'display':'block'});
-                $('.btn-holder2').css({'display':'block'});
+                $('.pic_upload').show();
+                $('.btn-holder2').show();
                 $('.pic-text').css({'display':'none'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
@@ -440,7 +444,7 @@ var userAvatar = null;
         function takePicture(){
             setTimeout(function(){
                 capturePicture();
-            },7000);
+            },4000);
             
         }
         
