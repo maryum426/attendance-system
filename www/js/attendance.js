@@ -454,6 +454,8 @@ var userAvatar = null;
             table += '<tr style="border:1px solid #000">';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'User Code'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Name'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Check-In Time'  + '</th>';
+            table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Check-Out Time'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Working Hours'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Status'  + '</th>';
             table += '<tr>';
