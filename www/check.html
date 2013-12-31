@@ -25,6 +25,27 @@
         <script>
             $('body').css({'background-image':'url(images/background-2.png)'});
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+            var check;
+                var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                    for (i=0;i<params.length;i++) {
+                        val = params[i].split("=");
+                        if (val[0] == "check") {
+                            check = unescape(val[1]);
+                            if (check == 'checkin')
+                                {
+                                    $('#in').attr('disabled','disabled');
+                                }
+                            else if (check == 'checkout')
+                                {
+                                    $('#out').attr('disabled','disabled');
+                                }
+                            else if (check == 'no')
+                                {
+                                    $('#out').attr('disabled','disabled');
+                                }    
+                        }
+                        
+                    }
         </script>
         
     </body>

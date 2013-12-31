@@ -55,18 +55,15 @@ var userAvatar = null;
 
                                             if (results[0].get("check") == 'checkin')
                                                 {
-                                                    $('#in').attr('disabled','disabled');
-                                                    window.location = "check.html";
+                                                    window.location = "check.html?check=checkin";
                                                 }
                                             else if (results[0].get("check") == 'checkout')
                                                 {
-                                                    $('#out').attr('disabled','disabled');
-                                                    window.location = "check.html";
+                                                    window.location = "check.html?check=checkout";
                                                 }
                                             else if (results.length == 0)
                                                 {
-                                                    $('#out').attr('disabled','disabled');
-                                                    window.location = "check.html";
+                                                    window.location = "check.html?check=no";
                                                 }    
                                         },
                                         error:function (error) {
