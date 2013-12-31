@@ -79,6 +79,7 @@ header{
     color: #fff;
     margin-top: 330px;
     float: left;
+    margin-left: 
     font-size: 45px;
     width: 78px;
     height: 76px;
@@ -135,6 +136,15 @@ header{
 }
 
 .welcome-text{
+    font-family: chalkBoard;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: -50px;
+    margin-right: 8px;
+    color: rgb(240,35,30);
+}
+
+.pic-text{
     font-family: chalkBoard;
     font-size: 46px;
     display: inline-block;

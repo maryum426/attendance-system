@@ -68,6 +68,7 @@ var userAvatar = null;
                 //alert("HERE!");
                 $('.pic_upload').css({'display':'block'});
                 $('.btn-holder2').css({'display':'block'});
+                $('.pic-text').css({'display':'none'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
@@ -439,7 +440,7 @@ var userAvatar = null;
         function takePicture(){
             setTimeout(function(){
                 capturePicture();
-            },3000);
+            },7000);
             
         }
         
