@@ -16,17 +16,19 @@
             
             <div class="pic_upload">
 <!--                <input type="file" accept="image/*" id="capture" capture="camera" class="ios-btn" size="0" >-->
-                <img id="my_image" src="images/profile-image3.png" onclick="capturePicture()">
+<!--                <img id="my_image" src="images/profile-image3.png" onclick="capturePicture()">-->
+                <img id="my_image" src="images/profile-image3.png">
             </div>
             
             <div class="btn-holder2">
-                <input class="code-btn-cancel ios-btn" type="button" value="Back" onclick="uploadBack()">
+<!--                <input class="code-btn-cancel ios-btn" type="button" value="Back" onclick="uploadBack()">-->
                 <input id ="submit" class="code-btn-ok ios-btn" type="button" value="Submit" onclick="uploadOk()">
             </div>
         </div>
             <script src="js/attendance.js"></script>
             <script type="text/javascript" src="js/parse-min.js"></script>
             <script>
+                capturePicture();
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var checkin;
                 var loc = window.location.search.substring(1),i, val, params = loc.split("&");
