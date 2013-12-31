@@ -259,7 +259,7 @@ var userAvatar = null;
                                 success:function (virtualf) {
                                     console.log(virtualf + " saved successfully");
                                     //alert("Done Upload!");
-                                    window.location = "home.html?checkin=" + checkin;
+                                    window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                     //cb(pSweet);
                                 },
                                 error:function (pSweet, error) {
@@ -283,7 +283,7 @@ var userAvatar = null;
                             km.save(null, {
                                 success:function (kuali) {
                                     console.log(kuali + " saved successfully");
-                                    window.location = "home.html?checkin=" + checkin;
+                                    window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                     //cb(pSweet);
                                 },
                                 error:function (pSweet, error) {
@@ -345,7 +345,7 @@ var userAvatar = null;
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                window.location = "home.html?checkin=" + checkin;
+                                                window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                 //cb(pSweet);
                                             },
                                             error:function (pSweet, error) {
@@ -406,7 +406,7 @@ var userAvatar = null;
                                                     results[0].save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
-                                                            window.location = "home.html?checkin=" + checkin;
+                                                            window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                             //cb(pSweet);
                                                         },
                                                         error:function (pSweet, error) {
@@ -437,8 +437,19 @@ var userAvatar = null;
         
         function sendEmail(){
             var currentDate = new Date();
+            var day = currentDate.getDay();
             var yesterday = new Date();
-            yesterday.setDate(currentDate.getDate()-1);
+            console.log('Today: ' + day);
+            if (day == 1){
+                console.log('Today is Monday!');
+                yesterday.setDate(currentDate.getDate()-3);
+            }
+            else{
+                console.log('Any other day!');
+                yesterday.setDate(currentDate.getDate()-1);
+            }
+            
+            
             var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
             table += '<tr style="border:1px solid #000">';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'User Code'  + '</th>';
@@ -452,19 +463,19 @@ var userAvatar = null;
             var msg = '';
             var reportDate;
                 var query = new Parse.Query("VirtualForce");
-                query.ascending("checkInOutTime");
-                query.startsWith("checkInOutTime", yesterday.toDateString());
-                query.equalTo("check",'checkout');
+                query.ascending("checkInTime");
+                query.startsWith("checkInTime", yesterday.toDateString());
+                //query.equalTo("check",'checkin');
                 query.find({
                        success:function (results) {
                                console.log("results =--> " + results.length);
-
+                               console.log("Results =--> results for checkin VF");
                                //$('#myGrid').empty();
                                //$("#myGrid").append(results);
                                if(results.length == 0) {
                                        //var txt = "<div>No Result Found</div>";					
                                        //$("#myGrid").append(txt);
-                                       alert("No Results!");
+                                       console.log("No Results! VF1");
 
                                } else {	
                                        
@@ -472,26 +483,32 @@ var userAvatar = null;
                                                table += '<tr style="border:1px solid #000">';
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
-                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
-                                               table += '<tr>';
+                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5)  + '</td>';
+                                               //table += '<tr style="border:1px solid #000">';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5)  + '</td>';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
+                                                //reportDate = results[i].get("checkInOutTime").substr (0,15);
+                                                //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
+                                                table += '<tr>';
+                                               
                                        }
-                                       //console.log(table += '</table>');
                                        
                                        var query2 = new Parse.Query("Kualitatem");
-                                        query2.ascending("checkInOutTime");
-                                        query2.startsWith("checkInOutTime", yesterday.toDateString());
-                                        query2.equalTo("check",'checkout');
+                                        query2.ascending("checkInTime");
+                                        query2.startsWith("checkInTime", yesterday.toDateString());
+                                        //query2.equalTo("check",'checkin');
                                         query2.find({
                                                success:function (results) {
                                                        console.log("results =--> " + results.length);
-
+                                                       console.log("Results =--> results for checkin KM");
                                                        //$('#myGrid').empty();
                                                        //$("#myGrid").append(results);
                                                        if(results.length == 0) {
                                                                //var txt = "<div>No Result Found</div>";					
                                                                //$("#myGrid").append(txt);
-                                                               alert("No Results!");
+                                                                console.log("No Results! KM1");
 
                                                        } else {	
 
@@ -499,16 +516,21 @@ var userAvatar = null;
                                                                        table += '<tr style="border:1px solid #000">';
                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                                                       reportDate = results[i].get("checkInOutTime").substr (0,15);
-                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
-                                                                       table += '<tr>';
+                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5)  + '</td>';
+                                                                        //table += '<tr style="border:1px solid #000">';
+                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5)  + '</td>';
+                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                                        //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
+                                                                        reportDate = results[i].get("checkInTime").substr (0,15);
+                                                                        //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
+                                                                        table += '<tr>';
                                                                }
-                                                               console.log(table += '</table>');
+                                                                console.log(table += '</table>');
                                                                msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
-                                                               sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','tanzeel@virtual-force.com','Attendance Report', msg, function (success) {
+                                                               sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','tanzeel@virtul-force.com','Attendance Report', msg, function (success) {
                                                                     if (success) {
-                                                                        console.log("Email Bcc successfuly");
+                                                                        console.log("Email successfully sent!");
                                                                         return true;
                                                                     }
                                                                     else {
@@ -516,13 +538,23 @@ var userAvatar = null;
                                                                         return false;
                                                                     }
                                                                 });
-                                                       }		
+                                                               
+
+                                                               //console.log(table += '</table>');
+
+
+                                                       }
+                                                       
 
                                                },
                                                error:function (error) {
                                                        // $(".error").show();
                                                }
                                        });
+                                       
+                                       //console.log(table += '</table>');
+                                       
+                                      
                                }		
                                
                        },
