@@ -430,7 +430,7 @@ var userAvatar = null;
         function backToLogin(){
             setTimeout(function(){
                 window.location = "index.html";
-            },2000);
+            },5000);
             
         }
         
