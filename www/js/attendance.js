@@ -8,16 +8,12 @@ var userAvatar = null;
         function checkIn(){
             checkin = true;
             console.log('CheckIn');
-            $('.pic_upload').hide();
-            $('.btn-holder2').hide();
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
         function checkOut(){
             checkin = false;
             console.log('CheckOut');
-            $('.pic_upload').hide();
-            $('.btn-holder2').hide();
             window.location = "picUpload.html?checkin=" + checkin;
         }
         
@@ -26,6 +22,8 @@ var userAvatar = null;
         }
         
         function codePageOk(){
+            $('.pic_upload').hide();
+            $('.btn-holder2').hide();
             $('#codeOk').attr('disabled','disabled');
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
@@ -43,8 +41,69 @@ var userAvatar = null;
                         document.cookie = "username=" + username + ";" ; 
                         document.cookie = "company=" + company + ";"  ;
                         document.cookie = "department=" + department + ";" ;
+                        
+                        
+                            //check checkin/out status
 
-                        window.location = "check.html";
+                            if (company == 'virtualforce'){
+                                var query = new Parse.Query("VirtualForce");
+                                query.equalTo("userPin", userpin);
+                                query.startsWith("checkInTime", currentDate.toDateString());
+                                query.find({
+                                    success:function (results) {
+                                        console.log("Results Length: " + results.length);
+
+                                            if (results[0].get("check") == 'checkin')
+                                                {
+                                                    $('.main-btn-in').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }
+                                            else if (results[0].get("check") == 'checkout')
+                                                {
+                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }
+                                            else if (results.length == 0)
+                                                {
+                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }    
+                                        },
+                                        error:function (error) {
+
+                                        }
+                                });
+                            }
+                            else if (company == 'kualitatem'){
+                                var query = new Parse.Query("Kualitatem");
+                                query.equalTo("userPin", userpin);
+                                query.startsWith("checkInTime", currentDate.toDateString());
+                                query.find({
+                                    success:function (results) {
+                                        console.log("Results Length: " + results.length);
+
+                                            if (results[0].get("check") == 'checkin')
+                                                {
+                                                    $('.main-btn-in').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }
+                                            else if (results[0].get("check") == 'checkout')
+                                                {
+                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }
+                                            else if (results.length == 0)
+                                                {
+                                                    $('.main-btn-out').attr('disabled','disabled');
+                                                    window.location = "check.html";
+                                                }    
+                                        },
+                                        error:function (error) {
+
+                                        }
+                                });
+                            }
+
                     }
                     else {
                        alert("User doesnot exist!");
@@ -70,9 +129,6 @@ var userAvatar = null;
         }*/
         function capturePicture(){
                 //alert("HERE!");
-                $('.pic_upload').show();
-                $('.btn-holder2').show();
-                $('.pic-text').css({'display':'none'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
@@ -87,6 +143,9 @@ var userAvatar = null;
           }
           var onSuccess = function(data3) {
                     //alert("On success called");
+                    $('.pic_upload').css({'display':'block'});
+                    $('.btn-holder2').css({'display':'block'});
+                    $('.pic-text').css({'display':'none'});
                     userAvatar = data3;
                     var data;
                     data = "data:image/jpeg;base64," + userAvatar;
