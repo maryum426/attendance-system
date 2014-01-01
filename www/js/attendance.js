@@ -52,7 +52,12 @@ var userAvatar = null;
                                 query.find({
                                     success:function (results) {
                                         console.log("Results Length: " + results.length);
-
+                                            
+                                            if (results.length == 0)
+                                                {
+                                                    window.location = "check.html?check=no";
+                                                }   
+                                                
                                             if (results[0].get("check") == 'checkin')
                                                 {
                                                     window.location = "check.html?check=checkin";
@@ -61,10 +66,7 @@ var userAvatar = null;
                                                 {
                                                     window.location = "check.html?check=checkout";
                                                 }
-                                            else if (results.length == 0)
-                                                {
-                                                    window.location = "check.html?check=no";
-                                                }    
+                                            
                                         },
                                         error:function (error) {
 
@@ -79,6 +81,11 @@ var userAvatar = null;
                                     success:function (results) {
                                         console.log("Results Length: " + results.length);
 
+                                            if (results.length == 0)
+                                                {
+                                                    window.location = "check.html?check=no";
+                                                }   
+                                                
                                             if (results[0].get("check") == 'checkin')
                                                 {
                                                     window.location = "check.html?check=checkin";
@@ -87,10 +94,6 @@ var userAvatar = null;
                                                 {
                                                     window.location = "check.html?check=checkout";
                                                 }
-                                            else if (results.length == 0)
-                                                {
-                                                    window.location = "check.html?check=no";
-                                                }    
                                         },
                                         error:function (error) {
 
