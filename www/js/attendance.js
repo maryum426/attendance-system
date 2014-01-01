@@ -43,7 +43,26 @@ var userAvatar = null;
                         document.cookie = "department=" + department + ";" ;
                         
                         
-                            //check checkin/out status
+                            checkCheckIn();
+
+                    }
+                    else {
+                       alert("User doesnot exist!");
+                       $('#codeOk').removeAttr('disabled');
+                       $('.code-holder').val(null);
+                    }
+                },
+                error:function (error) {
+                    console.log("Error -> " + error.code + " " + error.message);
+                }
+
+            });
+            
+        }
+        
+        function checkCheckIn(){
+            
+            //check checkin/out status
 
                             if (company == 'virtualforce'){
                                 var query = new Parse.Query("VirtualForce");
@@ -100,20 +119,6 @@ var userAvatar = null;
                                         }
                                 });
                             }
-
-                    }
-                    else {
-                       alert("User doesnot exist!");
-                       $('#codeOk').removeAttr('disabled');
-                       $('.code-holder').val(null);
-                    }
-                },
-                error:function (error) {
-                    console.log("Error -> " + error.code + " " + error.message);
-                }
-
-            });
-            
         }
         
         /*function codePageBack(){
