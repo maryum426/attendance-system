@@ -25,14 +25,14 @@
         <script>
             var current = new Date();
             var checkStatus = new Date();
-            checkStatus.setHours(5);
+            checkStatus.setHours(17);
             checkStatus.setMinutes(00);
             checkStatus.setSeconds(00);
             
             if (current < checkStatus){
                 $('body').css({'background-image':'url(images/background-2.png)'});
             }
-            else if (current == checkStatus){
+            else if (current == checkStatus || current > checkStatus){
                 $('body').css({'background-image':'url(images/background-2.1.png)'});
             }
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
