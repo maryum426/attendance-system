@@ -31,7 +31,7 @@
             $('.pic_upload').css({'display':'block'});
             var current = new Date();
             var checkStatus = new Date();
-            checkStatus.setHours(17);
+            checkStatus.setHours(5);
             checkStatus.setMinutes(00);
             checkStatus.setSeconds(00);
             
@@ -40,6 +40,7 @@
             }
             else if (current == checkStatus || current > checkStatus){
                 $('body').css({'background-image':'url(images/background-4.1.png)'});
+                $('.welcome-message').css({'margin-left':'40px','float':'left','margin-top':'-33px'});
             }
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
         </script>
