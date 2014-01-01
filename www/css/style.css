@@ -100,7 +100,7 @@ header{
 }
 
 #snap-text{
-    margin-top: 350px;
+    margin-top: 320px;
 }
 
 .code-holder{
@@ -150,7 +150,7 @@ header{
     display: inline-block;
     margin-top: -50px;
     margin-right: 8px;
-    padding-bottom: 50px;
+    padding-bottom: 80px;
     color: rgb(240,35,30);
 }
 
