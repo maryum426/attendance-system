@@ -8,13 +8,36 @@ var userAvatar = null;
         function checkIn(){
             checkin = true;
             console.log('CheckIn');
-            window.location = "picUpload.html?checkin=" + checkin;
+            if (check == 'checkin')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
+                }
+            else if (check == 'checkout')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkout";
+                }
+            else if (check == 'no')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=no";
+                }    
+            
         }
         
         function checkOut(){
             checkin = false;
             console.log('CheckOut');
-            window.location = "picUpload.html?checkin=" + checkin;
+            if (check == 'checkin')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
+                }
+            else if (check == 'checkout')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkout";
+                }
+            else if (check == 'no')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=no";
+                }    
         }
         
         function logout(){
@@ -250,8 +273,20 @@ var userAvatar = null;
         
         
         
-        function uploadBack(){
-            window.location = "check.html";
+        function uploadBack(check){
+            if (check == 'checkin')
+                {
+                    window.location = "check.html?check=checkin";
+                }
+            else if (check == 'checkout')
+                {
+                    window.location = "check.html?check=checkout";
+                }
+            else if (check == 'no')
+                {
+                    window.location = "check.html?check=no";
+                }    
+            
         }
         
          var uploadParsePic = function(url){
