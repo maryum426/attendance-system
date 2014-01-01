@@ -128,7 +128,8 @@ var userAvatar = null;
                 //alert("HERE!");
                 $('.pic_upload').css({'display':'block'});
                 $('.btn-holder2').css({'display':'block'});
-                $('.snap-text').css({'display':'none','margin':'0'});
+                $('.snap-text').css({'display':'none','margin-top':'0'});
+                $('.pic-text').css({'display':'none','margin-top':'0'});
                 $('#submit').removeAttr('disabled');
                 var options =   {
                     quality: 50,
