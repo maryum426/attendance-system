@@ -41,7 +41,18 @@
                             checkin = unescape(val[1]);
                         }
                     }
-                $('body').css({'background-image':'url(images/background-3.png)'});
+                var current = new Date();
+                var checkStatus = new Date();
+                checkStatus.setHours(17);
+                checkStatus.setMinutes(00);
+                checkStatus.setSeconds(00);
+
+                if (current < checkStatus){
+                    $('body').css({'background-image':'url(images/background-3.png)'});
+                }
+                else if (current == checkStatus){
+                    $('body').css({'background-image':'url(images/background-3.1.png)'});
+                }
                 setMessages(checkin);
                 
                 takePicture();
