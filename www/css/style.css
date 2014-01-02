@@ -208,3 +208,7 @@ header{
     -moz-box-sizing: border-box; /* Firefox 1+ */
     box-sizing: border-box;
 }
+#login{
+    display: none;
+}
+

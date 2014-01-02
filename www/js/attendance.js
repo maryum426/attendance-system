@@ -108,6 +108,10 @@ var userAvatar = null;
                                                 {
                                                     window.location = "check.html?check=checkout";
                                                 }
+                                            else if (results[0].get("check") == '' || results[0].get("check") == null)
+                                            {
+                                                window.location = "check.html?check=no";
+                                            }
                                             
                                         },
                                         error:function (error) {
@@ -135,6 +139,10 @@ var userAvatar = null;
                                             else if (results[0].get("check") == 'checkout')
                                                 {
                                                     window.location = "check.html?check=checkout";
+                                                }
+                                            else if (results[0].get("check") == '' || results[0].get("check")== null)
+                                                {
+                                                    window.location = "check.html?check=no";
                                                 }
                                         },
                                         error:function (error) {
@@ -296,6 +304,19 @@ var userAvatar = null;
              checkStatus.setHours(9);
              checkStatus.setMinutes(30);
              checkStatus.setSeconds(59);
+             var checkSDate = new Date();
+             var checkEDate = new Date();
+             //var compareDate;
+             checkSDate.setHours(00);
+             checkSDate.setMinutes(00);
+             checkSDate.setSeconds(00);
+             checkEDate.setHours(23);
+             checkEDate.setMinutes(59);
+             checkEDate.setSeconds(59);
+             var checkStatus = new Date();
+             checkStatus.setHours(9);
+             checkStatus.setMinutes(30);
+             checkStatus.setSeconds(59);
              var status;
              console.log("Check Status: " + checkStatus.toString());
              console.log("Current Date: " + currentDate.toString());
@@ -350,22 +371,35 @@ var userAvatar = null;
                 if (checkin == 'true'){
                         if (company == 'virtualforce'){
                             //alert("In Virtual Force");
-                            var virtualF = Parse.Object.extend("VirtualForce");
-                            var vf = new virtualF();
-                            vf.set("userPin",userpin);
-                            vf.set("userAvatarIn",url);
-                            vf.set("checkInTime",currentTime);
-                            vf.set("department",department);
-                            vf.set("check","checkin");
-                            vf.set("createdAt",currentDate);
-                            vf.set("userName",username);
-                            vf.set("status",status);
-                            vf.save(null, {
-                                success:function (virtualf) {
-                                    console.log(virtualf + " saved successfully");
-                                    //alert("Done Upload!");
-                                    $('.pic_upload').css({'display':'block'});
-                                    window.location = "home.html?checkin=" + checkin + "&pic=" + url;
+                            var query = new Parse.Query("VirtualForce");
+                            //query.ascending("checkInOutTime");
+                            query.equalTo("userPin", userpin);
+                            //query.equalTo("check", 'checkin');
+                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                            query.lessThanOrEqualTo("createdAt", checkEDate);
+                            query.find({
+                                success:function (results) {
+                                    console.log("Results Length: " +results.length);
+                                    //results[0].set("userPin",userpin);
+                                    results[0].set("userAvatarIn",url);
+                                    results[0].set("checkInTime",currentTime);
+                                    results[0].set("department",department);
+                                    results[0].set("check","checkin");
+                                    results[0].set("createdAt",currentDate);
+                                    //results[0].set("userName",username);
+                                    results[0].set("status",status);
+                                    results[0].save(null, {
+                                        success:function (kuali) {
+                                            console.log(kuali + " saved successfully");
+                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                            //cb(pSweet);
+                                        },
+                                        error:function (pSweet, error) {
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                    
                                     //cb(pSweet);
                                 },
                                 error:function (pSweet, error) {
@@ -376,21 +410,35 @@ var userAvatar = null;
                         }
                         else if (company == 'kualitatem'){
                             
-                            var kualitatem = Parse.Object.extend("Kualitatem");
-                            var km = new kualitatem();
-                            km.set("userPin",userpin);
-                            km.set("userAvatarIn",url);
-                            km.set("checkInTime",currentTime);
-                            km.set("department",department);
-                            km.set("check","checkin");
-                            km.set("createdAt",currentDate);
-                            km.set("userName",username);
-                            km.set("status",status);
-                            km.save(null, {
-                                success:function (kuali) {
-                                    console.log(kuali + " saved successfully");
-                                    $('.pic_upload').css({'display':'block'});
-                                    window.location = "home.html?checkin=" + checkin + "&pic=" + url;
+                            var query = new Parse.Query("Kualitatem");
+                            //query.ascending("checkInOutTime");
+                            query.equalTo("userPin", userpin);
+                            //query.equalTo("check", 'checkin');
+                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                            query.lessThanOrEqualTo("createdAt", checkEDate);
+                            query.find({
+                                success:function (results) {
+                                    //console.log(virtualf + " saved successfully");
+                                    //results[0].set("userPin",userpin);
+                                    results[0].set("userAvatarIn",url);
+                                    results[0].set("checkInTime",currentTime);
+                                    results[0].set("department",department);
+                                    results[0].set("check","checkin");
+                                    results[0].set("createdAt",currentDate);
+                                    //results[0].set("userName",username);
+                                    results[0].set("status",status);
+                                    results[0].save(null, {
+                                        success:function (kuali) {
+                                            console.log(kuali + " saved successfully");
+                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                            //cb(pSweet);
+                                        },
+                                        error:function (pSweet, error) {
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                    
                                     //cb(pSweet);
                                 },
                                 error:function (pSweet, error) {
@@ -443,9 +491,8 @@ var userAvatar = null;
                                         //vf.set("userPin",userpin);
                                         results[0].set("userAvatarOut",url);
                                         results[0].set("checkOutTime",currentTime);
-                                        results[0].set("check","checkout");
                                         //vf.set("department",department);
-                                        //vf.set("check","checkout");
+                                        results[0].set("check","checkout");
                                         //vf.set("createdAt",currentDate);
                                         results[0].set("workingHours",workHours);
                                         //vf.set("userName",username);    
@@ -453,8 +500,7 @@ var userAvatar = null;
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                $('.pic_upload').css({'display':'block'});
-                                                window.location = "home.html?checkin=" + checkin + "&pic=" + url;
+                                                window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
                                                 //cb(pSweet);
                                             },
                                             error:function (pSweet, error) {
@@ -506,9 +552,8 @@ var userAvatar = null;
                                                     //km.set("userPin",userpin);
                                                     results[0].set("userAvatarOut",url);
                                                     results[0].set("checkOutTime",currentTime);
-                                                    results[0].set("check","checkout");
                                                     //km.set("department",department);
-                                                    //km.set("check","checkout");
+                                                    results[0].set("check","checkout");
                                                     //km.set("createdAt",currentDate);
                                                     results[0].set("workingHours",workHours);
                                                     //km.set("userName",username);
@@ -516,8 +561,7 @@ var userAvatar = null;
                                                     results[0].save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
-                                                            $('.pic_upload').css({'display':'block'});
-                                                            window.location = "home.html?checkin=" + checkin + "&pic=" + url;
+                                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
                                                             //cb(pSweet);
                                                         },
                                                         error:function (pSweet, error) {
@@ -531,7 +575,6 @@ var userAvatar = null;
                                         }
                                 });
                             }
-                    
                     }
 
         
@@ -557,6 +600,8 @@ var userAvatar = null;
             var currentDate = new Date();
             var day = currentDate.getDay();
             var yesterday = new Date();
+            var checkin_time, checkout_time;
+            var time = {};
             console.log('Today: ' + day);
             if (day == 1){
                 console.log('Today is Monday!');
@@ -568,7 +613,6 @@ var userAvatar = null;
             }
             
             
-            var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
             table += '<tr style="border:1px solid #000">';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'User Code'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Name'  + '</th>';
@@ -596,6 +640,7 @@ var userAvatar = null;
                                        //var txt = "<div>No Result Found</div>";					
                                        //$("#myGrid").append(txt);
                                        console.log("No Results! VF1");
+                                       getKualitatem();
 
                                } else {	
                                        
@@ -603,77 +648,33 @@ var userAvatar = null;
                                                table += '<tr style="border:1px solid #000">';
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                               table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5)  + '</td>';
-                                               //table += '<tr style="border:1px solid #000">';
-                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5)  + '</td>';
+                                               checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
+                                                time = checkin_time.split(':');
+                                                //console.log("Time[1]: " + time[1]);
+                                                if (time[1].length < 2){
+                                                    checkin_time = time[0] + ':0' + time[1];
+                                                    console.log("CheckinTime: " + checkin_time);
+                                                }
+                                                checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
+                                                if (checkout_time == null || checkout_time == ''){
+                                                  checkout_time = 'Still Here!';
+                                                 }
+                                                 else{
+                                                     time = checkout_time.split(':');
+                                                     if (time[1].length < 2){
+                                                         checkout_time = time[0] + ':0' + time[1];
+                                                         console.log("CheckoutTime: " + checkout_time);
+                                                     }
+                                                 }
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + checkin_time  + '</td>';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + checkout_time  + '</td>';
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
-                                                //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                                //reportDate = results[i].get("checkInOutTime").substr (0,15);
-                                                //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
                                                 table += '<tr>';
                                                
                                        }
                                        
-                                       var query2 = new Parse.Query("Kualitatem");
-                                        query2.ascending("checkInTime");
-                                        query2.startsWith("checkInTime", yesterday.toDateString());
-                                        //query2.equalTo("check",'checkin');
-                                        query2.find({
-                                               success:function (results) {
-                                                       console.log("results =--> " + results.length);
-                                                       console.log("Results =--> results for checkin KM");
-                                                       //$('#myGrid').empty();
-                                                       //$("#myGrid").append(results);
-                                                       if(results.length == 0) {
-                                                               //var txt = "<div>No Result Found</div>";					
-                                                               //$("#myGrid").append(txt);
-                                                                console.log("No Results! KM1");
-
-                                                       } else {	
-
-                                                               for(var i=0; i < results.length; i++){
-                                                                       table += '<tr style="border:1px solid #000">';
-                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                                                       table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5)  + '</td>';
-                                                                        //table += '<tr style="border:1px solid #000">';
-                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5)  + '</td>';
-                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
-                                                                        //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
-                                                                        reportDate = results[i].get("checkInTime").substr (0,15);
-                                                                        //table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
-                                                                        table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
-                                                                        table += '<tr>';
-                                                               }
-                                                                console.log(table += '</table>');
-                                                               msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
-                                                               sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','tanzeel@virtul-force.com','Attendance Report', msg, function (success) {
-                                                                    if (success) {
-                                                                        console.log("Email successfully sent!");
-                                                                        return true;
-                                                                    }
-                                                                    else {
-                                                                        console.log("EmailBcc having some problem");
-                                                                        return false;
-                                                                    }
-                                                                });
-                                                               
-
-                                                               //console.log(table += '</table>');
-
-
-                                                       }
-                                                       
-
-                                               },
-                                               error:function (error) {
-                                                       // $(".error").show();
-                                               }
-                                       });
-                                       
-                                       //console.log(table += '</table>');
-                                       
+                                       getKualitatem();
                                       
                                }		
                                
@@ -682,6 +683,83 @@ var userAvatar = null;
                                // $(".error").show();
                        }
                });
+               
+               function getKualitatem(){
+                   
+                   var query2 = new Parse.Query("Kualitatem");
+                    query2.ascending("checkInTime");
+                    query2.startsWith("checkInTime", yesterday.toDateString());
+                    //query2.equalTo("check",'checkin');
+                    query2.find({
+                           success:function (results) {
+                                   console.log("results =--> " + results.length);
+                                   console.log("Results =--> results for checkin KM");
+                                   //$('#myGrid').empty();
+                                   //$("#myGrid").append(results);
+                                   if(results.length == 0) {
+                                           //var txt = "<div>No Result Found</div>";					
+                                           //$("#myGrid").append(txt);
+                                            console.log("No Results! KM1");
+
+                                   } else {	
+
+                                           for(var i=0; i < results.length; i++){
+                                                table += '<tr style="border:1px solid #000">';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userPin")  + '</td>';
+                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
+                                                checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
+                                                time = checkin_time.split(':');
+                                                //console.log("Time[1]: " + time[1]);
+                                                if (time[1].length < 2){
+                                                    checkin_time = time[0] + ':0' + time[1];
+                                                    console.log("CheckinTime: " + checkin_time);
+                                                }
+                                                checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
+                                                if (checkout_time == null || checkout_time == ''){
+                                                  checkout_time = 'Still Here!';
+                                                 }
+                                                 else{
+                                                     time = checkout_time.split(':');
+                                                     if (time[1].length < 2){
+                                                         checkout_time = time[0] + ':0' + time[1];
+                                                         console.log("CheckoutTime: " + checkout_time);
+                                                     }
+                                                 }
+                                                 table += '<td style="border:1px solid #000;padding:5px;">' + checkin_time  + '</td>';
+                                                 table += '<td style="border:1px solid #000;padding:5px;">' + checkout_time  + '</td>';
+                                                 reportDate = results[i].get("checkInTime").substr(results[i].get("checkInTime"),15);
+                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
+                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("status")  + '</td>';
+                                                 table += '<tr>';
+
+                                        }
+                                            console.log(table += '</table>');
+                                           msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
+                                           sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','Attendance Report', msg, function (success) {
+                                                if (success) {
+                                                    console.log("Email successfully sent!");
+                                                    return true;
+                                                }
+                                                else {
+                                                    console.log("EmailBcc having some problem");
+                                                    return false;
+                                                }
+                                            });
+
+
+                                           //console.log(table += '</table>');
+
+
+                                   }
+
+
+                           },
+                           error:function (error) {
+                                   // $(".error").show();
+                           }
+                   });
+                   
+               }
                
                
         }
@@ -706,7 +784,7 @@ var userAvatar = null;
                     },
                     {
                         success:function (msg) {
-                            backToLogin2();
+                            uploadAll();
                             return true;
                         },
                         error:function () {
@@ -770,5 +848,91 @@ var userAvatar = null;
         function backToLogin2(){
             alert("Email Sent!");
                 window.location = "index.html";
+        }
+        
+        function uploadAll(){
+            console.log("In UploadAll!");
+             var currentDate = new Date();
+             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+             var  expiryTime = new Date();
+             expiryTime.setHours(23);
+             expiryTime.setMinutes(59);
+             expiryTime.setSeconds(59);
+//             var status;
+//             console.log("Check Status: " + checkStatus.toString());
+//             console.log("Current Date: " + currentDate.toString());
+//             if ((currentDate < checkStatus || currentDate == checkStatus)){
+//                 status = 'ontime';
+//             }
+//             else{
+//                 status = 'late';
+//             }
+                var query = new Parse.Query("Users");
+                query.find({
+                    success:function (r_auth) {
+                        if (r_auth.length > 0) {
+                            for(var i=0;i < r_auth.length;i++){
+                                username = r_auth[i].get("userName");
+                                company = r_auth[i].get("company");
+                                userpin = r_auth[i].get("userPin");
+                                department = r_auth[i].get("department");
+                                
+                                
+                                console.log("Company: " + company);
+               
+                                if (company == 'virtualforce'){
+                                    console.log("In Virtual Force: " + i);
+                                    var virtualF = Parse.Object.extend("VirtualForce");
+                                    var vf = new virtualF();
+                                    vf.set("userPin",userpin);
+                                    vf.set("userName",username);
+                                    vf.set("department",department);
+                                    vf.set("checkInTime",currentTime);
+                                    vf.set("status",'absent');
+                                    vf.save(null, {
+                                        success:function (virtualf) {
+                                            console.log(virtualf + " saved successfully");
+                                            document.cookie = "launch=true;" + " expires=" + expiryTime;
+                                            //$('#launch').css({'display':'none'});
+                                            //$('#login').css({'display':'block'});
+                                        },
+                                        error:function (pSweet, error) {
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                }
+                                else if (company == 'kualitatem'){
+                                    
+                                    console.log("In Kualitatem: " + i);
+                                    var kualitatem = Parse.Object.extend("Kualitatem");
+                                    var km = new kualitatem();
+                                    km.set("userPin",userpin);
+                                    km.set("userName",username);
+                                    km.set("department",department);
+                                    km.set("checkInTime",currentTime);
+                                    km.set("status",'absent');
+                                    km.save(null, {
+                                        success:function (kuali) {
+                                            console.log(kuali + " saved successfully");
+                                            document.cookie = "launch=true;" + " expires=" + expiryTime;
+                                            //$('#launch').css({'display':'none'});
+                                            //$('#login').css({'display':'block'});
+                                        },
+                                        error:function (pSweet, error) {
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                }
+                                
+                            }
+                            $('#launch').css({'display':'none'});
+                            $('#login').css({'display':'block'});
+                        }
+                    },error: function(){
+                        
+                    }
+                });
         }
       

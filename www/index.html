@@ -16,14 +16,18 @@
 <!--            <img src="images/kualitatem-logo.png"/>-->
         </header>
         <div id="main-div">
-<!--            <form method="get" action="picUpload.html">-->
-                <input type="number" placeholder="Enter your code" class="code-holder">
+                <div id ="login">
+                    <input type="number" placeholder="Enter your code" class="code-holder">
 
-                <div class="btn-holder-main">
-<!--                    <input class="code-btn" type="button" value="Back" onclick="codePageBack()">-->
-                    <input id="codeOk" class="code-btn-ok ios-btn" type="submit" value="Ok" onclick="codePageOk()">
-                </div>
-<!--            </form>-->
+                    <div class="btn-holder2">
+                        <input id="codeOk" class="code-btn-ok ios-btn" type="submit" value="Ok" onclick="codePageOk()">
+                    </div>
+            </div>
+             <div id ="launch">
+                    <div class="btn-holder2">
+                        <input id="codeOk" class="code-btn-ok ios-btn" type="submit" value="Launch" onclick="launch()">
+                    </div>
+            </div>
         </div>
         
         <script>
@@ -32,6 +36,21 @@
             var currentDate = new Date();
             var yesterday = new Date();
             yesterday.setDate(currentDate.getDate()-1);
+            var ca = document.cookie.split(';');
+            var laun;
+                for(var i=0; i< ca.length; i++) 
+                  {
+                      var c = ca[i].trim();
+                   if (c.indexOf("launch")== 0) {
+                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
+                        laun = unescape(laun[1]);
+                        
+                        if (laun == 'true'){
+                            $('#launch').css({'display':'none'});
+                            $('#login').css({'display':'block'});
+                        }
+                    }
+                  }
             console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
         </script>
         
