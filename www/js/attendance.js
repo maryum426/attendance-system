@@ -44,6 +44,11 @@ var userAvatar = null;
             window.location = "index.html";
         }
         
+        function launch(){
+            sendEmail();
+           
+        }
+        
         function codePageOk(){
             $('.pic_upload').hide();
             $('.btn-holder2').hide();

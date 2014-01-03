@@ -12,8 +12,8 @@ font-family: chalkBoard;
 src: url(chalkboard-bold.ttf);
 }
 body{
-    height: 1024px;
-    width: 768px;
+    height: auto;
+    width: auto;
     margin: 0 auto;
     font-family: chalkBoard;
 /*    -webkit-box-shadow:
