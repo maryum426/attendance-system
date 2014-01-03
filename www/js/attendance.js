@@ -900,6 +900,18 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         success:function (virtualf) {
                                             console.log(virtualf + " saved successfully");
                                             document.cookie = "launch=true;" + " expires=" + expiryTime;
+                                            alert("Expiry Time: " + expiryTime.toString());
+                                            var ca = document.cookie.split(';');
+                                            var l;
+                                            for(var i=0; i< ca.length; i++) 
+                                              {
+                                                  var c = ca[i].trim();
+                                               if (c.indexOf("launch")== 0) {
+                                                    l = (c.substring(c.indexOf("launch").length,c.length)).split("=");
+                                                    l = unescape(launch[1]);
+                                                }
+                                              }
+                                            alert("Launch Cookie: " + l);
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
@@ -923,6 +935,18 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
                                             document.cookie = "launch=true;" + " expires=" + expiryTime;
+                                            alert("Expiry Time: " + expiryTime.toString());
+                                            var ca = document.cookie.split(';');
+                                            var l;
+                                            for(var i=0; i< ca.length; i++) 
+                                              {
+                                                  var c = ca[i].trim();
+                                               if (c.indexOf("launch")== 0) {
+                                                    l = (c.substring(c.indexOf("launch").length,c.length)).split("=");
+                                                    l = unescape(launch[1]);
+                                                }
+                                              }
+                                            alert("Launch Cookie: " + l);
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
