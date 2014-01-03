@@ -31,28 +31,51 @@
         </div>
         
         <script>
-            $('body').css({'background-image':'url(images/background-1.png)'});
-            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
-            var currentDate = new Date();
-            var yesterday = new Date();
-            yesterday.setDate(currentDate.getDate()-1);
-            //var ca = document.cookie.split(';');
-            var laun = window.localStorage.getItem("launch");;
-//                for(var i=0; i< ca.length; i++) 
-//                  {
-//                      var c = ca[i].trim();
-//                   if (c.indexOf("launch")== 0) {
-//                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
-//                        laun = unescape(laun[1]);
-                        
-                        if (laun == 'true'){
-                            $('#launch').css({'display':'none'});
-                            $('#login').css({'display':'block'});
-                        }
-                    //}
-                  //}
-                  //alert("Cookie Support: " + navigator.cookieEnabled);
-            console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
+            
+            window.onload = firstFunc();
+            
+            function firstFunc(){
+                var cDate = new Date();
+                console.log('Hello');
+                
+               if (window.localStorage.getItem("tdate") != cDate.toDateString() && window.localStorage.getItem("launch") == 'true'){
+                   console.log (window.localStorage.getItem("tdate"));
+                   console.log (cDate.toDateString());
+                   console.log (window.localStorage.getItem("launch"));
+                    //$('#launch').css({'display':'none'});
+                   //$('#login').css({'display':'block'});
+                   window.localStorage.removeItem("launch");
+               }
+//               else{
+//                   window.localStorage.removeItem("launch");
+//               }
+
+                $('body').css({'background-image':'url(images/background-1.png)'});
+                Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+                var currentDate = new Date();
+                var yesterday = new Date();
+                yesterday.setDate(currentDate.getDate()-1);
+                //var ca = document.cookie.split(';');
+                var laun = window.localStorage.getItem("launch");
+    //                for(var i=0; i< ca.length; i++) 
+    //                  {
+    //                      var c = ca[i].trim();
+    //                   if (c.indexOf("launch")== 0) {
+    //                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
+    //                        laun = unescape(laun[1]);
+
+                            if (laun == 'true'){
+                                $('#launch').css({'display':'none'});
+                                $('#login').css({'display':'block'});
+                            }
+                        //}
+                      //}
+                      //alert("Cookie Support: " + navigator.cookieEnabled);
+                console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
+
+                }
+            
+            
         </script>
         
     </body>

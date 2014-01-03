@@ -47,6 +47,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function launch(){
             $('#launch').attr('disabled','disabled');
+            
             sendEmail();
            
         }
@@ -871,6 +872,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
              var currentDate = new Date();
              var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
              var  expiryTime = new Date();
+             var todaysDate  = currentDate.toDateString();
              expiryTime.setHours(23);
              expiryTime.setMinutes(59);
              expiryTime.setSeconds(59);
@@ -910,6 +912,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log(virtualf + " saved successfully");
                                             //document.cookie = "launch=true;" + " expires=" + expiryTime;
                                             window.localStorage.setItem("launch","true");
+                                            window.localStorage.setItem("tdate",todaysDate);
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
@@ -933,6 +936,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
                                             window.localStorage.setItem("launch","true");
+                                            window.localStorage.setItem("tdate",todaysDate);
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
