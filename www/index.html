@@ -36,22 +36,22 @@
             var currentDate = new Date();
             var yesterday = new Date();
             yesterday.setDate(currentDate.getDate()-1);
-            var ca = document.cookie.split(';');
-            var laun;
-                for(var i=0; i< ca.length; i++) 
-                  {
-                      var c = ca[i].trim();
-                   if (c.indexOf("launch")== 0) {
-                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
-                        laun = unescape(laun[1]);
+            //var ca = document.cookie.split(';');
+            var laun = window.localStorage.getItem("launch");;
+//                for(var i=0; i< ca.length; i++) 
+//                  {
+//                      var c = ca[i].trim();
+//                   if (c.indexOf("launch")== 0) {
+//                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
+//                        laun = unescape(laun[1]);
                         
                         if (laun == 'true'){
                             $('#launch').css({'display':'none'});
                             $('#login').css({'display':'block'});
                         }
-                    }
-                  }
-                  alert("Cookie Support: " + navigator.cookieEnabled);
+                    //}
+                  //}
+                  //alert("Cookie Support: " + navigator.cookieEnabled);
             console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
         </script>
         

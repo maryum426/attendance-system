@@ -67,10 +67,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         company = r_auth[0].get("company");
                         department = r_auth[0].get("department");
                         
-                        document.cookie = "pin=" + userpin + ";" ; 
-                        document.cookie = "username=" + username + ";" ; 
-                        document.cookie = "company=" + company + ";"  ;
-                        document.cookie = "department=" + department + ";" ;
+                        //document.cookie = "pin=" + userpin + ";" ; 
+                        window.localStorage.setItem("pin",userpin);
+                        //document.cookie = "username=" + username + ";" ; 
+                        window.localStorage.setItem("username",username);
+                        //document.cookie = "company=" + company + ";"  ;
+                        window.localStorage.setItem("company",company);
+                        //document.cookie = "department=" + department + ";" ;
+                        window.localStorage.setItem("department",department);
                         
                         
                             checkCheckIn();
@@ -346,7 +350,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 }
             
             //Get values from cookie
-            var ca = document.cookie.split(';');
+            /*var ca = document.cookie.split(';');
                 for(var i=0; i< ca.length; i++) 
                   {
                     var c = ca[i].trim();
@@ -367,7 +371,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         department = unescape(department[1]);
                     }
                     
-                  }
+                  }*/
+             userpin = window.localStorage.getItem("pin");
+             username = window.localStorage.getItem("username");
+             company = window.localStorage.getItem("company");
+             department = window.localStorage.getItem("department");
                     //alert("User Pin: " + userpin);
                     //alert("User Name: " + username);
                     //alert("User Company: " + company);
@@ -807,7 +815,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         function setMessages(check){
             
             
-            var ca = document.cookie.split(';');
+            /*var ca = document.cookie.split(';');
                 for(var i=0; i< ca.length; i++) 
                   {
                       var c = ca[i].trim();
@@ -815,7 +823,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         username = (c.substring(c.indexOf("username").length,c.length)).split("=");
                         username = unescape(username[1]);
                     }
-                  }
+                  }*/
+            username = window.localStorage.getItem("username");
             var currentDate = new Date();
             
             if (check == 'true'){
@@ -899,19 +908,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     vf.save(null, {
                                         success:function (virtualf) {
                                             console.log(virtualf + " saved successfully");
-                                            document.cookie = "launch=true;" + " expires=" + expiryTime;
-                                            alert("Expiry Time: " + expiryTime.toString());
-                                            var ca = document.cookie.split(';');
-                                            var l;
-                                            for(var i=0; i< ca.length; i++) 
-                                              {
-                                                  var c = ca[i].trim();
-                                               if (c.indexOf("launch")== 0) {
-                                                    l = (c.substring(c.indexOf("launch").length,c.length)).split("=");
-                                                    l = unescape(launch[1]);
-                                                }
-                                              }
-                                            alert("Launch Cookie: " + l);
+                                            //document.cookie = "launch=true;" + " expires=" + expiryTime;
+                                            window.localStorage.setItem("launch","true");
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
@@ -934,19 +932,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     km.save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
-                                            document.cookie = "launch=true;" + " expires=" + expiryTime;
-                                            alert("Expiry Time: " + expiryTime.toString());
-                                            var ca = document.cookie.split(';');
-                                            var l;
-                                            for(var i=0; i< ca.length; i++) 
-                                              {
-                                                  var c = ca[i].trim();
-                                               if (c.indexOf("launch")== 0) {
-                                                    l = (c.substring(c.indexOf("launch").length,c.length)).split("=");
-                                                    l = unescape(launch[1]);
-                                                }
-                                              }
-                                            alert("Launch Cookie: " + l);
+                                            window.localStorage.setItem("launch","true");
                                             //$('#launch').css({'display':'none'});
                                             //$('#login').css({'display':'block'});
                                         },
