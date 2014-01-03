@@ -46,6 +46,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function launch(){
+            $('#launch').attr('disabled','disabled');
             sendEmail();
            
         }
@@ -706,7 +707,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                            //var txt = "<div>No Result Found</div>";					
                                            //$("#myGrid").append(txt);
                                             console.log("No Results! KM1");
-
+                                            uploadAll();
                                    } else {	
 
                                            for(var i=0; i < results.length; i++){
