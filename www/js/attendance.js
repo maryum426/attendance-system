@@ -4,6 +4,7 @@ var userpin;
 var company;
 var department;
 var userAvatar = null;
+var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
 
         function checkIn(){
             checkin = true;
