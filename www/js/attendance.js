@@ -406,7 +406,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
-                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                            window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                             //cb(pSweet);
                                         },
                                         error:function (pSweet, error) {
@@ -445,7 +445,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
-                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                            window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                             //cb(pSweet);
                                         },
                                         error:function (pSweet, error) {
@@ -515,7 +515,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                                window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                 //cb(pSweet);
                                             },
                                             error:function (pSweet, error) {
@@ -576,7 +576,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     results[0].save(null, {
                                                         success:function (kuali) {
                                                             console.log(kuali + " saved successfully");
-                                                            window.location = "home.html?checkin=" + checkin + "&pic=" + picUrl;
+                                                            window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                                             //cb(pSweet);
                                                         },
                                                         error:function (pSweet, error) {
