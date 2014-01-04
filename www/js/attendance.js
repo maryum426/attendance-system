@@ -46,6 +46,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function launch(){
+            
             $('#launch').attr('disabled','disabled');
             
             sendEmail();
@@ -96,7 +97,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function checkCheckIn(){
-            
+            var currentDate = new Date();
             //check checkin/out status
 
                             if (company == 'virtualforce'){
