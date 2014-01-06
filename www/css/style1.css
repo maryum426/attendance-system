@@ -313,8 +313,8 @@ header{
     width: auto;
     height: 198px;
     position: absolute;
-    top: -10px;
-    left: 23px;
+    top: -5px;
+    left: 25px;
 }
 
 #home-div{
@@ -330,7 +330,7 @@ header{
     font-size: 15px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 654px;
+    top: 684px;
     left: 205px;
 }
 
