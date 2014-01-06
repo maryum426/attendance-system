@@ -311,9 +311,10 @@ header{
 #my_image{
 /*    display: block;*/
     width: auto;
-    height: 214px;
+    height: 205px;
     position: absolute;
     top: -18px;
+    left: 10px;
 }
 
 #home-div{
