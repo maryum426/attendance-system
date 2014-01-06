@@ -311,10 +311,10 @@ header{
 #my_image{
 /*    display: block;*/
     width: auto;
-    height: 201px;
+    height: 198px;
     position: absolute;
     top: -10px;
-    left: 20px;
+    left: 23px;
 }
 
 #home-div{
@@ -330,7 +330,7 @@ header{
     font-size: 15px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 754px;
+    top: 654px;
     left: 205px;
 }
 
