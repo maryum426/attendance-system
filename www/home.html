@@ -38,10 +38,10 @@
             checkStatus.setSeconds(00);
             
             if (current < checkStatus){
-                $('body').css({'background-image':'url(images/background-4.jpg)'});
+                $('#background').attr('src','images/background-4.jpg');
             }
             else if (current == checkStatus || current > checkStatus){
-                $('body').css({'background-image':'url(images/background-4.1.jpg)'});
+                $('#background').attr('src','images/background-4.1.jpg');
                 $('.welcome-message').css({'left':'46px','top':'445px'});
                 $('.time').css({'color':'#fff'});
                 

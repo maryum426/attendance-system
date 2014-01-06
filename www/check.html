@@ -28,10 +28,10 @@
             checkStatus.setSeconds(00);
             
             if (current < checkStatus){
-                $('.main-wrapper').css({'background-image':'url(images/background-2.jpg)'});
+                $('#background').attr('src','images/background-2.jpg');
             }
             else if (current == checkStatus || current > checkStatus){
-                $('.main-wrapper').css({'background-image':'url(images/background-2.1.jpg)'});
+                $('#background').attr('src','images/background-2.1.jpg');
             }
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
             var check;

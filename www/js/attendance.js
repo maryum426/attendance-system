@@ -672,9 +672,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     checkin_time = time[0] + ':0' + time[1];
                                                     console.log("CheckinTime: " + checkin_time);
                                                 }
-                                                checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
-                                                if (checkout_time == null || checkout_time == ''){
-                                                  checkout_time = 'Still Here!';
+                                                
+                                                
+                                                if (results[i].get("status") == "absent"){
+                                                        checkin_time = 'nil';
+                                                        checkout_time = 'nil';
+                                                    }
+                                                if (results[i].get("checkOutTime") == null || results[i].get("checkOutTime") == ''){
+                                                    checkout_time = 'nil';
+                                                }
+                                                else{
+                                                    checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
+                                                    
+                                                    if (checkout_time == null || checkout_time == ''){
+                                                  checkout_time = 'nil';
                                                  }
                                                  else{
                                                      time = checkout_time.split(':');
@@ -683,6 +694,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                          console.log("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
+                                                }
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + checkin_time  + '</td>';
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + checkout_time  + '</td>';
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("workingHours")  + '</td>';
@@ -731,9 +743,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     checkin_time = time[0] + ':0' + time[1];
                                                     console.log("CheckinTime: " + checkin_time);
                                                 }
-                                                checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
-                                                if (checkout_time == null || checkout_time == ''){
-                                                  checkout_time = 'Still Here!';
+                                                
+                                                
+                                                if (results[i].get("status") == "absent"){
+                                                        checkin_time = 'nil';
+                                                        checkout_time = 'nil';
+                                                    }
+                                                if (results[i].get("checkOutTime") == null || results[i].get("checkOutTime") == ''){
+                                                    checkout_time = 'nil';
+                                                }
+                                                else{
+                                                    checkout_time = results[i].get("checkOutTime").substr(results[i].get("checkOutTime").length - 5);
+                                                    
+                                                    if (checkout_time == null || checkout_time == ''){
+                                                  checkout_time = 'nil';
                                                  }
                                                  else{
                                                      time = checkout_time.split(':');
@@ -742,6 +765,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                          console.log("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
+                                                }
                                                  table += '<td style="border:1px solid #000;padding:5px;">' + checkin_time  + '</td>';
                                                  table += '<td style="border:1px solid #000;padding:5px;">' + checkout_time  + '</td>';
                                                  reportDate = results[i].get("checkInTime").substr(results[i].get("checkInTime"),15);
@@ -752,7 +776,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }
                                             console.log(table += '</table>');
                                            msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
-                                           sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','Attendance Report', msg, function (success) {
+                                           sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','tanzeel@virtual-force.com','Attendance Report', msg, function (success) {
                                                 if (success) {
                                                     console.log("Email successfully sent!");
                                                     return true;

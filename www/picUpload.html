@@ -52,11 +52,11 @@
                 checkStatus.setSeconds(00);
 
                 if (current < checkStatus){
-                    $('body').css({'background-image':'url(images/background-3.jpg)'});
+                    $('#background').attr('src','images/background-3.jpg');
                     $('.pic_upload').css({'top':'145px'});
                 }
                 else if (current == checkStatus || current > checkStatus){
-                    $('body').css({'background-image':'url(images/background-3.1.jpg)'});
+                    $('#background').attr('src','images/background-3.1.jpg');
                     $('.pic-text').css({'color':'#fff'});
                     $('.pic_upload').css({'top':'145px'});
                 }
