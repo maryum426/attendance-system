@@ -4,16 +4,17 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
         <script src="phonegap.js"></script>
     </head>
     <body>
+        <div class="main-wrapper">
         <header>
             <p class="welcome-text"></p>
             <p class="welcome-text2"></p>
         </header>
-        <div id="main-div">
-            
+        
+            <img id="background" src="" alt="bg-image">
             <div class="pic_upload">
 <!--                <input type="file" accept="image/*" id="capture" capture="camera" class="ios-btn" size="0" >-->
 <!--                <img id="my_image" src="images/profile-image3.png" onclick="capturePicture()">-->
@@ -51,11 +52,13 @@
                 checkStatus.setSeconds(00);
 
                 if (current < checkStatus){
-                    $('body').css({'background-image':'url(images/background-3.png)'});
+                    $('body').css({'background-image':'url(images/background-3.jpg)'});
+                    $('.pic_upload').css({'top':'145px'});
                 }
                 else if (current == checkStatus || current > checkStatus){
-                    $('body').css({'background-image':'url(images/background-3.1.png)'});
+                    $('body').css({'background-image':'url(images/background-3.1.jpg)'});
                     $('.pic-text').css({'color':'#fff'});
+                    $('.pic_upload').css({'top':'145px'});
                 }
                 setMessages(checkin);
                 

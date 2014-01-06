@@ -1,0 +1,379 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+	background: none repeat scroll 0 0 transparent;
+	border: 0 none;
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+	vertical-align: baseline;
+}
+/* =============================================================================
+   HTML5 element display
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+	display: block;
+}
+audio, canvas, video {
+	display: inline-block;
+*display: inline;
+*zoom: 1;
+}
+audio:not([controls]) {
+	display: none;
+}
+[hidden] {
+display: none;
+}
+aside {
+	width: 213px;
+	height: auto;
+	float: left;
+	margin: 0 0 25px 0;
+	border: 1px solid #e8e8e8;
+	border-top: none;
+}
+article {
+	width: 690px;
+	height: auto; /*min-height:344px;*/
+	float: left;
+}
+section {
+	height: auto;
+}
+details {
+	width: 285px;
+	height: 50px;
+	margin-top: 10px;
+}
+a {
+color:;
+	outline: none;
+}
+a:visited {
+color:;
+	outline: none;
+}
+a:hover {
+color:;
+	outline: none;
+}
+a:focus {
+	outline: none;
+}
+/* Improve readability when focused and hovered in all browsers:
+065. h5bp.com/h */
+a:hover, a:active {
+	outline: 0;
+}
+a.selected { /*color: #3a5500; text-shadow:1px 1px 0px #e1eeb0;*/
+}
+/* =============================================================================
+Typography
+========================================================================== */
+
+
+ 
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+b, strong {
+	font-weight: bold;
+}
+blockquote {
+	margin: 1em 40px;
+}
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+/* =============================================================================
+   Lists
+   ========================================================================== */
+ 
+ul, ol {
+	margin: 0;
+	padding: 0 0 0 0;
+}
+dd {
+	margin: 0 0 0 40px;
+}
+nav ul, nav ol {
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+}
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
+html {
+	font-size: 100%;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	line-height: 1.231;
+	background: #fff;
+	color: #333;
+}
+.clear {
+	clear: both;
+}
+/*===================css start============================*/
+
+@font-face
+{
+font-family: chalkBoard;
+src: url(chalkboard-bold.ttf);
+}
+
+.main-wrapper {
+	width: 600px;
+	min-height: 800px;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+}
+.btn-holder {
+	left: 155px;
+	position: absolute;
+	top: 149px;
+}
+.ios-btn {
+	-webkit-appearance: none;
+        border-radius: 25px;
+        -webkit-border-radius: 25px;
+        -webkit-box-sizing: border-box; /* Android â‰¤ 2.3, iOS â‰¤ 4 */
+        -moz-box-sizing: border-box; /* Firefox 1+ */
+        box-sizing: border-box;
+}
+header{
+    left: 5px;
+    position: absolute;
+    top: 20px;
+    width: 100%;
+}
+.main-btn-in {
+	font-family: chalkBoard;
+	background-color: #92D933;
+	border: medium solid;
+	color: #FFFFFF;
+	display: block;
+	font-size: 45px;
+	padding: 10px 23px;
+	width: 285px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+.main-btn-out {
+	background-color: #505050;
+	border: medium solid;
+	color: #FFFFFF;
+	display: block;
+	font-family: chalkBoard;
+	font-weight: bold;
+	font-size: 45px;
+	margin-bottom: 120px;
+	margin-top: 15px;
+	padding: 10px 23px;
+	width: 285px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+.ios-btn2 {
+	 -webkit-appearance: none;
+        border-radius: 0;
+        -webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+        -webkit-box-sizing: border-box; /* Android â‰¤ 2.3, iOS â‰¤ 4 */
+        -moz-box-sizing: border-box; /* Firefox 1+ */
+        box-sizing: border-box;
+}
+.code-btn-cancel {
+	position: absolute;
+	bottom: 20px;
+	left: 10px;
+	background-color: #92D933;
+	background-image: url("../images/back-icon.png");
+	border: medium solid;
+	color: #FFFFFF;
+	float: left;
+	font-family: chalkBoard;
+	font-size: 45px;
+	height: 76px;
+	padding: 10px 23px;
+	width: 78px;
+}
+
+.welcome-text{
+    font-family: chalkBoard;
+    font-size: 37px;
+    display: inline-block;
+    position: absolute;
+    left: 78px;
+    color: rgb(240,35,30);
+}
+
+.pic-text{
+    font-family: chalkBoard;
+    font-size: 46px;
+    display: inline-block;
+    position: absolute;
+    padding-bottom: 80px;
+    color: rgb(240,35,30);
+}
+
+.welcome-text2{
+    font-family: chalkBoard;
+    font-size: 37px;
+    display: inline-block;
+    position: absolute;
+    left: 245px;
+    color: rgb(32,114,255);
+}
+
+.code-holder{
+    padding: 20px 23px;
+    font-family: chalkBoard;
+    color: #fff;
+    position: absolute;
+    background-color: rgb(48,48,48);
+    font-size: 35px;
+    width: 500px;
+    border : solid;
+    left: 2px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.btn-holder-main{
+    position: absolute;
+    top: 110px;
+    left: 160px;
+}
+
+.btn-holder-launch{
+    position: absolute;
+}
+
+.code-btn-ok{
+    padding: 10px 23px;
+    background-color: rgb(146,217,51);
+    font-family: chalkBoard;
+    color: #fff;
+    position: absolute;
+    font-size: 45px;
+    width: 220px;
+    border : solid;
+}
+
+#login{
+    position: absolute;
+    top: 120px;
+    left: 20px;
+}
+
+#launch{
+    position: absolute;
+    top: 90px;
+    left: 90px;
+}
+
+.pic_upload{
+/*    height: 100px;*/
+    display: none;
+    width: 201px;
+    height: 200px;
+     -webkit-box-shadow:
+    inset #fff 0 0 0 5px;
+    position: absolute;
+    top: 120px;
+    left: 192px;
+/*     padding: 100px;*/
+     overflow: hidden;
+}
+
+#my_image{
+/*    display: block;*/
+    width: auto;
+    height: 214px;
+    position: absolute;
+    top: -18px;
+}
+
+#home-div{
+    text-align: center;
+    position: absolute;
+    top: 10px;
+    font-family: chalkBoard;
+    width: 100%;
+}
+
+.welcome-message{
+    font-family: chalkBoard;
+    font-size: 15px;
+    position: absolute;
+    color: rgb(240,35,30);
+    top: 530px;
+    left: 205px;
+}
+
+.send-email{
+    font-family: chalkBoard;
+    font-size: 18px;
+    position: absolute;
+    float:right;
+}
+
+.time{
+    font-family: chalkBoard;
+    font-size: 60px;
+    position: absolute;
+    color: rgb(240,35,30);
+    top: 360px;
+    left: 152px;
+}
+
+.check-text{
+    font-family: chalkBoard;
+    font-size: 45px;
+    position: absolute;
+    top: 320px;
+    left: 100px;
+}
+
+.btn-holder2{
+    display: none;
+    position: absolute;
+    top: 365px;
+    left: 185px;
+}
+
+#snap-text{
+    position: absolute;
+    top: 320px;
+    left: 15px;
+    width: 100%;
+}
+
+.pic-text{
+    font-family: chalkBoard;
+    font-size: 37px;
+    display: inline-block;
+    position: absolute;
+    color: rgb(240,35,30);
+}

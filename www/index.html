@@ -4,7 +4,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
         <script src="js/attendance.js"></script>
         <script type="text/javascript" src="js/parse-min.js"></script>
         <script src="phonegap.js"></script>
@@ -15,7 +15,8 @@
          <header>
 <!--            <img src="images/kualitatem-logo.png"/>-->
         </header>
-        <div id="main-div">
+        <div class="main-wrapper">
+            <img id="background" src="" alt="bg-image">
            <div id ="login">
                     <input type="number" placeholder="Enter your code" class="code-holder">
 
@@ -50,7 +51,7 @@
 //                   window.localStorage.removeItem("launch");
 //               }
 
-                $('body').css({'background-image':'url(images/background-1.png)'});
+                $('body').css({'background-image':'url(images/background-1.jpg'});
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var currentDate = new Date();
                 var yesterday = new Date();

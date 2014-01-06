@@ -12,20 +12,23 @@ font-family: chalkBoard;
 src: url(chalkboard-bold.ttf);
 }
 body{
-    height: auto;
-    width: auto;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     font-family: chalkBoard;
 /*    -webkit-box-shadow:
     inset #0574b9 0 0 0 5px;*/
 /*    background-position: 470px;*/
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 #main-div{
     text-align: center;
-    margin-top: 120px;
     font-family: chalkBoard;
+    width: 768px;
+    margin: 0 auto;
+    overflow: hidden;
+    
 }
 #home-div{
     text-align: center;
@@ -87,8 +90,10 @@ header{
 }
 
 .btn-holder{
-    margin-top: 255px;
-    margin-left: 32%;
+    margin-top: 455px;
+    margin:0 auto;
+    width: 286px;
+ 
 }
 .btn-holder2{
     display: none;
