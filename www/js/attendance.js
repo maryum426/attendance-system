@@ -182,8 +182,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 $('.btn-holder2').css({'display':'block'});
                 $('#snap-text').css({'display':'none','margin-top':'0'});
                 $('.pic-text').css({'display':'none','margin-top':'0'});
-                $('#submit').removeAttr('disabled');
-                $('#submit').css({'opacity':'1.4'});
+                $('#submit1').removeAttr('disabled');
+                $('#submit1').css({'opacity':'1.4'});
                 var options =   {
                     quality: 50,
                     cameraDirection:1,
@@ -215,12 +215,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             //alert("In Upload!");
             if (userAvatar == null){
                 alert("Take a picture first!");
-                $('#submit').removeAttr('disabled');
-                $('#submit').css({'opacity':'1.4'});
+                $('#submit1').removeAttr('disabled');
+                $('#submit1').css({'opacity':'1.4'});
                 
             }
-            $('#submit').attr('disabled','disabled');
-            $('#submit').css({'opacity':'0.4'});
+            $('#submit1').attr('disabled','disabled');
+            $('#submit1').css({'opacity':'0.4'});
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
                    

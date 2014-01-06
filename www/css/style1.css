@@ -285,7 +285,7 @@ header{
     display:none;
     position: absolute;
     top: 120px;
-    left: 20px;
+    left: 35px;
 }
 
 #launch{
@@ -313,8 +313,8 @@ header{
     width: auto;
     height: 205px;
     position: absolute;
-    top: -18px;
-    left: 10px;
+    top: -15px;
+    left: 30px;
 }
 
 #home-div{
