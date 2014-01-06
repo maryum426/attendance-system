@@ -48,6 +48,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         function launch(){
             
             $('#launch').attr('disabled','disabled');
+            $('#launch').css({'opacity':'0.4'});
             
             sendEmail();
            
@@ -57,6 +58,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             $('.pic_upload').hide();
             $('.btn-holder2').hide();
             $('#codeOk').attr('disabled','disabled');
+            $('#codeOk').css({'opacity':'0.4'});
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             var query = new Parse.Query("Users");
@@ -85,6 +87,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     else {
                        alert("User doesnot exist!");
                        $('#codeOk').removeAttr('disabled');
+                       $('#launch').css({'opacity':'1.4'});
                        $('.code-holder').val(null);
                     }
                 },
@@ -180,6 +183,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 $('#snap-text').css({'display':'none','margin-top':'0'});
                 $('.pic-text').css({'display':'none','margin-top':'0'});
                 $('#submit').removeAttr('disabled');
+                $('#submit').css({'opacity':'1.4'});
                 var options =   {
                     quality: 50,
                     cameraDirection:1,
@@ -212,9 +216,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             if (userAvatar == null){
                 alert("Take a picture first!");
                 $('#submit').removeAttr('disabled');
+                $('#submit').css({'opacity':'1.4'});
                 
             }
             $('#submit').attr('disabled','disabled');
+            $('#submit').css({'opacity':'0.4'});
                     var thumbnail = 400;
                     var ppWidth, ppHeight;
                    
