@@ -87,7 +87,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     else {
                        alert("User doesnot exist!");
                        $('#codeOk').removeAttr('disabled');
-                       $('#launch').css({'opacity':'1.4'});
+                       $('#codeOk').css({'opacity':'1.4'});
                        $('.code-holder').val(null);
                     }
                 },
