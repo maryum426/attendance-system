@@ -282,6 +282,18 @@ header{
     border : solid;
 }
 
+.code-btn-ok-main{
+    padding: 10px 23px;
+    background-color: rgb(146,217,51);
+    font-family: chalkBoard;
+    color: #fff;
+    position: absolute;
+    font-size: 45px;
+    top: 20px;
+    width: 220px;
+    border : solid;
+}
+
 #login{
     display:none;
     position: absolute;
@@ -315,7 +327,7 @@ header{
     height: 234px;
     position: absolute;
     top: 5px;
-    left: 35px;
+    left: 65px;
 }
 
 #home-div{
@@ -347,7 +359,7 @@ header{
     font-size: 60px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 410px;
+    top: 480px;
     left: 152px;
 }
 
@@ -355,7 +367,7 @@ header{
     font-family: chalkBoard;
     font-size: 45px;
     position: absolute;
-    top: 370px;
+    top: 430px;
     left: 100px;
 }
 
