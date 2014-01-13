@@ -277,7 +277,7 @@ header{
     color: #fff;
     position: absolute;
     font-size: 45px;
-    top: 30px;
+    top: 50px;
     width: 220px;
     border : solid;
 }
@@ -314,8 +314,8 @@ header{
     width: auto;
     height: 234px;
     position: absolute;
-    top: -5px;
-    left: 25px;
+    top: 5px;
+    left: 35px;
 }
 
 #home-div{
@@ -347,7 +347,7 @@ header{
     font-size: 60px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 390px;
+    top: 410px;
     left: 152px;
 }
 
@@ -355,7 +355,7 @@ header{
     font-family: chalkBoard;
     font-size: 45px;
     position: absolute;
-    top: 350px;
+    top: 370px;
     left: 100px;
 }
 
