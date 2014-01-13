@@ -277,6 +277,7 @@ header{
     color: #fff;
     position: absolute;
     font-size: 45px;
+    top: 30px;
     width: 220px;
     border : solid;
 }
@@ -303,7 +304,7 @@ header{
     inset #fff 0 0 0 5px;
     position: absolute;
     top: 150px;
-    left: 192px;
+    left: 162px;
 /*     padding: 100px;*/
      overflow: hidden;
 }
@@ -346,7 +347,7 @@ header{
     font-size: 60px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 370px;
+    top: 390px;
     left: 152px;
 }
 
@@ -354,7 +355,7 @@ header{
     font-family: chalkBoard;
     font-size: 45px;
     position: absolute;
-    top: 330px;
+    top: 350px;
     left: 100px;
 }
 
