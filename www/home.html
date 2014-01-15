@@ -80,6 +80,12 @@
                 
             }
             
+            document.addEventListener("backbutton", onBackKeyDown, false);
+            function onBackKeyDown() {
+                alert("Exiting!");
+                navigator.app.exitApp();
+            }
+            
         </script>
         
         

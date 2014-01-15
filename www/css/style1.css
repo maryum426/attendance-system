@@ -246,7 +246,7 @@ header{
 }
 
 .code-holder{
-    padding: 20px 23px;
+    padding: 20px 0 20px 23px;
     font-family: chalkBoard;
     color: #fff;
     position: absolute;

@@ -75,7 +75,13 @@
                 console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
 
                 }
-            
+                
+                document.addEventListener("backbutton", onBackKeyDown, false);
+                function onBackKeyDown() {
+                    alert("Exiting!");
+                    navigator.app.exitApp();
+                }
+                           
             
         </script>
         
