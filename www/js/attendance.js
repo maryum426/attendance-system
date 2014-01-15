@@ -857,7 +857,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     }
                   }*/
             username = window.localStorage.getItem("username");
-            var currentDate = new Date();
+            var fname = [];
+            fname = username.split(" ");
+            
+            //var currentDate = new Date();
             
             if (check == 'true'){
                 var query = new Parse.Query("MessageConfig");
@@ -867,7 +870,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
                         $('.welcome-text').text('Welcome ');
-                        $('.welcome-text2').text(username + '!');
+                        $('.welcome-text2').text(fname[0] + '!');
                         $('.check-text').text("You checked in at");
                     },
                     error: function (error){

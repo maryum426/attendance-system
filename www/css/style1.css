@@ -158,10 +158,9 @@ src: url(chalkboard-bold.ttf);
         box-sizing: border-box;
 }
 header{
-    left: 5px;
+    left: 50%;
     position: absolute;
     top: 20px;
-    width: 100%;
 }
 .main-btn-in {
 	font-family: chalkBoard;
