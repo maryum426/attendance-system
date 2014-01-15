@@ -35,7 +35,6 @@
 
             function onDeviceReady() {
                 // Register the event listener
-                alert("Device is ready!");
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
             
@@ -59,8 +58,8 @@
             
             
             function onBackKeyDown() {
-                alert("Exiting!");
-                navigator.app.exitApp();
+                //alert("Exiting!");
+                window.location = "index.html";
             }
             
         </script>

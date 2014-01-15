@@ -36,7 +36,6 @@
 
             function onDeviceReady() {
                 // Register the event listener
-                alert("Device is ready!");
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
             window.onload = firstFunc();
@@ -83,7 +82,7 @@
                 }
                 
                 function onBackKeyDown() {
-                    alert("Exiting!");
+                    //alert("Exiting!");
                     navigator.app.exitApp();
                 }
                            

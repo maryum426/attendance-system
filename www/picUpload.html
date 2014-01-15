@@ -37,7 +37,6 @@
 
                 function onDeviceReady() {
                     // Register the event listener
-                    alert("Device is ready!");
                     document.addEventListener("backbutton", onBackKeyDown, false);
                 }
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
@@ -72,8 +71,8 @@
                 takePicture();
                 
                 function onBackKeyDown() {
-                    alert("Exiting!");
-                    navigator.app.exitApp();
+                    //alert("Exiting!");
+                    window.location = "index.html";
                 }
             </script>
     </body>
