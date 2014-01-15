@@ -161,12 +161,18 @@ header{
 /*    left: 50px;*/
     position: absolute;
     top: 20px;
-    width: 100%;
+    width: 466px;
 }
 .user-name{
-    width:466px;
+    height: 85px;
+    left: 78px;
+    position: absolute;
     text-align: center;
-    margin: 0 auto;
+    color: rgb(32,114,255);
+    top: 10px;
+    width: 445px;  
+    font-family: chalkBoard;
+    font-size: 37px;
 }
 .main-btn-in {
 	font-family: chalkBoard;
@@ -226,9 +232,8 @@ header{
 .welcome-text{
     font-family: chalkBoard;
     font-size: 37px;
-    display: inline-block;
-    position: absolute;
-    left: 78px;
+/*    position: absolute;
+    left: 78px;*/
     color: rgb(240,35,30);
 }
 
@@ -244,7 +249,6 @@ header{
 .welcome-text2{
     font-family: chalkBoard;
     font-size: 37px;
-    display: inline-block;
     position: absolute;
     left: 245px;
     color: rgb(32,114,255);

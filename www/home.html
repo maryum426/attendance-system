@@ -15,8 +15,8 @@
             <img id="background" src="" alt="bg-image">
             <header>
                <div class="user-name">
-                    <p class="welcome-text"></p>
-                    <p class="welcome-text2"></p>
+                    <span class="welcome-text"></span>
+                    <span id="welcome-text2"></span>
                </div>
             </header>
 
@@ -38,7 +38,7 @@
             $('.pic_upload').css({'display':'block'});
             var current = new Date();
             var checkStatus = new Date();
-            checkStatus.setHours(5);
+            checkStatus.setHours(17);
             checkStatus.setMinutes(00);
             checkStatus.setSeconds(00);
             
@@ -47,7 +47,7 @@
             }
             else if (current == checkStatus || current > checkStatus){
                 $('#background').attr('src','images/background-4.1.jpg');
-                $('.welcome-message').css({'left':'46px','top':'555px'});
+                $('.welcome-message').css({'left':'46px','top':'560px'});
                 $('.time').css({'color':'#fff'});
                 
             }
