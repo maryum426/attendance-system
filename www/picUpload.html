@@ -33,6 +33,13 @@
             <script type="text/javascript" src="js/parse-min.js"></script>
             <script>
                 
+                document.addEventListener("deviceready", onDeviceReady, false);
+
+                function onDeviceReady() {
+                    // Register the event listener
+                    alert("Device is ready!");
+                    document.addEventListener("backbutton", onBackKeyDown, false);
+                }
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var checkin,check;
                 var loc = window.location.search.substring(1),i, val, params = loc.split("&");
@@ -64,7 +71,6 @@
                 
                 takePicture();
                 
-                document.addEventListener("backbutton", onBackKeyDown, false);
                 function onBackKeyDown() {
                     alert("Exiting!");
                     navigator.app.exitApp();

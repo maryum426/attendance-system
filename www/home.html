@@ -30,6 +30,15 @@
         </div>
         
          <script>
+             
+             document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                // Register the event listener
+                alert("Device is ready!");
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+            
             $('.pic_upload').css({'display':'block'});
             var current = new Date();
             var checkStatus = new Date();
@@ -47,6 +56,13 @@
                 
             }
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+            
+            
+            function onBackKeyDown() {
+                alert("Exiting!");
+                navigator.app.exitApp();
+            }
+            
         </script>
         <script>
             var checkin,picurl;
@@ -80,11 +96,6 @@
                 
             }
             
-            document.addEventListener("backbutton", onBackKeyDown, false);
-            function onBackKeyDown() {
-                alert("Exiting!");
-                navigator.app.exitApp();
-            }
             
         </script>
         

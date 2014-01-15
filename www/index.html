@@ -32,7 +32,13 @@
         </div>
         
         <script>
-            
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                // Register the event listener
+                alert("Device is ready!");
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
             window.onload = firstFunc();
             
             function firstFunc(){
@@ -76,7 +82,6 @@
 
                 }
                 
-                document.addEventListener("backbutton", onBackKeyDown, false);
                 function onBackKeyDown() {
                     alert("Exiting!");
                     navigator.app.exitApp();
