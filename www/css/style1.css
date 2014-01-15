@@ -158,7 +158,7 @@ src: url(chalkboard-bold.ttf);
         box-sizing: border-box;
 }
 header{
-    left: 50%;
+    left: 25px;
     position: absolute;
     top: 20px;
 }
