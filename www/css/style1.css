@@ -161,6 +161,7 @@ header{
 /*    left: 50px;*/
     position: absolute;
     top: 20px;
+    width: 100%;
 }
 .user-name{
     width:466px;
