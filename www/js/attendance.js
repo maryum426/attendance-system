@@ -212,7 +212,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         };
         
         function uploadOk(){
-            //alert("In Upload!");
+            alert("In Upload!");
             if (userAvatar == null){
                 alert("Take a picture first!");
                 $('#submit1').removeAttr('disabled');
@@ -286,6 +286,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                             uploadParsePic(userAvatar);
                                                             //alert (parseFile.url());
                                                             console.log("Ok");
+                                                            alert("In Uploadfinal!");
 
                                                         }, function(error) {
                                                             console.log("Error");
@@ -317,6 +318,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
          var uploadParsePic = function(url){
+             alert("In UploadPic!");
              var currentDate = new Date();
              var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
              var checkStatus = new Date();
@@ -393,7 +395,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                
                 if (checkin == 'true'){
                         if (company == 'virtualforce'){
-                            //alert("In Virtual Force");
+                            alert("In Virtual Force");
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -413,7 +415,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].set("status",status);
                                     results[0].save(null, {
                                         success:function (kuali) {
-                                            console.log(kuali + " saved successfully");
+                                            alert(kuali + " saved successfully");
                                             window.location = "home.html?checkin=" + checkin + "&pic=" + url;
                                             //cb(pSweet);
                                         },
@@ -858,7 +860,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var fname = [];
             fname = username.split(" ");
             
-            //var currentDate = new Date();
+            var currentDate = new Date();
             
             if (check == 'true'){
                 var query = new Parse.Query("MessageConfig");
