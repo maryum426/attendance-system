@@ -14,8 +14,10 @@
         <div class="main-wrapper">
             <img id="background" src="" alt="bg-image">
             <header>
-               <p class="welcome-text"></p>
-                <p class="welcome-text2"></p>
+               <div class="user-name">
+                    <p class="welcome-text"></p>
+                    <p class="welcome-text2"></p>
+               </div>
             </header>
 
             <div id="home-div">
@@ -31,12 +33,7 @@
         
          <script>
              
-            //document.addEventListener("deviceready", onDeviceReady, false);
-
-            function onDeviceReady() {
-                // Register the event listener
-                document.addEventListener("backbutton", onBackKeyDown, false);
-            }
+           
             
             $('.pic_upload').css({'display':'block'});
             var current = new Date();
@@ -50,13 +47,18 @@
             }
             else if (current == checkStatus || current > checkStatus){
                 $('#background').attr('src','images/background-4.1.jpg');
-                $('.welcome-message').css({'left':'46px','top':'539px'});
+                $('.welcome-message').css({'left':'46px','top':'545px'});
                 $('.time').css({'color':'#fff'});
                 
             }
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
             
-            
+             document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
             function onBackKeyDown() {
                 //alert("Exiting!");
                 window.location = "index.html";
