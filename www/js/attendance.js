@@ -404,7 +404,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             query.lessThanOrEqualTo("createdAt", checkEDate);
                             query.find({
                                 success:function (results) {
-                                    console.log("Results Length: " +results.length);
+                                    alert("Results Length: " +results.length);
                                     //results[0].set("userPin",userpin);
                                     results[0].set("userAvatarIn",url);
                                     results[0].set("checkInTime",currentTime);
@@ -420,7 +420,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             //cb(pSweet);
                                         },
                                         error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            alert("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
