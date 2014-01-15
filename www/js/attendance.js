@@ -845,8 +845,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
         function setMessages(check){
-            
-            
             /*var ca = document.cookie.split(';');
                 for(var i=0; i< ca.length; i++) 
                   {
@@ -886,7 +884,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     success:function (results) {
                         $('.welcome-message').text(results[0].get("message"));
                         $('.welcome-text').text('Goodbye ');
-                        $('.welcome-text2').text(username + '!');
+                        $('.welcome-text2').text(fname[0] + '!');
                         $('.check-text').text("You checked out at");
                     },
                     error: function (error){
