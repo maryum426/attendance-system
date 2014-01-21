@@ -1493,34 +1493,23 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 });
                                 };
                                 function it(value,un,up,com,dep){
-                                                    //alert("In DB!");
+                                                    console.log("UserPin: " + up);
                                                     db.transaction(function(t){
                                                         t.executeSql('INSERT INTO USERS (id, username, userpin, company, department) VALUES (?,?,?,?,?)',[value, un,up,com,dep]);
 
                                                     });
                                     };
-                                if (company == 'virtualforce'){
-                                    //Insert values in table for vf
                                     it(i,username,userpin,company,department);
-                                    it2(i,username,userpin,currentTime,"","",department,"","","absent","","");
-                                }
-                                else if(company == 'kualitatem'){
-                                     //Insert values in table for kualitatem
-
-                                     it(i,username,userpin,company,department);
-                                    it3(i,username,userpin,currentTime,"","",department,"","","absent","","");
-                                }
-                                
-                                
+                               
                                 console.log("Company: " + company);
                
-                                if (company == 'virtualforce'){
+                                if ((r_auth[i].get("userPin")).substr(0,1) == '1'){
                                     console.log("In Virtual Force: " + i);
                                    
                                     var virtualF = Parse.Object.extend("VirtualForce");
                                     
                                     
-                                    
+                                    it2(i,username,userpin,currentTime,"","",department,"","","absent","","");
                                     var vf = new virtualF();
                                     vf.set("userPin",userpin);
                                     vf.set("userName",username);
@@ -1544,7 +1533,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                     });
                                 }
-                                else if (company == 'kualitatem'){
+                                else if ((r_auth[i].get("userPin")).substr(0,1) == '2'){
                                     
                                     console.log("In Kualitatem: " + i);
                                     
@@ -1552,7 +1541,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     var kualitatem = Parse.Object.extend("Kualitatem");
                                     
                                     
-                                    
+                                    it3(i,username,userpin,currentTime,"","",department,"","","absent","","");
                                     var km = new kualitatem();
                                     km.set("userPin",userpin);
                                     km.set("userName",username);
