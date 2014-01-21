@@ -9,9 +9,10 @@ var offPicData = null;
 var db = window.openDatabase("users", "1.0", "Users", 2048576);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
 
+        
         function checkIn(){
             checkin = true;
-            console.log('CheckIn');
+            alert('CheckIn');
             if (check == 'checkin')
                 {
                     window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
@@ -29,7 +30,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function checkOut(){
             checkin = false;
-            console.log('CheckOut');
+            alert('CheckOut');
             if (check == 'checkin')
                 {
                     window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
@@ -64,11 +65,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             $('#codeOk').attr('disabled','disabled');
             $('#codeOk').css({'opacity':'0.4'});
             userpin = ($('.code-holder').val()).toString();
-            console.log("User Pin: " + userpin);
+            alert("User Pin: " + userpin);
             
             //Getting User Info
             function it(up){
-                //alert("In DB!");
+                
                 db.transaction(function(t){
                     t.executeSql('SELECT * FROM USERS WHERE userpin ==' + up , [], querySuccess, errorCB);
                 });
@@ -81,30 +82,31 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        }
        
        function errorCB9 (err){	 	
-            console.log("I am wild!")	 	
+            alert("I am wild!")	 	
         }
+        
         // Query the success callback
-
         function querySuccess(tx, results) {
             
-            console.log("Returned rows = " + results.rows.length);
-            // this will be true since it was a select statement and so rowsAffected was 0
+            alert("Returned rows = " + results.rows.length);
+            // This will be true since it was a SELECT statement and so rowsAffected was 0
             var len = results.rows.length;
             if (len > 0){
-                    console.log("Username: " + results.rows.item(0).username);
-                    console.log("Comapny: " + results.rows.item(0).company);
-                    console.log("Department: " + results.rows.item(0).department);
+                    alert("Username: " + results.rows.item(0).username);
+                    alert("Comapny: " + results.rows.item(0).company);
+                    alert("Department: " + results.rows.item(0).department);
                     username = results.rows.item(0).username;
                     company = results.rows.item(0).company;
                     department = results.rows.item(0).department;
                     
-                    //document.cookie = "pin=" + userpin + ";" ; 
+                    
+                    //Storing data in local storage  for efficiency
                     window.localStorage.setItem("pin",userpin);
-                    //document.cookie = "username=" + username + ";" ; 
+                    
                     window.localStorage.setItem("username",username);
-                    //document.cookie = "company=" + company + ";"  ;
+                    
                     window.localStorage.setItem("company",company);
-                    //document.cookie = "department=" + department + ";" ;
+                    
                     window.localStorage.setItem("department",department);
                     
                     
@@ -120,28 +122,28 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkCheckIn();
         }
 
-        // Transaction error callback
+        // Transaction error callbacks
     
         function errorCB(err) {
-            console.log("Error processing SQL: "+err.code);
+            alert("Error processing SQL: "+err.code);
         }
         
         function errorCB2(err) {
-            console.log("Error processing SQL: "+err.code);
+            alert("Error processing SQL: "+err.code);
         }
         
         function errorCBout(err) {	 	
-            console.log("Error in offline Checkout");	 	
+            alert("Error in offline Checkout");	 	
         }
         
-         function codePageOk() {
+        /*function codePageOk() {
             
             $('.pic_upload').hide();
             $('.btn-holder2').hide();
             $('#codeOk').attr('disabled','disabled');
             $('#codeOk').css({'opacity':'0.4'});
             userpin = ($('.code-holder').val()).toString();
-            console.log("User Pin: " + userpin);
+            alert("User Pin: " + userpin);
             var query = new Parse.Query("Users");
             //var query = new Auth();
             query.equalTo('userPin',userpin);
@@ -173,16 +175,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     }
                 },
                 error:function (error) {
-                    console.log("Error -> " + error.code + " " + error.message);
+                    alert("Error -> " + error.code + " " + error.message);
                 }
 
             });
             
-        }
-        
+        }*/
+       
+       //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
                 db.transaction(function(t){
-                console.log("My Query Home Called!");
+                alert("My Query Home Called!");
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
@@ -205,8 +208,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function queryRedirect(tx,results){
             //WHERE  userpin ='" + up + "'"+"AND SUBSTR(checkInTime,1,7) =' " + cd + "'
-            console.log("Results Length: " + results.rows.length);
-            //console.log("checkintime : " + results.rows.item(0).Newcol);
+            alert("Results Length: " + results.rows.length);
+            //alert("checkintime : " + results.rows.item(0).Newcol);
                 
             if (results.rows.length == 0)
                     {
@@ -226,19 +229,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         window.location = "picUpload.html?checkin=true";
                     }
         }
+        
         function checkCheckIn(){
-            console.log("In checkCheckIn!");
+            alert("In checkCheckIn!");
             var currentDate = new Date();
             var d = currentDate.toDateString();
-            //check checkin/out status
+            //Check checkin/out status
                         company = 'virtualforce';
                             if (company == 'virtualforce'){
                                 function it6(up,cd){
-                                //alert("In DB!");
+                                
                                 db.transaction(function(t1){
-                                    console.log("In checkCheckIn2!");
-                                    console.log("Userpin: " + up);
-                                    console.log("Date: " + cd);
+                                    alert("In checkCheckIn2!");
+                                    alert("Userpin: " + up);
+                                    alert("Date: " + cd);
                                     t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
                                 });
                             };
@@ -248,7 +252,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
-                                        console.log("Results Length: " + results.length);
+                                        alert("Results Length: " + results.length);
                                             
                                             if (results.length == 0)
                                                 {
@@ -280,7 +284,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
-                                        console.log("Results Length: " + results.length);
+                                        alert("Results Length: " + results.length);
 
                                             if (results.length == 0)
                                                 {
@@ -324,8 +328,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 window.location = "index.html";
             }
         }*/
+                            
         function capturePicture(){
-                //alert("HERE!");
+                
                 $('.pic_upload').css({'display':'block'});
                 $('.btn-holder2').css({'display':'block'});
                 $('#snap-text').css({'display':'none','margin-top':'0'});
@@ -340,12 +345,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     destinationType: navigator.camera.DestinationType.DATA_URL
                     //allowEdit: true
                 };
+                
                 // Take picture using device camera and retrieve image as base64-encoded string
                 navigator.camera.getPicture(onSuccess,onFail,options);
           }
           var onSuccess = function(data3) {
-                    //alert("On success called");
-                    
+              
+                    //alert("On success called");      
                     userAvatar = data3;
                     var data;
                     data = "data:image/jpeg;base64," + userAvatar;
@@ -366,84 +372,88 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 $('#submit1').css({'opacity':'1.4'});
                 
             }
+            
             $('#submit1').attr('disabled','disabled');
             $('#submit1').css({'opacity':'0.4'});
-                    var thumbnail = 400;
-                    var ppWidth, ppHeight;
+                    
                    
+            var thumbnail = 400;
+            var ppWidth, ppHeight;
+            //alert("Image: " + data);
+            var image = new Image();
+            image.src = userAvatar;
+            offlinePic = userAvatar;
+            
+            //Resizing Image
+            var canvas = document.createElement('canvas');
 
-                    //alert("Image: " + data);
-                    var image = new Image();
-                    image.src = userAvatar;
-                    offlinePic = userAvatar;
-                    var canvas = document.createElement('canvas');
-
-                    canvas.width = thumbnail;
-                    canvas.height = thumbnail;
-
-
-                    image.onload = function(){
-                        ppWidth = image.width;
-                        ppHeight = image.height;
-
-                        //alert('Width: ' + ppWidth);
-                        //alert('Height: ' + ppHeight);
-
-                        var context = canvas.getContext('2d');
-                        context.clearRect(0, 0, thumbnail, thumbnail);
-                        var imageWidth;
-                        var imageHeight;
-                        var offsetX = 0;
-                        var offsetY = 0;
+            canvas.width = thumbnail;
+            canvas.height = thumbnail;
 
 
+            image.onload = function(){
+                
+                ppWidth = image.width;
+                ppHeight = image.height;
 
-                        if (image.width > image.height) {
-                            imageWidth = Math.round(thumbnail * image.width / image.height);
-                            imageHeight = thumbnail;
-                            offsetX = - Math.round((imageWidth - thumbnail) / 2);
-                            //alert("IF");
-                        } else {
-                            imageHeight = Math.round(thumbnail * image.height / image.width);
-                            imageWidth = thumbnail;    
-                            offsetY = - Math.round((imageHeight - thumbnail) / 2);            
-                            //alert("ELSE");
-                        }
+                var context = canvas.getContext('2d');
+                context.clearRect(0, 0, thumbnail, thumbnail);
+                var imageWidth;
+                var imageHeight;
+                var offsetX = 0;
+                var offsetY = 0;
 
-                        context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
-                        var data2 = canvas.toDataURL('image/jpeg');
 
-                        //alert ("Data2.1: " + data2);
-                        data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
-                        offPicData  = data2;
-                        //alert ("Data2.2: " + data2);
-                        if (navigator.onLine){
-                            uploadParseFile(data2);
-                        }
-                        else{
-                            uploadParsePic(userAvatar,offPicData); 
-                        }
+
+                if (image.width > image.height) {
+                    imageWidth = Math.round(thumbnail * image.width / image.height);
+                    imageHeight = thumbnail;
+                    offsetX = - Math.round((imageWidth - thumbnail) / 2);
+                    //alert("IF");
+                } else {
+                    imageHeight = Math.round(thumbnail * image.height / image.width);
+                    imageWidth = thumbnail;    
+                    offsetY = - Math.round((imageHeight - thumbnail) / 2);            
+                    //alert("ELSE");
+                }
+
+                context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
+                var data2 = canvas.toDataURL('image/jpeg');
+
+                data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
+                offPicData  = data2;
+
+                if (navigator.onLine){ //Online
+                    
+                    uploadParseFile(data2);
+                    
+                }
+                else{ //Offline
+                    uploadParsePic(userAvatar,offPicData); 
+                }
 
                         
         }
         
         function uploadParseFile(pf){
+            
             //Initialize Parse
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
 
             var parseFile = new Parse.File("mypic.jpg", {base64:pf});
-
+            
+            //Uploading file to Parse
             parseFile.save().then(function() {
                                             //alert("Got it!");
                                             userAvatar = parseFile.url();
                                             uploadParsePic(userAvatar,pf);
-                                            //alert (parseFile.url());
-                                            console.log("Ok");
-                                            //alert("In Uploadfinal!");
+                                            alert (parseFile.url());
+                                            alert("Ok");
+                                            alert("In Uploadfinal!");
 
                                         }, function(error) {
-                                            console.log("Error");
-                                            console.log(error);
+                                            alert("Error");
+                                            alert(error);
                                         });
             }
         }
@@ -455,312 +465,298 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
         function syncDataCheckIn(){
-            console.log("Sync Data Called");
-            if (checkin == 'true'){
-                //if (company == 'virtualforce'){
-                console.log("Sync Data Called Checkin!");
+            alert("Sync Data Called");
+            
+            if (checkin == 'true'){ //Checked-In
+                
+                alert("Sync Data Called Checkin!");
                     db.transaction(function(t){
-                        console.log("This query called!");
+                        alert("This query called!");
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploaded == 'false1'", [], querySyncIn, errorCB);
                         t.executeSql("SELECT * FROM KUALITATEM WHERE uploaded == 'false1'", [], querySyncIn, errorCB);
                     });
-                //}
                 
             }
-            else{
-                //if (company == 'virtualforce'){
-                console.log("Sync Data Called Checkout!");
+            else{ //Checked-Out
+                
+                alert("Sync Data Called Checkout!");
                     db.transaction(function(t){
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploaded ='false2'", [], querySyncOut, errorCB);
                         t.executeSql("SELECT * FROM KUALITATEM WHERE uploaded ='false2'", [], querySyncOut, errorCB);
                     });
-                //}
                 
             }
         }
         
         function uploadPicToParse(pic3){
+            
             //Initialize Parse
             Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
 
             var parseFile = new Parse.File("mypic.jpg", {base64:pic3});
-
+            
+            //Uploading Pic to Parse
             parseFile.save().then(function() {
                                             //alert("Got it!");
                                             userAvatar = parseFile.url();
-                                            //uploadParsePic(userAvatar,pf);
-                                            //alert (parseFile.url());
-                                            console.log("Ok");
-                                            //alert("In Uploadfinal!");
+                                            alert (parseFile.url());
+                                            alert("Ok");
+                                            alert("In Uploadfinal!");
 
                                         }, function(error) {
-                                            console.log("Error");
-                                            console.log(error);
+                                            alert("Error");
+                                            alert(error);
                                         });
             
         }
         
-        function querySyncIn(t,result){
+        function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
-                console.log("No Result found!");
+                alert("No Result found!");
                 return;
             }
-            console.log("Sync CheckIn");
+            alert("Sync CheckIn");
             var currentDate = new Date();
-             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var checkSDate = new Date();
-             var checkEDate = new Date();
-             //var compareDate;
-             checkSDate.setHours(00);
-             checkSDate.setMinutes(00);
-             checkSDate.setSeconds(00);
-             checkEDate.setHours(23);
-             checkEDate.setMinutes(59);
-             checkEDate.setSeconds(59);
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var status;
-             console.log("Check Status: " + checkStatus.toString());
-             console.log("Current Date: " + currentDate.toString());
-             if ((currentDate < checkStatus || currentDate == checkStatus)){
-                 status = 'ontime';
-             }
-             else{
-                 status = 'late';
-             }
-             var j=0;
-             var k=0;
-             console.log("Before Loop!");
-             console.log("Query Results: " + result.rows.length);
-              for (var i=0;i<result.rows.length;i++){
-                  console.log("In Loop!");
-             if ((result.rows.item(i).userpin).substr(0,1) == '1'){
-                        console.log("Called for VF!");
-                        var query = new Parse.Query("VirtualForce");
-                        console.log("UserPin to find: " + result.rows.item(i).userpin);
-                        var up = result.rows.item(i).userpin;
-                        query.equalTo("userPin", result.rows.item(i).userpin);
-                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                        query.lessThanOrEqualTo("createdAt", checkEDate);
-                        query.find({
-                            success:function (results) {
-                                console.log("Result in VF found");
-                                console.log("Results Length in VF sync: " +results.length);
-                                //var fil = result.rows.item(0).userAvatarIn;
-                                uploadPicToParse(result.rows.item(j).userAvatarIn);
-                                console.log("Results Found: " + result.rows.item(j).checkInTime);
-                                console.log("Results Found (Username): " + result.rows.item(j).username);
-                                results[0].set("userAvatarIn",userAvatar);
-                                results[0].set("checkInTime",result.rows.item(j).checkInTime);
-                                results[0].set("department",result.rows.item(j).department);
-                                results[0].set("check","checkin");
-                                results[0].set("createdAt",currentDate);
-                                results[0].set("status",result.rows.item(j).status);
-                                db.transaction(function(t){
-                                    console.log("My Query Home Called!");
-                                    t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                });
-                                j++;
-                                results[0].save(null, {
-                                    success:function (kuali) {
-                                        console.log(kuali + " saved successfully");
-                                        
-                                    },
-                                    error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    }
-
-                                });
-
-                                //cb(pSweet);
-                            },
-                            error:function (pSweet, error) {
-                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                            }
-                            
-                        });
-                        
-                    //}
-             }
-             else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
-                 //for (var i=0;i<result.rows.length;i++){
-                 console.log("Called for KM!");
-                        var query = new Parse.Query("Kualitatem");
-                        query.equalTo("userPin", result.rows.item(i).userpin);
-                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                        query.lessThanOrEqualTo("createdAt", checkEDate);
-                        query.find({
-                            success:function (results) {
-                                //alert("Results Length: " +results.length);
-                                uploadPicToParse(result.rows.item(k).userAvatarIn);
-                                results[0].set("userAvatarIn",userAvatar);
-                                results[0].set("checkInTime",result.rows.item(k).checkInTime);
-                                results[0].set("department",result.rows.item(k).department);
-                                results[0].set("check","checkin");
-                                results[0].set("createdAt",currentDate);
-                                results[0].set("status",result.rows.item(k).status);
-                                db.transaction(function(t){
-                                    console.log("My Query Home Called!");
-                                    t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                });
-                                k++;
-                                results[0].save(null, {
-                                    success:function (kuali) {
-                                        console.log(kuali + " saved successfully");
-                                       
-                                    },
-                                    error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    }
-
-                                });
-
-                                //cb(pSweet);
-                            },
-                            error:function (pSweet, error) {
-                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                            }
-
-                        });
-                    //}
-             }
-              }
-                
-
-        }
-        
-        function querySyncOut(t,result){
+            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
-            if(result.rows.length == 0){
-                console.log("No Result found!");
-                return;
+            var checkStatus = new Date(); // Status : late,ontime
+            checkStatus.setHours(9);
+            checkStatus.setMinutes(30);
+            checkStatus.setSeconds(59);
+            
+            var checkSDate = new Date(); //Start Date
+            checkSDate.setHours(00);
+            checkSDate.setMinutes(00);
+            checkSDate.setSeconds(00);
+            
+            var checkEDate = new Date(); //End Date
+            checkEDate.setHours(23);
+            checkEDate.setMinutes(59);
+            checkEDate.setSeconds(59);
+            
+            var status;
+            
+            alert("Check Status: " + checkStatus.toString());
+            alert("Current Date: " + currentDate.toString());
+            
+            if ((currentDate < checkStatus || currentDate == checkStatus)){
+                status = 'ontime';
             }
-            var currentDate = new Date();
-             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var checkSDate = new Date();
-             var checkEDate = new Date();
-             //var compareDate;
-             checkSDate.setHours(00);
-             checkSDate.setMinutes(00);
-             checkSDate.setSeconds(00);
-             checkEDate.setHours(23);
-             checkEDate.setMinutes(59);
-             checkEDate.setSeconds(59);
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var status;
-             console.log("Check Status: " + checkStatus.toString());
-             console.log("Current Date: " + currentDate.toString());
-             if ((currentDate < checkStatus || currentDate == checkStatus)){
-                 status = 'ontime';
-             }
-             else{
-                 status = 'late';
-             }
-             
-             var checkinTime = new Date();
-            var hours = new Date();
-
-            var time2;
-            var time=[];
-            var checkinHr,checkinMn;
-           
-            console.log("Query Results: " + result.rows.length);
+            else{
+                status = 'late';
+            }
             
             var j=0;
             var k=0;
+            
+            //alert("Query Results: " + result.rows.length);
             for (var i=0;i<result.rows.length;i++){
-            if((result.rows.item(i).userpin).substr(0,1) == '1'){
-                        
-                        var query = new Parse.Query("VirtualForce");
-                        query.equalTo("userPin", result.rows.item(i).userpin);
-                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                        query.lessThanOrEqualTo("createdAt", checkEDate);
-                        query.find({
-                            success:function (results) {
+                 //alert("In Loop!");
+                if ((result.rows.item(i).userpin).substr(0,1) == '1'){
+                           alert("Called for VF!");
+                           alert("UserPin to find: " + result.rows.item(i).userpin);
+                           
+                           var query = new Parse.Query("VirtualForce");
+                           query.equalTo("userPin", result.rows.item(i).userpin);
+                           query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                           query.lessThanOrEqualTo("createdAt", checkEDate);
+                           query.find({
+                               success:function (results) {
+                                   alert("Result in VF found");
+                                   alert("Results Length in VF sync: " +results.length);
+                                   alert("Results Found: " + result.rows.item(j).checkInTime);
+                                   alert("Results Found (Username): " + result.rows.item(j).username);
+                                   
+                                   //Upload Picture to Parse
 
-                                console.log("Results Length: " + results.length);
-                               
-                                //alert("Results Length: " +results.length);
-                                uploadPicToParse(result.rows.item(j).userAvatarOut);
-                                
-                                results[0].set("userAvatarOut",userAvatar);
-                                results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
-                                results[0].set("check","checkout");
-                                results[0].set("workingHours",result.rows.item(j).workingHours);
-                                
-                                deleteLocalvf(result.rows.item(j).userpin);
-                                j++;
-                                results[0].save(null, {
-                                    success:function (virtualf) {
-                                        console.log(virtualf + " saved successfully");
-                                        
-                                        
-                                    },
-                                    error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    }
+                                   uploadPicToParse(result.rows.item(j).userAvatarIn);
+                                   results[0].set("userAvatarIn",userAvatar);
+                                   results[0].set("checkInTime",result.rows.item(j).checkInTime);
+                                   results[0].set("department",result.rows.item(j).department);
+                                   results[0].set("check","checkin");
+                                   results[0].set("createdAt",currentDate);
+                                   results[0].set("status",result.rows.item(j).status);
+                                   db.transaction(function(t){
+                                       alert("My Query Home Called!");
+                                       t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){alert("Success!");}), errorCB);
+                                   });
+                                   j++;
+                                   results[0].save(null, {
+                                       success:function (kuali) {
+                                           alert(kuali + " saved successfully");
 
-                                });
-                            },
-                            error:function (error) {
+                                       },
+                                       error:function (pSweet, error) {
+                                           alert("saveRecord() -> " + error.code + " " + error.message);
+                                       }
 
-                            }
-                        });
+                                   });
+                               },
+                               error:function (pSweet, error) {
+                                   alert("saveRecord() -> " + error.code + " " + error.message);
+                               }
 
-                    //}
+                           });
+                }
+                else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
+                    alert("Called for KM!");
+                           var query = new Parse.Query("Kualitatem");
+                           query.equalTo("userPin", result.rows.item(i).userpin);
+                           query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                           query.lessThanOrEqualTo("createdAt", checkEDate);
+                           query.find({
+                               success:function (results) {
+                                   //alert("Results Length: " +results.length);
+                                   
+                                   //Upload Picture to Parse
+                                   uploadPicToParse(result.rows.item(k).userAvatarIn);
+                                   results[0].set("userAvatarIn",userAvatar);
+                                   results[0].set("checkInTime",result.rows.item(k).checkInTime);
+                                   results[0].set("department",result.rows.item(k).department);
+                                   results[0].set("check","checkin");
+                                   results[0].set("createdAt",currentDate);
+                                   results[0].set("status",result.rows.item(k).status);
+                                   db.transaction(function(t){
+                                       alert("My Query Home Called!");
+                                       
+                                       //Update record locally
+                                       t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){alert("Success!");}), errorCB);
+                                   });
+                                   k++;
+                                   results[0].save(null, {
+                                       success:function (kuali) {
+                                           alert(kuali + " saved successfully");
+
+                                       },
+                                       error:function (pSweet, error) {
+                                           alert("saveRecord() -> " + error.code + " " + error.message);
+                                       }
+
+                                   });
+                               },
+                               error:function (pSweet, error) {
+                                   alert("saveRecord() -> " + error.code + " " + error.message);
+                               }
+
+                           });
+                }
             }
-            else if((result.rows.item(i).userpin).substr(0,1) == '2'){
-                    //for (var i=0;i<result.rows.length;i++){
-                        var query = new Parse.Query("Kualitatem");
-                        query.equalTo("userPin", result.rows.item(i).userpin);
-                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                        query.lessThanOrEqualTo("createdAt", checkEDate);
-                        query.find({
-                            success:function (results) {
-
-                                console.log("Results Length: " + results.length);
-                               
-                                //alert("Results Length: " +results.length);
-                                uploadPicToParse(result.rows.item(k).userAvatarOut);
-                                results[0].set("userAvatarOut",userAvatar);
-                                results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
-                                results[0].set("check","checkout");
-                                results[0].set("workingHours",result.rows.item(k).workingHours);
-                                deleteLocalkm(result.rows.item(k).userpin);
-                                k++;
-                                results[0].save(null, {
-                                    success:function (virtualf) {
-                                        console.log(virtualf + " saved successfully");
-                                         
-                                    },
-                                    error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    }
-
-                                });
-                            },
-                            error:function (error) {
-
-                            }
-                        });
-
-                    //}
+        }
+        
+        function querySyncOut(t,result){ //Sync Check-out Records
+            
+            if(result.rows.length == 0){
+                alert("No Result found!");
+                return;
             }
+            var currentDate = new Date();
+            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+            
+            var checkStatus = new Date(); // Status : late,ontime
+            checkStatus.setHours(9);
+            checkStatus.setMinutes(30);
+            checkStatus.setSeconds(59);
+            
+            var checkSDate = new Date(); //Start Date
+            checkSDate.setHours(00);
+            checkSDate.setMinutes(00);
+            checkSDate.setSeconds(00);
+            
+            var checkEDate = new Date(); //End Date
+            checkEDate.setHours(23);
+            checkEDate.setMinutes(59);
+            checkEDate.setSeconds(59);
+            
+            var status;
+            alert("Check Status: " + checkStatus.toString());
+            alert("Current Date: " + currentDate.toString());
+            
+            if ((currentDate < checkStatus || currentDate == checkStatus)){
+                status = 'ontime';
             }
+            else{
+                status = 'late';
+            }
+            
+            alert("Query Results: " + result.rows.length);
+            
+            var j=0;
+            var k=0;
+            
+            for (var i=0;i<result.rows.length;i++){
+                if((result.rows.item(i).userpin).substr(0,1) == '1'){
 
+                            var query = new Parse.Query("VirtualForce");
+                            query.equalTo("userPin", result.rows.item(i).userpin);
+                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                            query.lessThanOrEqualTo("createdAt", checkEDate);
+                            query.find({
+                                success:function (results) {
+
+                                    alert("Results Length: " + results.length);
+                                    
+                                    //Upload Picture to Parse
+                                    uploadPicToParse(result.rows.item(j).userAvatarOut);
+
+                                    results[0].set("userAvatarOut",userAvatar);
+                                    results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
+                                    results[0].set("check","checkout");
+                                    results[0].set("workingHours",result.rows.item(j).workingHours);
+
+                                    deleteLocalvf(result.rows.item(j).userpin);
+                                    j++;
+                                    results[0].save(null, {
+                                        success:function (virtualf) {
+                                            alert(virtualf + " saved successfully");
+
+
+                                        },
+                                        error:function (pSweet, error) {
+                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                },
+                                error:function (error) {
+
+                                }
+                            });
+                }
+                else if((result.rows.item(i).userpin).substr(0,1) == '2'){
+                            var query = new Parse.Query("Kualitatem");
+                            query.equalTo("userPin", result.rows.item(i).userpin);
+                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                            query.lessThanOrEqualTo("createdAt", checkEDate);
+                            query.find({
+                                success:function (results) {
+
+                                    alert("Results Length: " + results.length);
+                                    
+                                    //Upload Picture to Parse
+                                    uploadPicToParse(result.rows.item(k).userAvatarOut);
+                                    results[0].set("userAvatarOut",userAvatar);
+                                    results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
+                                    results[0].set("check","checkout");
+                                    results[0].set("workingHours",result.rows.item(k).workingHours);
+                                    deleteLocalkm(result.rows.item(k).userpin);
+                                    k++;
+                                    results[0].save(null, {
+                                        success:function (virtualf) {
+                                            alert(virtualf + " saved successfully");
+
+                                        },
+                                        error:function (pSweet, error) {
+                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                        }
+
+                                    });
+                                },
+                                error:function (error) {
+
+                                }
+                            });
+                }
+            }
         }
        
         function queryHome(){
@@ -772,290 +768,268 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
          var uploadParsePic = function(url){
              //alert("In UploadPic!");
-             var currentDate = new Date();
-             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var checkSDate = new Date();
-             var checkEDate = new Date();
-             //var compareDate;
-             checkSDate.setHours(00);
-             checkSDate.setMinutes(00);
-             checkSDate.setSeconds(00);
-             checkEDate.setHours(23);
-             checkEDate.setMinutes(59);
-             checkEDate.setSeconds(59);
-             var checkStatus = new Date();
-             checkStatus.setHours(9);
-             checkStatus.setMinutes(30);
-             checkStatus.setSeconds(59);
-             var status;
-             console.log("Check Status: " + checkStatus.toString());
-             console.log("Current Date: " + currentDate.toString());
-             if ((currentDate < checkStatus || currentDate == checkStatus)){
-                 status = 'ontime';
-             }
-             else{
-                 status = 'late';
-             }
+            var currentDate = new Date();
+            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
+            var checkStatus = new Date(); // Status : late,ontime
+            checkStatus.setHours(9);
+            checkStatus.setMinutes(30);
+            checkStatus.setSeconds(59);
+            
+            var checkSDate = new Date(); //Start Date
+            checkSDate.setHours(00);
+            checkSDate.setMinutes(00);
+            checkSDate.setSeconds(00);
+            
+            var checkEDate = new Date(); //End Date
+            checkEDate.setHours(23);
+            checkEDate.setMinutes(59);
+            checkEDate.setSeconds(59);
+            
+            var status;
+            alert("Check Status: " + checkStatus.toString());
+            alert("Current Date: " + currentDate.toString());
+            
+            if ((currentDate < checkStatus || currentDate == checkStatus)){
+                status = 'ontime';
+            }
+            else{
+                status = 'late';
+            }
+
+           //URL Parsing get checkin value
+           var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+               for (i=0;i<params.length;i++) {
+                   val = params[i].split("=");
+                   if (val[0] == "checkin") {
+                       checkin = unescape(val[1]);
+                   }
+               }
+
+           userpin = window.localStorage.getItem("pin");
+           username = window.localStorage.getItem("username");
+           company = window.localStorage.getItem("company");
+           department = window.localStorage.getItem("department");
            
-            
-            //URL Parsing get checkin value
-            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
-                for (i=0;i<params.length;i++) {
-                    val = params[i].split("=");
-                    if (val[0] == "checkin") {
-                        checkin = unescape(val[1]);
-                    }
-                }
-            
-             userpin = window.localStorage.getItem("pin");
-             username = window.localStorage.getItem("username");
-             company = window.localStorage.getItem("company");
-             department = window.localStorage.getItem("department");
-                    //alert("User Pin: " + userpin);
-                    //alert("User Name: " + username);
-                    //alert("User Company: " + company);
-                    //alert("User Dept: " + department);
-                    
-                    //alert("CheckIn: " + checkin);
-     
-                
-                    if (checkin == 'true'){
-                        if (company == 'virtualforce'){
-                            //alert("In Virtual Force");
-                            if (navigator.onLine){
-                                console.log("Yes Em Online!");
-                                //syncDataCheckIn();   
-                                //function for saving/updating record locally
-                                
+            if (checkin == 'true'){
+                if (company == 'virtualforce'){
+                    //alert("In Virtual Force");
+                    if (navigator.onLine){
+                        alert("Yes Em Online!");
 
-                                var query = new Parse.Query("VirtualForce");
-                                query.equalTo("userPin", userpin);
-                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                                query.lessThanOrEqualTo("createdAt", checkEDate);
-                                query.find({
-                                    success:function (results) {
-                                        //alert("Results Length: " +results.length);
-                                        results[0].set("userAvatarIn",url);
-                                        results[0].set("checkInTime",currentTime);
-                                        results[0].set("department",department);
-                                        results[0].set("check","checkin");
-                                        results[0].set("createdAt",currentDate);
-                                        results[0].set("status",status);
-                                        results[0].save(null, {
-                                            success:function (kuali) {
-                                                console.log(kuali + " saved successfully");
-                                                syncDataCheckIn();  
-                                                upLocalvfIn(picUrl,currentTime,department,status,userpin);
-                                                //window.location = "home.html?checkin=" + checkin + "&pic=" + url;
-                                            },
-                                            error:function (pSweet, error) {
-                                                //alert("saveRecord() -> " + error.code + " " + error.message);
-                                            }
-
-                                        });
-
-                                        //cb(pSweet);
+                        var query = new Parse.Query("VirtualForce");
+                        query.equalTo("userPin", userpin);
+                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                        query.lessThanOrEqualTo("createdAt", checkEDate);
+                        query.find({
+                            success:function (results) {
+                                //alert("Results Length: " +results.length);
+                                results[0].set("userAvatarIn",url);
+                                results[0].set("checkInTime",currentTime);
+                                results[0].set("department",department);
+                                results[0].set("check","checkin");
+                                results[0].set("createdAt",currentDate);
+                                results[0].set("status",status);
+                                results[0].save(null, {
+                                    success:function (kuali) {
+                                        alert(kuali + " saved successfully");
+                                        syncDataCheckIn();  
+                                        upLocalvfIn(picUrl,currentTime,department,status,userpin);
                                     },
                                     error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
                                     }
 
                                 });
+                            },
+                            error:function (pSweet, error) {
+                                alert("saveRecord() -> " + error.code + " " + error.message);
                             }
-                            else{
-                                db.transaction(function(t){
-                                    t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offPicData + "' , checkInTime = '" + currentTime + "' , department = '" + department + "' , checkstat = 'checkin', status = '" + status + "' , uploaded = 'false1' WHERE userpin ==" + userpin , [], queryHome, errorCB9);
-                                    //
-                                });
-                            }
-                        }
-                        else if (company == 'kualitatem'){
-                            
-                            if (navigator.onLine){
-                                
-                                //function for saving/updating record locally
-                                
-                                var query = new Parse.Query("Kualitatem");
 
-                                query.equalTo("userPin", userpin);
-                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                                query.lessThanOrEqualTo("createdAt", checkEDate);
-                                query.find({
-                                    success:function (results) {
-                                        //console.log(virtualf + " saved successfully");
-                                        //results[0].set("userPin",userpin);
-                                        results[0].set("userAvatarIn",picUrl);
-                                        results[0].set("checkInTime",currentTime);
-                                        results[0].set("department",department);
-                                        results[0].set("check","checkin");
-                                        results[0].set("createdAt",currentDate);
-                                        //results[0].set("userName",username);
-                                        results[0].set("status",status);
-                                        results[0].save(null, {
-                                            success:function (kuali) {
-                                                console.log(kuali + " saved successfully");
-                                                syncDataCheckIn();  
-                                                upLocalkmIn(picUrl,currentTime,department,status,userpin);
-                                                
-                                            },
-                                            error:function (pSweet, error) {
-                                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                                            }
-
-                                        });
-
-                                        //cb(pSweet);
-                                    },
-                                    error:function (pSweet, error) {
-                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    }
-
-                                });
-                            }
-                            else{
-                                db.transaction(function(t){
-                                    t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offPicData + "' , checkInTime = '" + currentTime + "' , department = '" + department + "' , checkstat = 'checkin', status = '" + status + "' , uploaded = 'false1' WHERE userpin ==" + userpin , [], queryHome, errorCB9);
-                                });
-                            }
-                        }
+                        });
                     }
                     else{
-                        var checkinTime = new Date();
-                        var hours = new Date();
-                        var workHours;
-                        var time2;
-                        var time=[];
-                        var checkinHr,checkinMn;
-                        if (company == 'virtualforce'){
-                            if (navigator.onLine){
-                                    
-                                    var query = new Parse.Query("VirtualForce");
-                                    //query.ascending("checkInOutTime");
-                                    query.equalTo("userPin", userpin);
-                                    //query.equalTo("check", 'checkin');
-                                    query.startsWith("checkInTime", currentDate.toDateString());
-                                    query.find({
-                                        success:function (results) {
-                                            console.log("Results Length: " + results.length);
-                                              time2 = results[0].get("checkInTime");
-                                              time2 = time2.substr(time2.length -5);
-                                              time = time2.split(":");
-                                              checkinHr = time[0];
-                                              checkinMn = time[1];
-                                              checkinTime.setHours(checkinHr);
-                                              checkinTime.setMinutes(checkinMn);
-                                              hours = currentDate - checkinTime;
-
-                                               var cd = 24 * 60 * 60 * 1000,
-                                                    ch = 60 * 60 * 1000,
-                                                    d = Math.floor(hours / cd),
-                                                    h = '0' + Math.floor( (hours - d * cd) / ch),
-                                                    m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
-                                                hours = [h.substr(-2), m.substr(-2)].join(':');
-                                                //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
-
-                                              workHours = hours.toString();
-
-                                                results[0].set("userAvatarOut",picUrl);
-                                                results[0].set("checkOutTime",currentTime);
-                                                results[0].set("check","checkout");
-                                                results[0].set("workingHours",workHours);
-                                                results[0].save(null, {
-                                                    success:function (virtualf) {
-                                                        console.log(virtualf + " saved successfully");
-                                                        syncDataCheckIn();  
-                                                        deleteLocalvf(userpin);
-                                                        db.transaction(function(t){
-                                                               t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ userAvatar + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'true2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
-                                                           });
-                                                    },
-                                                    error:function (pSweet, error) {
-                                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                    }
-
-                                                });
-                                            },
-                                            error:function (error) {
-
-                                            }
-                                    });
-                                }
-                                else{
-                                    
-                                    db.transaction(function(t){
-                                        t.executeSql("SELECT checkInTime FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], calcOffWorkHourvf, errorCBout);
-                                    });
-                                   
-                                }
-                        }
-                        
-                        else if (company == 'kualitatem'){
-                                    if (navigator.onLine){
-                                        
-                                        var query = new Parse.Query("Kualitatem");
-                                        //query.ascending("checkInOutTime");
-                                        query.equalTo("userPin", userpin);
-                                        //query.equalTo("check", 'checkin');
-                                        query.startsWith("checkInTime", currentDate.toDateString());
-                                        query.find({
-                                            success:function (results) {
-                                                console.log("Results Length: " + results.length);
-                                                  time2 = results[0].get("checkInTime");
-                                                  time2 = time2.substr(time2.length -5);
-                                                  time = time2.split(":");
-                                                  checkinHr = time[0];
-                                                  checkinMn = time[1];
-                                                  checkinTime.setHours(checkinHr);
-                                                  checkinTime.setMinutes(checkinMn);
-                                                  hours = currentDate - checkinTime;
-
-                                                   var cd = 24 * 60 * 60 * 1000,
-                                                        ch = 60 * 60 * 1000,
-                                                        d = Math.floor(hours / cd),
-                                                        h = '0' + Math.floor( (hours - d * cd) / ch),
-                                                        m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
-                                                    hours = [h.substr(-2), m.substr(-2)].join(':');
-                                                    //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
-
-                                                  workHours = hours.toString();
-                                                  console.log("Working Hours " + workHours);
-                                      
-                                                    results[0].set("userAvatarOut",picUrl);
-                                                    results[0].set("checkOutTime",currentTime);
-                                                    results[0].set("check","checkout");
-                                                    results[0].set("workingHours",workHours);
-                                                    results[0].save(null, {
-                                                        success:function (kuali) {
-                                                            console.log(kuali + " saved successfully");
-                                                            syncDataCheckIn();  
-                                                            deleteLocalkm(userpin);
-                                                        },
-                                                        error:function (pSweet, error) {
-                                                            console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                        }
-
-                                                    });
-                                            },
-                                        error:function (error) {
-
-                                        }
-                                    });
-                                }
-                                else{
-                                    db.transaction(function(t){
-                                        t.executeSql("SELECT checkInTime FROM KUALITATEM WHERE userpin ==" + userpin , [], calcOffWorkHourkm, errorCBout);
-                                    });
-                                }
-                            }
+                        db.transaction(function(t){
+                            t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offPicData + "' , checkInTime = '" + currentTime + "' , department = '" + department + "' , checkstat = 'checkin', status = '" + status + "' , uploaded = 'false1' WHERE userpin ==" + userpin , [], queryHome, errorCB9);
+                        });
                     }
+                }
+                else if (company == 'kualitatem'){
 
-        
-            
+                    if (navigator.onLine){
+                        
+                        var query = new Parse.Query("Kualitatem");
+                        query.equalTo("userPin", userpin);
+                        query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                        query.lessThanOrEqualTo("createdAt", checkEDate);
+                        query.find({
+                            success:function (results) {
+                                
+                                results[0].set("userAvatarIn",picUrl);
+                                results[0].set("checkInTime",currentTime);
+                                results[0].set("department",department);
+                                results[0].set("check","checkin");
+                                results[0].set("createdAt",currentDate);
+                                results[0].set("status",status);
+                                results[0].save(null, {
+                                    success:function (kuali) {
+                                        alert(kuali + " saved successfully");
+                                        syncDataCheckIn();  
+                                        upLocalkmIn(picUrl,currentTime,department,status,userpin);
+
+                                    },
+                                    error:function (pSweet, error) {
+                                        alert("saveRecord() -> " + error.code + " " + error.message);
+                                    }
+
+                                });
+
+                                //cb(pSweet);
+                            },
+                            error:function (pSweet, error) {
+                                alert("saveRecord() -> " + error.code + " " + error.message);
+                            }
+
+                        });
+                    }
+                    else{
+                        db.transaction(function(t){
+                            t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offPicData + "' , checkInTime = '" + currentTime + "' , department = '" + department + "' , checkstat = 'checkin', status = '" + status + "' , uploaded = 'false1' WHERE userpin ==" + userpin , [], queryHome, errorCB9);
+                        });
+                    }
+                }
+            }
+            else{
+                var checkinTime = new Date();
+                var hours = new Date();
+                var workHours;
+                var time2;
+                var time=[];
+                var checkinHr,checkinMn;
+                if (company == 'virtualforce'){
+                    if (navigator.onLine){
+
+                            var query = new Parse.Query("VirtualForce");
+                            //query.ascending("checkInOutTime");
+                            query.equalTo("userPin", userpin);
+                            //query.equalTo("check", 'checkin');
+                            query.startsWith("checkInTime", currentDate.toDateString());
+                            query.find({
+                                success:function (results) {
+                                    alert("Results Length: " + results.length);
+                                      time2 = results[0].get("checkInTime");
+                                      time2 = time2.substr(time2.length -5);
+                                      time = time2.split(":");
+                                      checkinHr = time[0];
+                                      checkinMn = time[1];
+                                      checkinTime.setHours(checkinHr);
+                                      checkinTime.setMinutes(checkinMn);
+                                      hours = currentDate - checkinTime;
+
+                                       var cd = 24 * 60 * 60 * 1000,
+                                            ch = 60 * 60 * 1000,
+                                            d = Math.floor(hours / cd),
+                                            h = '0' + Math.floor( (hours - d * cd) / ch),
+                                            m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
+                                        hours = [h.substr(-2), m.substr(-2)].join(':');
+                                        //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
+
+                                      workHours = hours.toString();
+
+                                        results[0].set("userAvatarOut",picUrl);
+                                        results[0].set("checkOutTime",currentTime);
+                                        results[0].set("check","checkout");
+                                        results[0].set("workingHours",workHours);
+                                        results[0].save(null, {
+                                            success:function (virtualf) {
+                                                alert(virtualf + " saved successfully");
+                                                syncDataCheckIn();  
+                                                deleteLocalvf(userpin);
+                                                db.transaction(function(t){
+                                                       t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ userAvatar + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'true2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
+                                                   });
+                                            },
+                                            error:function (pSweet, error) {
+                                                alert("saveRecord() -> " + error.code + " " + error.message);
+                                            }
+
+                                        });
+                                    },
+                                    error:function (error) {
+
+                                    }
+                            });
+                        }
+                        else{
+
+                            db.transaction(function(t){
+                                t.executeSql("SELECT checkInTime FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], calcOffWorkHourvf, errorCBout);
+                            });
+
+                        }
+                }
+
+                else if (company == 'kualitatem'){
+                            if (navigator.onLine){
+
+                                var query = new Parse.Query("Kualitatem");
+                                //query.ascending("checkInOutTime");
+                                query.equalTo("userPin", userpin);
+                                //query.equalTo("check", 'checkin');
+                                query.startsWith("checkInTime", currentDate.toDateString());
+                                query.find({
+                                    success:function (results) {
+                                        alert("Results Length: " + results.length);
+                                          time2 = results[0].get("checkInTime");
+                                          time2 = time2.substr(time2.length -5);
+                                          time = time2.split(":");
+                                          checkinHr = time[0];
+                                          checkinMn = time[1];
+                                          checkinTime.setHours(checkinHr);
+                                          checkinTime.setMinutes(checkinMn);
+                                          hours = currentDate - checkinTime;
+
+                                           var cd = 24 * 60 * 60 * 1000,
+                                                ch = 60 * 60 * 1000,
+                                                d = Math.floor(hours / cd),
+                                                h = '0' + Math.floor( (hours - d * cd) / ch),
+                                                m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
+                                            hours = [h.substr(-2), m.substr(-2)].join(':');
+                                            //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
+
+                                          workHours = hours.toString();
+                                          alert("Working Hours " + workHours);
+
+                                            results[0].set("userAvatarOut",picUrl);
+                                            results[0].set("checkOutTime",currentTime);
+                                            results[0].set("check","checkout");
+                                            results[0].set("workingHours",workHours);
+                                            results[0].save(null, {
+                                                success:function (kuali) {
+                                                    alert(kuali + " saved successfully");
+                                                    syncDataCheckIn();  
+                                                    deleteLocalkm(userpin);
+                                                },
+                                                error:function (pSweet, error) {
+                                                    alert("saveRecord() -> " + error.code + " " + error.message);
+                                                }
+
+                                            });
+                                    },
+                                error:function (error) {
+
+                                }
+                            });
+                        }
+                        else{
+                            db.transaction(function(t){
+                                t.executeSql("SELECT checkInTime FROM KUALITATEM WHERE userpin ==" + userpin , [], calcOffWorkHourkm, errorCBout);
+                            });
+                        }
+                    }
+            }
+
+
+
         }
         
         function calcOffWorkHourvf(tx,results){
@@ -1151,13 +1125,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var yesterday = new Date();
             var checkin_time, checkout_time;
             var time = {};
-            console.log('Today: ' + day);
+            alert('Today: ' + day);
             if (day == 1){
-                console.log('Today is Monday!');
+                alert('Today is Monday!');
                 yesterday.setDate(currentDate.getDate()-3);
             }
             else{
-                console.log('Any other day!');
+                alert('Any other day!');
                 yesterday.setDate(currentDate.getDate()-1);
             }
             
@@ -1170,8 +1144,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Working Hours'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Status'  + '</th>';
             table += '<tr>';
-            //console.log("Yesterday's Date: " + yesterday);
-            console.log("In sendEmail");
+            //alert("Yesterday's Date: " + yesterday);
+            alert("In sendEmail");
             var newLine = "<br>";
             var msg = '';
             var reportDate;
@@ -1181,14 +1155,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 //query.equalTo("check",'checkin');
                 query.find({
                        success:function (results) {
-                               console.log("results =--> " + results.length);
-                               console.log("Results =--> results for checkin VF");
+                               alert("results =--> " + results.length);
+                               alert("Results =--> results for checkin VF");
                                //$('#myGrid').empty();
                                //$("#myGrid").append(results);
                                if(results.length == 0) {
                                        //var txt = "<div>No Result Found</div>";					
                                        //$("#myGrid").append(txt);
-                                       console.log("No Results! VF1");
+                                       alert("No Results! VF1");
                                        getKualitatem();
 
                                } else {	
@@ -1199,10 +1173,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
                                                checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
                                                 time = checkin_time.split(':');
-                                                //console.log("Time[1]: " + time[1]);
+                                                //alert("Time[1]: " + time[1]);
                                                 if (time[1].length < 2){
                                                     checkin_time = time[0] + ':0' + time[1];
-                                                    console.log("CheckinTime: " + checkin_time);
+                                                    alert("CheckinTime: " + checkin_time);
                                                 }
                                                 
                                                 
@@ -1223,7 +1197,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                      time = checkout_time.split(':');
                                                      if (time[1].length < 2){
                                                          checkout_time = time[0] + ':0' + time[1];
-                                                         console.log("CheckoutTime: " + checkout_time);
+                                                         alert("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
                                                 }
@@ -1253,14 +1227,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     //query2.equalTo("check",'checkin');
                     query2.find({
                            success:function (results) {
-                                   console.log("results =--> " + results.length);
-                                   console.log("Results =--> results for checkin KM");
+                                   alert("results =--> " + results.length);
+                                   alert("Results =--> results for checkin KM");
                                    //$('#myGrid').empty();
                                    //$("#myGrid").append(results);
                                    if(results.length == 0) {
                                            //var txt = "<div>No Result Found</div>";					
                                            //$("#myGrid").append(txt);
-                                            console.log("No Results! KM1");
+                                            alert("No Results! KM1");
                                             uploadAll();
                                    } else {	
 
@@ -1270,10 +1244,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
                                                 checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
                                                 time = checkin_time.split(':');
-                                                //console.log("Time[1]: " + time[1]);
+                                                //alert("Time[1]: " + time[1]);
                                                 if (time[1].length < 2){
                                                     checkin_time = time[0] + ':0' + time[1];
-                                                    console.log("CheckinTime: " + checkin_time);
+                                                    alert("CheckinTime: " + checkin_time);
                                                 }
                                                 
                                                 
@@ -1294,7 +1268,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                      time = checkout_time.split(':');
                                                      if (time[1].length < 2){
                                                          checkout_time = time[0] + ':0' + time[1];
-                                                         console.log("CheckoutTime: " + checkout_time);
+                                                         alert("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
                                                 }
@@ -1306,21 +1280,21 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                  table += '<tr>';
 
                                         }
-                                            console.log(table += '</table>');
+                                            alert(table += '</table>');
                                            msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
                                            sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','maryum.babar@gmail.com','Attendance Report', msg, function (success) {
                                                 if (success) {
-                                                    console.log("Email successfully sent!");
+                                                    alert("Email successfully sent!");
                                                     return true;
                                                 }
                                                 else {
-                                                    console.log("EmailBcc having some problem");
+                                                    alert("EmailBcc having some problem");
                                                     return false;
                                                 }
                                             });
 
 
-                                           //console.log(table += '</table>');
+                                           //alert(table += '</table>');
 
 
                                    }
@@ -1339,10 +1313,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function sendEmailTo(fromEmail,receiverEmail,ccEmail,subject,m_phone){
             
-                console.log("fromEmail" + fromEmail);
-                console.log("receiverEmail" + receiverEmail);
-                console.log("subject" + subject);
-                console.log("body" + m_phone);
+                alert("fromEmail" + fromEmail);
+                alert("receiverEmail" + receiverEmail);
+                alert("subject" + subject);
+                alert("body" + m_phone);
             
             Parse.Cloud.run("sendEmailCc",
                     {
@@ -1434,7 +1408,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function uploadAll(){
-            console.log("In UploadAll!");
+            alert("In UploadAll!");
              var currentDate = new Date();
              var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
              var  expiryTime = new Date();
@@ -1480,20 +1454,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 department = r_auth[i].get("department");
                                 
                                 function it2(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
-                                                console.log("In VFDB!");
+                                                alert("In VFDB!");
                                                 db.transaction(function(t){
                                                     t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
                                                 });
                                 };
                                 
                                 function it3(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
-                                                console.log("In KMDB!");
+                                                alert("In KMDB!");
                                                 db.transaction(function(t){
                                                     t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
                                                 });
                                 };
                                 function it(value,un,up,com,dep){
-                                                    console.log("UserPin: " + up);
+                                                    alert("UserPin: " + up);
                                                     db.transaction(function(t){
                                                         t.executeSql('INSERT INTO USERS (id, username, userpin, company, department) VALUES (?,?,?,?,?)',[value, un,up,com,dep]);
 
@@ -1501,10 +1475,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     };
                                     it(i,username,userpin,company,department);
                                
-                                console.log("Company: " + company);
+                                alert("Company: " + company);
                
                                 if ((r_auth[i].get("userPin")).substr(0,1) == '1'){
-                                    console.log("In Virtual Force: " + i);
+                                    alert("In Virtual Force: " + i);
                                    
                                     var virtualF = Parse.Object.extend("VirtualForce");
                                     
@@ -1518,7 +1492,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     vf.set("status",'absent');
                                     vf.save(null, {
                                         success:function (virtualf) {
-                                            console.log(virtualf + " saved successfully");
+                                            alert(virtualf + " saved successfully");
                                             //document.cookie = "launch=true;" + " expires=" + expiryTime;
                                             window.localStorage.setItem("launch","true");
                                             window.localStorage.setItem("tdate",todaysDate);
@@ -1528,14 +1502,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             
                                         },
                                         error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            alert("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
                                 }
                                 else if ((r_auth[i].get("userPin")).substr(0,1) == '2'){
                                     
-                                    console.log("In Kualitatem: " + i);
+                                    alert("In Kualitatem: " + i);
                                     
                                     
                                     var kualitatem = Parse.Object.extend("Kualitatem");
@@ -1550,14 +1524,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     km.set("status",'absent');
                                     km.save(null, {
                                         success:function (kuali) {
-                                            console.log(kuali + " saved successfully");
+                                            alert(kuali + " saved successfully");
                                             window.localStorage.setItem("launch","true");
                                             window.localStorage.setItem("tdate",todaysDate);
                                             
                                            
                                         },
                                         error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            alert("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
