@@ -184,24 +184,27 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        
        //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
-                db.transaction(function(t){
-                console.log("My Query Home Called!");
+            db.transaction(function(t){
+                alert("My Query Up local vf!");
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         
         function upLocalkmIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
+                alert("My Query Up local km!");
                 t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         function deleteLocalvf(up){
             db.transaction(function(t){
+                alert("My Query Del local vf!");
                 t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         function deleteLocalkm(up){
             db.transaction(function(t){
+                alert("My Query Del local km!");
                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
@@ -233,24 +236,33 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     }
         }
         
+        function it6(up,cd){
+                                
+            db.transaction(function(t1){
+                console.log("In checkCheckIn2!");
+                console.log("Userpin: " + up);
+                console.log("Date: " + cd);
+                t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
+            });
+        };
+        
+        function offCheckkm(up,cd){
+            //console.log("In DB!");
+            db.transaction(function(t){
+                t.executeSql("SELECT substr(checkInTime,0,15) FROM KUALITATEM WHERE userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
+            });
+        }
+        
         function checkCheckIn(){
             console.log("In checkCheckIn!");
             var currentDate = new Date();
             var d = currentDate.toDateString();
             //Check checkin/out status
-                        company = 'virtualforce';
+                        
                             if (company == 'virtualforce'){
-                                function it6(up,cd){
                                 
-                                db.transaction(function(t1){
-                                    console.log("In checkCheckIn2!");
-                                    console.log("Userpin: " + up);
-                                    console.log("Date: " + cd);
-                                    t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
-                                });
-                            };
-                            it6(userpin,d);    
-                                /*var query = new Parse.Query("VirtualForce");
+                               if (navigator.onLine){
+                                var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
@@ -259,7 +271,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             
                                             if (results.length == 0)
                                                 {
-                                                    window.location = "check.html?check=no";
+                                                    console.log("User doesnot exist!");
+                                                    $('#codeOk').removeAttr('disabled');
+                                                    $('#codeOk').css({'opacity':'1.4'});
+                                                    $('.code-holder').val(null);
                                                 }   
                                                 
                                             if (results[0].get("check") == 'checkin')
@@ -279,10 +294,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (error) {
 
                                         }
-                                });*/
+                                });
+                               }
+                               else{
+                                   it6(userpin,d);
+                               }
+                                 
                             }
                             else if (company == 'kualitatem'){
-                                /*var query = new Parse.Query("Kualitatem");
+                                if(navigator.onLine){
+                                var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
@@ -291,7 +312,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                             if (results.length == 0)
                                                 {
-                                                    window.location = "check.html?check=no";
+                                                    console.log("User doesnot exist!");
+                                                    $('#codeOk').removeAttr('disabled');
+                                                    $('#codeOk').css({'opacity':'1.4'});
+                                                    $('.code-holder').val(null);
                                                 }   
                                                 
                                            if (results[0].get("check") == 'checkin')
@@ -310,17 +334,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (error) {
 
                                         }
-                                });*/
-                            
-                            
-                                 function it(up,cd){
-                                        //console.log("In DB!");
-                                        db.transaction(function(t){
-                                            t.executeSql("SELECT substr(checkInTime,0,15) FROM KUALITATEM WHERE userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
-                                    });
-                                    it(userpin,d);    
+                                });
                                 }
+                                else{
+                                   it(userpin,d);    
+                                }
+                             
                             }
+            
         }
         
         /*function codePageBack(){
@@ -516,130 +537,132 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("No Result found!");
                 return;
             }
-            console.log("Sync CheckIn");
-            var currentDate = new Date();
-            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
-            
-            var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
-            
-            var checkSDate = new Date(); //Start Date
-            checkSDate.setHours(00);
-            checkSDate.setMinutes(00);
-            checkSDate.setSeconds(00);
-            
-            var checkEDate = new Date(); //End Date
-            checkEDate.setHours(23);
-            checkEDate.setMinutes(59);
-            checkEDate.setSeconds(59);
-            
-            var status;
-            
-            console.log("Check Status: " + checkStatus.toString());
-            console.log("Current Date: " + currentDate.toString());
-            
-            if ((currentDate < checkStatus || currentDate == checkStatus)){
-                status = 'ontime';
-            }
             else{
-                status = 'late';
-            }
-            
-            var j=0;
-            var k=0;
-            
-            //console.log("Query Results: " + result.rows.length);
-            for (var i=0;i<result.rows.length;i++){
-                 //console.log("In Loop!");
-                if ((result.rows.item(i).userpin).substr(0,1) == '1'){
-                           console.log("Called for VF!");
-                           console.log("UserPin to find: " + result.rows.item(i).userpin);
-                           
-                           var query = new Parse.Query("VirtualForce");
-                           query.equalTo("userPin", result.rows.item(i).userpin);
-                           query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                           query.lessThanOrEqualTo("createdAt", checkEDate);
-                           query.find({
-                               success:function (results) {
-                                   console.log("Result in VF found");
-                                   console.log("Results Length in VF sync: " +results.length);
-                                   console.log("Results Found: " + result.rows.item(j).checkInTime);
-                                   console.log("Results Found (Username): " + result.rows.item(j).username);
-                                   
-                                   //Upload Picture to Parse
+                console.log("Sync CheckIn");
+                var currentDate = new Date();
+                var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
-                                   uploadPicToParse(result.rows.item(j).userAvatarIn);
-                                   results[0].set("userAvatarIn",userAvatar);
-                                   results[0].set("checkInTime",result.rows.item(j).checkInTime);
-                                   results[0].set("department",result.rows.item(j).department);
-                                   results[0].set("check","checkin");
-                                   results[0].set("createdAt",currentDate);
-                                   results[0].set("status",result.rows.item(j).status);
-                                   db.transaction(function(t){
-                                       console.log("My Query Home Called!");
-                                       t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                   });
-                                   j++;
-                                   results[0].save(null, {
-                                       success:function (kuali) {
-                                           console.log(kuali + " saved successfully");
+                var checkStatus = new Date(); // Status : late,ontime
+                checkStatus.setHours(9);
+                checkStatus.setMinutes(30);
+                checkStatus.setSeconds(59);
 
-                                       },
-                                       error:function (pSweet, error) {
-                                           console.log("saveRecord() -> " + error.code + " " + error.message);
-                                       }
+                var checkSDate = new Date(); //Start Date
+                checkSDate.setHours(00);
+                checkSDate.setMinutes(00);
+                checkSDate.setSeconds(00);
 
-                                   });
-                               },
-                               error:function (pSweet, error) {
-                                   console.log("saveRecord() -> " + error.code + " " + error.message);
-                               }
+                var checkEDate = new Date(); //End Date
+                checkEDate.setHours(23);
+                checkEDate.setMinutes(59);
+                checkEDate.setSeconds(59);
 
-                           });
+                var status;
+
+                console.log("Check Status: " + checkStatus.toString());
+                console.log("Current Date: " + currentDate.toString());
+
+                if ((currentDate < checkStatus || currentDate == checkStatus)){
+                    status = 'ontime';
                 }
-                else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
-                    console.log("Called for KM!");
-                           var query = new Parse.Query("Kualitatem");
-                           query.equalTo("userPin", result.rows.item(i).userpin);
-                           query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                           query.lessThanOrEqualTo("createdAt", checkEDate);
-                           query.find({
-                               success:function (results) {
-                                   //console.log("Results Length: " +results.length);
-                                   
-                                   //Upload Picture to Parse
-                                   uploadPicToParse(result.rows.item(k).userAvatarIn);
-                                   results[0].set("userAvatarIn",userAvatar);
-                                   results[0].set("checkInTime",result.rows.item(k).checkInTime);
-                                   results[0].set("department",result.rows.item(k).department);
-                                   results[0].set("check","checkin");
-                                   results[0].set("createdAt",currentDate);
-                                   results[0].set("status",result.rows.item(k).status);
-                                   db.transaction(function(t){
-                                       console.log("My Query Home Called!");
-                                       
-                                       //Update record locally
-                                       t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                   });
-                                   k++;
-                                   results[0].save(null, {
-                                       success:function (kuali) {
-                                           console.log(kuali + " saved successfully");
+                else{
+                    status = 'late';
+                }
 
-                                       },
-                                       error:function (pSweet, error) {
-                                           console.log("saveRecord() -> " + error.code + " " + error.message);
-                                       }
+                var j=0;
+                var k=0;
 
-                                   });
-                               },
-                               error:function (pSweet, error) {
-                                   console.log("saveRecord() -> " + error.code + " " + error.message);
-                               }
+                //console.log("Query Results: " + result.rows.length);
+                for (var i=0;i<result.rows.length;i++){
+                     //console.log("In Loop!");
+                    if ((result.rows.item(i).userpin).substr(0,1) == '1'){
+                               console.log("Called for VF!");
+                               console.log("UserPin to find: " + result.rows.item(i).userpin);
 
-                           });
+                               var query = new Parse.Query("VirtualForce");
+                               query.equalTo("userPin", result.rows.item(i).userpin);
+                               query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                               query.lessThanOrEqualTo("createdAt", checkEDate);
+                               query.find({
+                                   success:function (results) {
+                                       console.log("Result in VF found");
+                                       console.log("Results Length in VF sync: " +results.length);
+                                       console.log("Results Found: " + result.rows.item(j).checkInTime);
+                                       console.log("Results Found (Username): " + result.rows.item(j).username);
+
+                                       //Upload Picture to Parse
+
+                                       uploadPicToParse(result.rows.item(j).userAvatarIn);
+                                       results[0].set("userAvatarIn",userAvatar);
+                                       results[0].set("checkInTime",result.rows.item(j).checkInTime);
+                                       results[0].set("department",result.rows.item(j).department);
+                                       results[0].set("check","checkin");
+                                       results[0].set("createdAt",currentDate);
+                                       results[0].set("status",result.rows.item(j).status);
+                                       db.transaction(function(t){
+                                           console.log("My Query Home Called!");
+                                           t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                       });
+                                       j++;
+                                       results[0].save(null, {
+                                           success:function (kuali) {
+                                               console.log(kuali + " saved successfully");
+
+                                           },
+                                           error:function (pSweet, error) {
+                                               console.log("saveRecord() -> " + error.code + " " + error.message);
+                                           }
+
+                                       });
+                                   },
+                                   error:function (pSweet, error) {
+                                       console.log("saveRecord() -> " + error.code + " " + error.message);
+                                   }
+
+                               });
+                    }
+                    else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
+                        console.log("Called for KM!");
+                               var query = new Parse.Query("Kualitatem");
+                               query.equalTo("userPin", result.rows.item(i).userpin);
+                               query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                               query.lessThanOrEqualTo("createdAt", checkEDate);
+                               query.find({
+                                   success:function (results) {
+                                       //console.log("Results Length: " +results.length);
+
+                                       //Upload Picture to Parse
+                                       uploadPicToParse(result.rows.item(k).userAvatarIn);
+                                       results[0].set("userAvatarIn",userAvatar);
+                                       results[0].set("checkInTime",result.rows.item(k).checkInTime);
+                                       results[0].set("department",result.rows.item(k).department);
+                                       results[0].set("check","checkin");
+                                       results[0].set("createdAt",currentDate);
+                                       results[0].set("status",result.rows.item(k).status);
+                                       db.transaction(function(t){
+                                           console.log("My Query Home Called!");
+
+                                           //Update record locally
+                                           t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                       });
+                                       k++;
+                                       results[0].save(null, {
+                                           success:function (kuali) {
+                                               console.log(kuali + " saved successfully");
+
+                                           },
+                                           error:function (pSweet, error) {
+                                               console.log("saveRecord() -> " + error.code + " " + error.message);
+                                           }
+
+                                       });
+                                   },
+                                   error:function (pSweet, error) {
+                                       console.log("saveRecord() -> " + error.code + " " + error.message);
+                                   }
+
+                               });
+                    }
                 }
             }
         }
@@ -650,117 +673,120 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("No Result found!");
                 return;
             }
-            var currentDate = new Date();
-            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
-            
-            var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
-            
-            var checkSDate = new Date(); //Start Date
-            checkSDate.setHours(00);
-            checkSDate.setMinutes(00);
-            checkSDate.setSeconds(00);
-            
-            var checkEDate = new Date(); //End Date
-            checkEDate.setHours(23);
-            checkEDate.setMinutes(59);
-            checkEDate.setSeconds(59);
-            
-            var status;
-            console.log("Check Status: " + checkStatus.toString());
-            console.log("Current Date: " + currentDate.toString());
-            
-            if ((currentDate < checkStatus || currentDate == checkStatus)){
-                status = 'ontime';
-            }
             else{
-                status = 'late';
-            }
-            
-            console.log("Query Results: " + result.rows.length);
-            
-            var j=0;
-            var k=0;
-            
-            for (var i=0;i<result.rows.length;i++){
-                if((result.rows.item(i).userpin).substr(0,1) == '1'){
+                var currentDate = new Date();
+                var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
-                            var query = new Parse.Query("VirtualForce");
-                            query.equalTo("userPin", result.rows.item(i).userpin);
-                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                            query.lessThanOrEqualTo("createdAt", checkEDate);
-                            query.find({
-                                success:function (results) {
+                var checkStatus = new Date(); // Status : late,ontime
+                checkStatus.setHours(9);
+                checkStatus.setMinutes(30);
+                checkStatus.setSeconds(59);
 
-                                    console.log("Results Length: " + results.length);
-                                    
-                                    //Upload Picture to Parse
-                                    uploadPicToParse(result.rows.item(j).userAvatarOut);
+                var checkSDate = new Date(); //Start Date
+                checkSDate.setHours(00);
+                checkSDate.setMinutes(00);
+                checkSDate.setSeconds(00);
 
-                                    results[0].set("userAvatarOut",userAvatar);
-                                    results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
-                                    results[0].set("check","checkout");
-                                    results[0].set("workingHours",result.rows.item(j).workingHours);
+                var checkEDate = new Date(); //End Date
+                checkEDate.setHours(23);
+                checkEDate.setMinutes(59);
+                checkEDate.setSeconds(59);
 
-                                    deleteLocalvf(result.rows.item(j).userpin);
-                                    j++;
-                                    results[0].save(null, {
-                                        success:function (virtualf) {
-                                            console.log(virtualf + " saved successfully");
+                var status;
+                console.log("Check Status: " + checkStatus.toString());
+                console.log("Current Date: " + currentDate.toString());
 
-
-                                        },
-                                        error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
-                                        }
-
-                                    });
-                                },
-                                error:function (error) {
-
-                                }
-                            });
+                if ((currentDate < checkStatus || currentDate == checkStatus)){
+                    status = 'ontime';
                 }
-                else if((result.rows.item(i).userpin).substr(0,1) == '2'){
-                            var query = new Parse.Query("Kualitatem");
-                            query.equalTo("userPin", result.rows.item(i).userpin);
-                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                            query.lessThanOrEqualTo("createdAt", checkEDate);
-                            query.find({
-                                success:function (results) {
+                else{
+                    status = 'late';
+                }
 
-                                    console.log("Results Length: " + results.length);
-                                    
-                                    //Upload Picture to Parse
-                                    uploadPicToParse(result.rows.item(k).userAvatarOut);
-                                    results[0].set("userAvatarOut",userAvatar);
-                                    results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
-                                    results[0].set("check","checkout");
-                                    results[0].set("workingHours",result.rows.item(k).workingHours);
-                                    deleteLocalkm(result.rows.item(k).userpin);
-                                    k++;
-                                    results[0].save(null, {
-                                        success:function (virtualf) {
-                                            console.log(virtualf + " saved successfully");
+                console.log("Query Results: " + result.rows.length);
 
-                                        },
-                                        error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
-                                        }
+                var j=0;
+                var k=0;
 
-                                    });
-                                },
-                                error:function (error) {
+                for (var i=0;i<result.rows.length;i++){
+                    if((result.rows.item(i).userpin).substr(0,1) == '1'){
 
-                                }
-                            });
+                                var query = new Parse.Query("VirtualForce");
+                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
+
+                                        console.log("Results Length: " + results.length);
+
+                                        //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(j).userAvatarOut);
+
+                                        results[0].set("userAvatarOut",userAvatar);
+                                        results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
+                                        results[0].set("check","checkout");
+                                        results[0].set("workingHours",result.rows.item(j).workingHours);
+
+                                        deleteLocalvf(result.rows.item(j).userpin);
+                                        j++;
+                                        results[0].save(null, {
+                                            success:function (virtualf) {
+                                                console.log(virtualf + " saved successfully");
+
+
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            }
+
+                                        });
+                                    },
+                                    error:function (error) {
+
+                                    }
+                                });
+                    }
+                    else if((result.rows.item(i).userpin).substr(0,1) == '2'){
+                                var query = new Parse.Query("Kualitatem");
+                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
+
+                                        console.log("Results Length: " + results.length);
+
+                                        //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(k).userAvatarOut);
+                                        results[0].set("userAvatarOut",userAvatar);
+                                        results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
+                                        results[0].set("check","checkout");
+                                        results[0].set("workingHours",result.rows.item(k).workingHours);
+                                        deleteLocalkm(result.rows.item(k).userpin);
+                                        k++;
+                                        results[0].save(null, {
+                                            success:function (virtualf) {
+                                                console.log(virtualf + " saved successfully");
+
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            }
+
+                                        });
+                                    },
+                                    error:function (error) {
+
+                                    }
+                                });
+                    }
                 }
             }
         }
        
         function queryHome(){
+            alert("Going to Redirect!");
             window.location = "home.html?checkin=" + checkin + "&pic=" + offlinePic;
         }
 
