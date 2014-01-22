@@ -861,7 +861,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
                                         
-                                        upLocalvfIn(picUrl,currentTime,department,status,userpin);
+                                        upLocalvfIn(url,currentTime,department,status,userpin);
                                           
                                     },
                                     error:function (pSweet, error) {
@@ -892,7 +892,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.find({
                             success:function (results) {
                                 
-                                results[0].set("userAvatarIn",picUrl);
+                                results[0].set("userAvatarIn",url);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -902,7 +902,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
                                          
-                                        upLocalkmIn(picUrl,currentTime,department,status,userpin);
+                                        upLocalkmIn(url,currentTime,department,status,userpin);
                                         
 
                                     },
@@ -973,9 +973,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 console.log(virtualf + " saved successfully");
                                                  
                                                 deleteLocalvf(userpin);
-                                                db.transaction(function(t){
-                                                       t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ userAvatar + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'true2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
-                                                   });
+//                                                db.transaction(function(t){
+//                                                       t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ url + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'true2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
+//                                                   });
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
