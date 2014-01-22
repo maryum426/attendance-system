@@ -12,7 +12,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function checkIn(){
             checkin = true;
-            alert('CheckIn');
+            console.log('CheckIn');
             if (check == 'checkin')
                 {
                     window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
@@ -30,7 +30,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function checkOut(){
             checkin = false;
-            alert('CheckOut');
+            console.log('CheckOut');
             if (check == 'checkin')
                 {
                     window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
@@ -65,7 +65,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             $('#codeOk').attr('disabled','disabled');
             $('#codeOk').css({'opacity':'0.4'});
             userpin = ($('.code-holder').val()).toString();
-            alert("User Pin: " + userpin);
+            console.log("User Pin: " + userpin);
             
             //Getting User Info
             function it(up){
@@ -82,19 +82,19 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        }
        
        function errorCB9 (err){	 	
-            alert("I am wild!")	 	
+            console.log("I am wild!")	 	
         }
         
         // Query the success callback
         function querySuccess(tx, results) {
             
-            alert("Returned rows = " + results.rows.length);
+            console.log("Returned rows = " + results.rows.length);
             // This will be true since it was a SELECT statement and so rowsAffected was 0
             var len = results.rows.length;
             if (len > 0){
-                    alert("Username: " + results.rows.item(0).username);
-                    alert("Comapny: " + results.rows.item(0).company);
-                    alert("Department: " + results.rows.item(0).department);
+                    console.log("Username: " + results.rows.item(0).username);
+                    console.log("Comapny: " + results.rows.item(0).company);
+                    console.log("Department: " + results.rows.item(0).department);
                     username = results.rows.item(0).username;
                     company = results.rows.item(0).company;
                     department = results.rows.item(0).department;
@@ -112,7 +112,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     
                 
             }
-            else {
+            else if(results.rows.length) {
                 alert("User doesnot exist!");
                 $('#codeOk').removeAttr('disabled');
                 $('#codeOk').css({'opacity':'1.4'});
@@ -125,15 +125,15 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         // Transaction error callbacks
     
         function errorCB(err) {
-            alert("Error processing SQL: "+err.code);
+            console.log("Error processing SQL: "+err.code);
         }
         
         function errorCB2(err) {
-            alert("Error processing SQL: "+err.code);
+            console.log("Error processing SQL: "+err.code);
         }
         
         function errorCBout(err) {	 	
-            alert("Error in offline Checkout");	 	
+            console.log("Error in offline Checkout");	 	
         }
         
         /*function codePageOk() {
@@ -143,7 +143,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             $('#codeOk').attr('disabled','disabled');
             $('#codeOk').css({'opacity':'0.4'});
             userpin = ($('.code-holder').val()).toString();
-            alert("User Pin: " + userpin);
+            console.log("User Pin: " + userpin);
             var query = new Parse.Query("Users");
             //var query = new Auth();
             query.equalTo('userPin',userpin);
@@ -168,14 +168,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                     }
                     else {
-                       alert("User doesnot exist!");
+                       console.log("User doesnot exist!");
                        $('#codeOk').removeAttr('disabled');
                        $('#codeOk').css({'opacity':'1.4'});
                        $('.code-holder').val(null);
                     }
                 },
                 error:function (error) {
-                    alert("Error -> " + error.code + " " + error.message);
+                    console.log("Error -> " + error.code + " " + error.message);
                 }
 
             });
@@ -185,7 +185,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
                 db.transaction(function(t){
-                alert("My Query Home Called!");
+                console.log("My Query Home Called!");
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
@@ -208,12 +208,15 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function queryRedirect(tx,results){
             //WHERE  userpin ='" + up + "'"+"AND SUBSTR(checkInTime,1,7) =' " + cd + "'
-            alert("Results Length: " + results.rows.length);
-            //alert("checkintime : " + results.rows.item(0).Newcol);
+            console.log("Results Length: " + results.rows.length);
+            //console.log("checkintime : " + results.rows.item(0).Newcol);
                 
             if (results.rows.length == 0)
                     {
-                        //window.location = "check.html?check=no";
+                       alert("You've already checked out!\n Bubye! :D");
+                       $('#codeOk').removeAttr('disabled');
+                       $('#codeOk').css({'opacity':'1.4'});
+                       $('.code-holder').val(null);
                     }   
 
                 if (results.rows.item(0).checkstat == 'checkin')
@@ -231,7 +234,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function checkCheckIn(){
-            alert("In checkCheckIn!");
+            console.log("In checkCheckIn!");
             var currentDate = new Date();
             var d = currentDate.toDateString();
             //Check checkin/out status
@@ -240,9 +243,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 function it6(up,cd){
                                 
                                 db.transaction(function(t1){
-                                    alert("In checkCheckIn2!");
-                                    alert("Userpin: " + up);
-                                    alert("Date: " + cd);
+                                    console.log("In checkCheckIn2!");
+                                    console.log("Userpin: " + up);
+                                    console.log("Date: " + cd);
                                     t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
                                 });
                             };
@@ -252,7 +255,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
-                                        alert("Results Length: " + results.length);
+                                        console.log("Results Length: " + results.length);
                                             
                                             if (results.length == 0)
                                                 {
@@ -284,7 +287,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
-                                        alert("Results Length: " + results.length);
+                                        console.log("Results Length: " + results.length);
 
                                             if (results.length == 0)
                                                 {
@@ -311,7 +314,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             
                             
                                  function it(up,cd){
-                                        //alert("In DB!");
+                                        //console.log("In DB!");
                                         db.transaction(function(t){
                                             t.executeSql("SELECT substr(checkInTime,0,15) FROM KUALITATEM WHERE userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
                                     });
@@ -351,7 +354,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
           }
           var onSuccess = function(data3) {
               
-                    //alert("On success called");      
+                    //console.log("On success called");      
                     userAvatar = data3;
                     var data;
                     data = "data:image/jpeg;base64," + userAvatar;
@@ -360,12 +363,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             };
 
         var onFail = function(e) {
-            //alert("On fail " + e);
-            //alert("Profile Picture Progress: " + $rootScope.loginInProgress_profile);
+            //console.log("On fail " + e);
+            //console.log("Profile Picture Progress: " + $rootScope.loginInProgress_profile);
         };
         
         function uploadOk(){
-            //alert("In Upload!");
+            //console.log("In Upload!");
             if (userAvatar == null){
                 alert("Take a picture first!");
                 $('#submit1').removeAttr('disabled');
@@ -379,7 +382,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                    
             var thumbnail = 400;
             var ppWidth, ppHeight;
-            //alert("Image: " + data);
+            //console.log("Image: " + data);
             var image = new Image();
             image.src = userAvatar;
             offlinePic = userAvatar;
@@ -409,12 +412,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     imageWidth = Math.round(thumbnail * image.width / image.height);
                     imageHeight = thumbnail;
                     offsetX = - Math.round((imageWidth - thumbnail) / 2);
-                    //alert("IF");
+                    //console.log("IF");
                 } else {
                     imageHeight = Math.round(thumbnail * image.height / image.width);
                     imageWidth = thumbnail;    
                     offsetY = - Math.round((imageHeight - thumbnail) / 2);            
-                    //alert("ELSE");
+                    //console.log("ELSE");
                 }
 
                 context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
@@ -444,16 +447,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             
             //Uploading file to Parse
             parseFile.save().then(function() {
-                                            //alert("Got it!");
+                                            //console.log("Got it!");
                                             userAvatar = parseFile.url();
                                             uploadParsePic(userAvatar,pf);
-                                            alert (parseFile.url());
-                                            alert("Ok");
-                                            alert("In Uploadfinal!");
+                                            console.log (parseFile.url());
+                                            console.log("Ok");
+                                            console.log("In Uploadfinal!");
 
                                         }, function(error) {
-                                            alert("Error");
-                                            alert(error);
+                                            console.log("Error");
+                                            console.log(error);
                                         });
             }
         }
@@ -462,16 +465,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             window.location = "index.html";
         }
         
-        
-        
         function syncDataCheckIn(){
-            alert("Sync Data Called");
+            console.log("Sync Data Called");
             
             if (checkin == 'true'){ //Checked-In
                 
-                alert("Sync Data Called Checkin!");
+                console.log("Sync Data Called Checkin!");
                     db.transaction(function(t){
-                        alert("This query called!");
+                        console.log("This query called!");
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploaded == 'false1'", [], querySyncIn, errorCB);
                         t.executeSql("SELECT * FROM KUALITATEM WHERE uploaded == 'false1'", [], querySyncIn, errorCB);
                     });
@@ -479,7 +480,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             }
             else{ //Checked-Out
                 
-                alert("Sync Data Called Checkout!");
+                console.log("Sync Data Called Checkout!");
                     db.transaction(function(t){
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploaded ='false2'", [], querySyncOut, errorCB);
                         t.executeSql("SELECT * FROM KUALITATEM WHERE uploaded ='false2'", [], querySyncOut, errorCB);
@@ -497,25 +498,25 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             
             //Uploading Pic to Parse
             parseFile.save().then(function() {
-                                            //alert("Got it!");
+                                            //console.log("Got it!");
                                             userAvatar = parseFile.url();
-                                            alert (parseFile.url());
-                                            alert("Ok");
-                                            alert("In Uploadfinal!");
+                                            console.log (parseFile.url());
+                                            console.log("Ok");
+                                            console.log("In Uploadfinal!");
 
                                         }, function(error) {
-                                            alert("Error");
-                                            alert(error);
+                                            console.log("Error");
+                                            console.log(error);
                                         });
             
         }
         
         function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
-                alert("No Result found!");
+                console.log("No Result found!");
                 return;
             }
-            alert("Sync CheckIn");
+            console.log("Sync CheckIn");
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -536,8 +537,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             
             var status;
             
-            alert("Check Status: " + checkStatus.toString());
-            alert("Current Date: " + currentDate.toString());
+            console.log("Check Status: " + checkStatus.toString());
+            console.log("Current Date: " + currentDate.toString());
             
             if ((currentDate < checkStatus || currentDate == checkStatus)){
                 status = 'ontime';
@@ -549,12 +550,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var j=0;
             var k=0;
             
-            //alert("Query Results: " + result.rows.length);
+            //console.log("Query Results: " + result.rows.length);
             for (var i=0;i<result.rows.length;i++){
-                 //alert("In Loop!");
+                 //console.log("In Loop!");
                 if ((result.rows.item(i).userpin).substr(0,1) == '1'){
-                           alert("Called for VF!");
-                           alert("UserPin to find: " + result.rows.item(i).userpin);
+                           console.log("Called for VF!");
+                           console.log("UserPin to find: " + result.rows.item(i).userpin);
                            
                            var query = new Parse.Query("VirtualForce");
                            query.equalTo("userPin", result.rows.item(i).userpin);
@@ -562,10 +563,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                            query.lessThanOrEqualTo("createdAt", checkEDate);
                            query.find({
                                success:function (results) {
-                                   alert("Result in VF found");
-                                   alert("Results Length in VF sync: " +results.length);
-                                   alert("Results Found: " + result.rows.item(j).checkInTime);
-                                   alert("Results Found (Username): " + result.rows.item(j).username);
+                                   console.log("Result in VF found");
+                                   console.log("Results Length in VF sync: " +results.length);
+                                   console.log("Results Found: " + result.rows.item(j).checkInTime);
+                                   console.log("Results Found (Username): " + result.rows.item(j).username);
                                    
                                    //Upload Picture to Parse
 
@@ -577,36 +578,36 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                    results[0].set("createdAt",currentDate);
                                    results[0].set("status",result.rows.item(j).status);
                                    db.transaction(function(t){
-                                       alert("My Query Home Called!");
-                                       t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){alert("Success!");}), errorCB);
+                                       console.log("My Query Home Called!");
+                                       t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
                                    });
                                    j++;
                                    results[0].save(null, {
                                        success:function (kuali) {
-                                           alert(kuali + " saved successfully");
+                                           console.log(kuali + " saved successfully");
 
                                        },
                                        error:function (pSweet, error) {
-                                           alert("saveRecord() -> " + error.code + " " + error.message);
+                                           console.log("saveRecord() -> " + error.code + " " + error.message);
                                        }
 
                                    });
                                },
                                error:function (pSweet, error) {
-                                   alert("saveRecord() -> " + error.code + " " + error.message);
+                                   console.log("saveRecord() -> " + error.code + " " + error.message);
                                }
 
                            });
                 }
                 else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
-                    alert("Called for KM!");
+                    console.log("Called for KM!");
                            var query = new Parse.Query("Kualitatem");
                            query.equalTo("userPin", result.rows.item(i).userpin);
                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
                            query.lessThanOrEqualTo("createdAt", checkEDate);
                            query.find({
                                success:function (results) {
-                                   //alert("Results Length: " +results.length);
+                                   //console.log("Results Length: " +results.length);
                                    
                                    //Upload Picture to Parse
                                    uploadPicToParse(result.rows.item(k).userAvatarIn);
@@ -617,25 +618,25 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                    results[0].set("createdAt",currentDate);
                                    results[0].set("status",result.rows.item(k).status);
                                    db.transaction(function(t){
-                                       alert("My Query Home Called!");
+                                       console.log("My Query Home Called!");
                                        
                                        //Update record locally
-                                       t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){alert("Success!");}), errorCB);
+                                       t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
                                    });
                                    k++;
                                    results[0].save(null, {
                                        success:function (kuali) {
-                                           alert(kuali + " saved successfully");
+                                           console.log(kuali + " saved successfully");
 
                                        },
                                        error:function (pSweet, error) {
-                                           alert("saveRecord() -> " + error.code + " " + error.message);
+                                           console.log("saveRecord() -> " + error.code + " " + error.message);
                                        }
 
                                    });
                                },
                                error:function (pSweet, error) {
-                                   alert("saveRecord() -> " + error.code + " " + error.message);
+                                   console.log("saveRecord() -> " + error.code + " " + error.message);
                                }
 
                            });
@@ -646,7 +647,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         function querySyncOut(t,result){ //Sync Check-out Records
             
             if(result.rows.length == 0){
-                alert("No Result found!");
+                console.log("No Result found!");
                 return;
             }
             var currentDate = new Date();
@@ -668,8 +669,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setSeconds(59);
             
             var status;
-            alert("Check Status: " + checkStatus.toString());
-            alert("Current Date: " + currentDate.toString());
+            console.log("Check Status: " + checkStatus.toString());
+            console.log("Current Date: " + currentDate.toString());
             
             if ((currentDate < checkStatus || currentDate == checkStatus)){
                 status = 'ontime';
@@ -678,7 +679,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 status = 'late';
             }
             
-            alert("Query Results: " + result.rows.length);
+            console.log("Query Results: " + result.rows.length);
             
             var j=0;
             var k=0;
@@ -693,7 +694,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             query.find({
                                 success:function (results) {
 
-                                    alert("Results Length: " + results.length);
+                                    console.log("Results Length: " + results.length);
                                     
                                     //Upload Picture to Parse
                                     uploadPicToParse(result.rows.item(j).userAvatarOut);
@@ -707,12 +708,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     j++;
                                     results[0].save(null, {
                                         success:function (virtualf) {
-                                            alert(virtualf + " saved successfully");
+                                            console.log(virtualf + " saved successfully");
 
 
                                         },
                                         error:function (pSweet, error) {
-                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
@@ -730,7 +731,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             query.find({
                                 success:function (results) {
 
-                                    alert("Results Length: " + results.length);
+                                    console.log("Results Length: " + results.length);
                                     
                                     //Upload Picture to Parse
                                     uploadPicToParse(result.rows.item(k).userAvatarOut);
@@ -742,11 +743,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     k++;
                                     results[0].save(null, {
                                         success:function (virtualf) {
-                                            alert(virtualf + " saved successfully");
+                                            console.log(virtualf + " saved successfully");
 
                                         },
                                         error:function (pSweet, error) {
-                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
@@ -767,7 +768,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
          var uploadParsePic = function(url){
-             //alert("In UploadPic!");
+             //console.log("In UploadPic!");
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -787,8 +788,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setSeconds(59);
             
             var status;
-            alert("Check Status: " + checkStatus.toString());
-            alert("Current Date: " + currentDate.toString());
+            console.log("Check Status: " + checkStatus.toString());
+            console.log("Current Date: " + currentDate.toString());
             
             if ((currentDate < checkStatus || currentDate == checkStatus)){
                 status = 'ontime';
@@ -813,17 +814,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
            
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
-                    //alert("In Virtual Force");
+                    //console.log("In Virtual Force");
                     if (navigator.onLine){
-                        alert("Yes Em Online!");
-
+                        console.log("Yes Em Online!");
+                        syncDataCheckIn();
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
                         query.find({
                             success:function (results) {
-                                //alert("Results Length: " +results.length);
+                                //console.log("Results Length: " +results.length);
                                 results[0].set("userAvatarIn",url);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
@@ -832,9 +833,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].set("status",status);
                                 results[0].save(null, {
                                     success:function (kuali) {
-                                        alert(kuali + " saved successfully");
-                                        syncDataCheckIn();  
+                                        console.log(kuali + " saved successfully");
+                                        
                                         upLocalvfIn(picUrl,currentTime,department,status,userpin);
+                                          
                                     },
                                     error:function (pSweet, error) {
                                     }
@@ -842,7 +844,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 });
                             },
                             error:function (pSweet, error) {
-                                alert("saveRecord() -> " + error.code + " " + error.message);
+                                console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
                         });
@@ -856,7 +858,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.onLine){
-                        
+                        syncDataCheckIn(); 
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -872,13 +874,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].set("status",status);
                                 results[0].save(null, {
                                     success:function (kuali) {
-                                        alert(kuali + " saved successfully");
-                                        syncDataCheckIn();  
+                                        console.log(kuali + " saved successfully");
+                                         
                                         upLocalkmIn(picUrl,currentTime,department,status,userpin);
+                                        
 
                                     },
                                     error:function (pSweet, error) {
-                                        alert("saveRecord() -> " + error.code + " " + error.message);
+                                        console.log("saveRecord() -> " + error.code + " " + error.message);
                                     }
 
                                 });
@@ -886,7 +889,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 //cb(pSweet);
                             },
                             error:function (pSweet, error) {
-                                alert("saveRecord() -> " + error.code + " " + error.message);
+                                console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
                         });
@@ -907,7 +910,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.onLine){
-
+                            syncDataCheckIn(); 
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -915,7 +918,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             query.startsWith("checkInTime", currentDate.toDateString());
                             query.find({
                                 success:function (results) {
-                                    alert("Results Length: " + results.length);
+                                    console.log("Results Length: " + results.length);
                                       time2 = results[0].get("checkInTime");
                                       time2 = time2.substr(time2.length -5);
                                       time = time2.split(":");
@@ -941,15 +944,15 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].set("workingHours",workHours);
                                         results[0].save(null, {
                                             success:function (virtualf) {
-                                                alert(virtualf + " saved successfully");
-                                                syncDataCheckIn();  
+                                                console.log(virtualf + " saved successfully");
+                                                 
                                                 deleteLocalvf(userpin);
                                                 db.transaction(function(t){
                                                        t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ userAvatar + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'true2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
                                                    });
                                             },
                                             error:function (pSweet, error) {
-                                                alert("saveRecord() -> " + error.code + " " + error.message);
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
                                             }
 
                                         });
@@ -970,7 +973,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 else if (company == 'kualitatem'){
                             if (navigator.onLine){
-
+                                syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
@@ -978,7 +981,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
-                                        alert("Results Length: " + results.length);
+                                        console.log("Results Length: " + results.length);
                                           time2 = results[0].get("checkInTime");
                                           time2 = time2.substr(time2.length -5);
                                           time = time2.split(":");
@@ -997,7 +1000,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
 
                                           workHours = hours.toString();
-                                          alert("Working Hours " + workHours);
+                                          console.log("Working Hours " + workHours);
 
                                             results[0].set("userAvatarOut",picUrl);
                                             results[0].set("checkOutTime",currentTime);
@@ -1005,12 +1008,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             results[0].set("workingHours",workHours);
                                             results[0].save(null, {
                                                 success:function (kuali) {
-                                                    alert(kuali + " saved successfully");
-                                                    syncDataCheckIn();  
+                                                    console.log(kuali + " saved successfully");
+                                                      
                                                     deleteLocalkm(userpin);
                                                 },
                                                 error:function (pSweet, error) {
-                                                    alert("saveRecord() -> " + error.code + " " + error.message);
+                                                    console.log("saveRecord() -> " + error.code + " " + error.message);
                                                 }
 
                                             });
@@ -1125,13 +1128,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var yesterday = new Date();
             var checkin_time, checkout_time;
             var time = {};
-            alert('Today: ' + day);
+            console.log('Today: ' + day);
             if (day == 1){
-                alert('Today is Monday!');
+                console.log('Today is Monday!');
                 yesterday.setDate(currentDate.getDate()-3);
             }
             else{
-                alert('Any other day!');
+                console.log('Any other day!');
                 yesterday.setDate(currentDate.getDate()-1);
             }
             
@@ -1144,8 +1147,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Working Hours'  + '</th>';
             table += '<th style="border:1px solid #000;padding:5px;background-color:#dadad4">' + 'Status'  + '</th>';
             table += '<tr>';
-            //alert("Yesterday's Date: " + yesterday);
-            alert("In sendEmail");
+            //console.log("Yesterday's Date: " + yesterday);
+            console.log("In sendEmail");
             var newLine = "<br>";
             var msg = '';
             var reportDate;
@@ -1155,14 +1158,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 //query.equalTo("check",'checkin');
                 query.find({
                        success:function (results) {
-                               alert("results =--> " + results.length);
-                               alert("Results =--> results for checkin VF");
+                               console.log("results =--> " + results.length);
+                               console.log("Results =--> results for checkin VF");
                                //$('#myGrid').empty();
                                //$("#myGrid").append(results);
                                if(results.length == 0) {
                                        //var txt = "<div>No Result Found</div>";					
                                        //$("#myGrid").append(txt);
-                                       alert("No Results! VF1");
+                                       console.log("No Results! VF1");
                                        getKualitatem();
 
                                } else {	
@@ -1173,10 +1176,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
                                                checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
                                                 time = checkin_time.split(':');
-                                                //alert("Time[1]: " + time[1]);
+                                                //console.log("Time[1]: " + time[1]);
                                                 if (time[1].length < 2){
                                                     checkin_time = time[0] + ':0' + time[1];
-                                                    alert("CheckinTime: " + checkin_time);
+                                                    console.log("CheckinTime: " + checkin_time);
                                                 }
                                                 
                                                 
@@ -1197,7 +1200,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                      time = checkout_time.split(':');
                                                      if (time[1].length < 2){
                                                          checkout_time = time[0] + ':0' + time[1];
-                                                         alert("CheckoutTime: " + checkout_time);
+                                                         console.log("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
                                                 }
@@ -1227,14 +1230,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     //query2.equalTo("check",'checkin');
                     query2.find({
                            success:function (results) {
-                                   alert("results =--> " + results.length);
-                                   alert("Results =--> results for checkin KM");
+                                   console.log("results =--> " + results.length);
+                                   console.log("Results =--> results for checkin KM");
                                    //$('#myGrid').empty();
                                    //$("#myGrid").append(results);
                                    if(results.length == 0) {
                                            //var txt = "<div>No Result Found</div>";					
                                            //$("#myGrid").append(txt);
-                                            alert("No Results! KM1");
+                                            console.log("No Results! KM1");
                                             uploadAll();
                                    } else {	
 
@@ -1244,10 +1247,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 table += '<td style="border:1px solid #000;padding:5px;">' + results[i].get("userName")  + '</td>';
                                                 checkin_time = results[i].get("checkInTime").substr(results[i].get("checkInTime").length - 5);
                                                 time = checkin_time.split(':');
-                                                //alert("Time[1]: " + time[1]);
+                                                //console.log("Time[1]: " + time[1]);
                                                 if (time[1].length < 2){
                                                     checkin_time = time[0] + ':0' + time[1];
-                                                    alert("CheckinTime: " + checkin_time);
+                                                    console.log("CheckinTime: " + checkin_time);
                                                 }
                                                 
                                                 
@@ -1268,7 +1271,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                      time = checkout_time.split(':');
                                                      if (time[1].length < 2){
                                                          checkout_time = time[0] + ':0' + time[1];
-                                                         alert("CheckoutTime: " + checkout_time);
+                                                         console.log("CheckoutTime: " + checkout_time);
                                                      }
                                                  }
                                                 }
@@ -1280,21 +1283,21 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                  table += '<tr>';
 
                                         }
-                                            alert(table += '</table>');
+                                            console.log(table += '</table>');
                                            msg = newLine + '<h1 style="margin-left:35%">Attendance Report</h1>' + newLine + "<h3 style='display:inline-block'>Date: </h3>" + "<span style='font-size:14px;margin-left:5px;'>" + reportDate + '</span>' +newLine + table + newLine + newLine;
                                            sendEmailTo('attendance@gmail.com','maryum.babar@virtual-force.com','maryum.babar@gmail.com','Attendance Report', msg, function (success) {
                                                 if (success) {
-                                                    alert("Email successfully sent!");
+                                                    console.log("Email successfully sent!");
                                                     return true;
                                                 }
                                                 else {
-                                                    alert("EmailBcc having some problem");
+                                                    console.log("EmailBcc having some problem");
                                                     return false;
                                                 }
                                             });
 
 
-                                           //alert(table += '</table>');
+                                           //console.log(table += '</table>');
 
 
                                    }
@@ -1313,10 +1316,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function sendEmailTo(fromEmail,receiverEmail,ccEmail,subject,m_phone){
             
-                alert("fromEmail" + fromEmail);
-                alert("receiverEmail" + receiverEmail);
-                alert("subject" + subject);
-                alert("body" + m_phone);
+                console.log("fromEmail" + fromEmail);
+                console.log("receiverEmail" + receiverEmail);
+                console.log("subject" + subject);
+                console.log("body" + m_phone);
             
             Parse.Cloud.run("sendEmailCc",
                     {
@@ -1403,12 +1406,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function backToLogin2(){
-            alert("Email Sent!");
+            console.log("Email Sent!");
                 window.location = "index.html";
         }
         
         function uploadAll(){
-            alert("In UploadAll!");
+            console.log("In UploadAll!");
              var currentDate = new Date();
              var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
              var  expiryTime = new Date();
@@ -1422,13 +1425,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         // Transaction error callback
 
         function errorCB(tx, err) {
-            alert("Error processing SQL: "+err);
+            console.log("Error processing SQL: "+err);
         }
 
         // Transaction success callback
 
         function successCB() {
-            alert("success!");
+            console.log("success!");
         }
 
         // Populate the database
@@ -1454,20 +1457,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 department = r_auth[i].get("department");
                                 
                                 function it2(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
-                                                alert("In VFDB!");
+                                                console.log("In VFDB!");
                                                 db.transaction(function(t){
                                                     t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
                                                 });
                                 };
                                 
                                 function it3(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
-                                                alert("In KMDB!");
+                                                console.log("In KMDB!");
                                                 db.transaction(function(t){
                                                     t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
                                                 });
                                 };
                                 function it(value,un,up,com,dep){
-                                                    alert("UserPin: " + up);
+                                                    console.log("UserPin: " + up);
                                                     db.transaction(function(t){
                                                         t.executeSql('INSERT INTO USERS (id, username, userpin, company, department) VALUES (?,?,?,?,?)',[value, un,up,com,dep]);
 
@@ -1475,10 +1478,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     };
                                     it(i,username,userpin,company,department);
                                
-                                alert("Company: " + company);
+                                console.log("Company: " + company);
                
                                 if ((r_auth[i].get("userPin")).substr(0,1) == '1'){
-                                    alert("In Virtual Force: " + i);
+                                    console.log("In Virtual Force: " + i);
                                    
                                     var virtualF = Parse.Object.extend("VirtualForce");
                                     
@@ -1492,7 +1495,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     vf.set("status",'absent');
                                     vf.save(null, {
                                         success:function (virtualf) {
-                                            alert(virtualf + " saved successfully");
+                                            console.log(virtualf + " saved successfully");
                                             //document.cookie = "launch=true;" + " expires=" + expiryTime;
                                             window.localStorage.setItem("launch","true");
                                             window.localStorage.setItem("tdate",todaysDate);
@@ -1502,14 +1505,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             
                                         },
                                         error:function (pSweet, error) {
-                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
                                 }
                                 else if ((r_auth[i].get("userPin")).substr(0,1) == '2'){
                                     
-                                    alert("In Kualitatem: " + i);
+                                    console.log("In Kualitatem: " + i);
                                     
                                     
                                     var kualitatem = Parse.Object.extend("Kualitatem");
@@ -1524,14 +1527,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     km.set("status",'absent');
                                     km.save(null, {
                                         success:function (kuali) {
-                                            alert(kuali + " saved successfully");
+                                            console.log(kuali + " saved successfully");
                                             window.localStorage.setItem("launch","true");
                                             window.localStorage.setItem("tdate",todaysDate);
                                             
                                            
                                         },
                                         error:function (pSweet, error) {
-                                            alert("saveRecord() -> " + error.code + " " + error.message);
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
                                         }
 
                                     });
