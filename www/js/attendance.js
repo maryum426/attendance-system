@@ -964,7 +964,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                       workHours = hours.toString();
 
-                                        results[0].set("userAvatarOut",picUrl);
+                                        results[0].set("userAvatarOut",url);
                                         results[0].set("checkOutTime",currentTime);
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",workHours);
@@ -1028,7 +1028,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                           workHours = hours.toString();
                                           console.log("Working Hours " + workHours);
 
-                                            results[0].set("userAvatarOut",picUrl);
+                                            results[0].set("userAvatarOut",url);
                                             results[0].set("checkOutTime",currentTime);
                                             results[0].set("check","checkout");
                                             results[0].set("workingHours",workHours);
