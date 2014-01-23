@@ -788,6 +788,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        
         function queryHome(){
             alert("Going to Redirect!");
+            alert("Checkin Value: " + checkin);
             window.location = "home.html?checkin=" + checkin + "&pic=" + offlinePic;
         }
 
@@ -1656,7 +1657,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
         var uploadFinal = function(){
-             //console.log("In UploadPic!");
+             console.log("FucntionUpload!");
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -1706,7 +1707,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     //console.log("In Virtual Force");
                     if (navigator.onLine){
                         console.log("Yes Em Online!");
-                        syncDataCheckIn();
+                        
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -1723,7 +1724,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        window.location = "index.html";
+                                        syncDataCheckIn();
+                                        setTimeout(function(){window.location = "index.html";},5000);
                                         
                                           
                                     },
@@ -1746,7 +1748,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.onLine){
-                        syncDataCheckIn(); 
+                        
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -1763,7 +1765,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        window.location = "index.html";
+                                        syncDataCheckIn(); 
+                                        setTimeout(function(){window.location = "index.html";},5000);
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1793,7 +1796,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.onLine){
-                            syncDataCheckIn(); 
+                            
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -1828,7 +1831,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                 
+                                                syncDataCheckIn();  
                                                 deleteLocalvf(userpin);
 
                                             },
@@ -1852,7 +1855,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 else if (company == 'kualitatem'){
                             if (navigator.onLine){
-                                syncDataCheckIn();
+                                
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
@@ -1888,7 +1891,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             results[0].save(null, {
                                                 success:function (kuali) {
                                                     console.log(kuali + " saved successfully");
-                                                      
+                                                    syncDataCheckIn();  
                                                     deleteLocalkm(userpin);
                                                 },
                                                 error:function (pSweet, error) {
