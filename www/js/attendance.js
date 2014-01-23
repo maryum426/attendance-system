@@ -1823,8 +1823,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
 
                                       workHours = hours.toString();
-
-                                        results[0].set("userAvatarOut",picurl);
+                                        uploadPicToParse(picurl);
+                                        results[0].set("userAvatarOut",userAvatar);
                                         results[0].set("checkOutTime",currentTime);
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",workHours);
@@ -1884,7 +1884,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                           workHours = hours.toString();
                                           console.log("Working Hours " + workHours);
 
-                                            results[0].set("userAvatarOut",picurl);
+                                            uploadPicToParse(picurl);
+                                            results[0].set("userAvatarOut",userAvatar);
                                             results[0].set("checkOutTime",currentTime);
                                             results[0].set("check","checkout");
                                             results[0].set("workingHours",workHours);
