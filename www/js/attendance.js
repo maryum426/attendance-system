@@ -1725,8 +1725,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        $.when(syncDataCheckIn()).done(
-                                        setTimeout(function(){window.location = "index.html";},5000));
+                                        syncDataCheckIn();
+                                        setTimeout(function(){window.location = "index.html";},5000);
                                         
                                           
                                     },
@@ -1766,8 +1766,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        $.when(syncDataCheckIn()).done(
-                                        setTimeout(function(){window.location = "index.html";},5000));
+                                        syncDataCheckIn(); 
+                                        setTimeout(function(){window.location = "index.html";},5000);
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1832,8 +1832,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                $.when(syncDataCheckIn()).done(deleteLocalvf(userpin));
-                                                
+                                                syncDataCheckIn();  
+                                                deleteLocalvf(userpin);
 
                                             },
                                             error:function (pSweet, error) {
@@ -1893,7 +1893,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             results[0].save(null, {
                                                 success:function (kuali) {
                                                     console.log(kuali + " saved successfully");
-                                                    $.when(syncDataCheckIn()).done(deleteLocalkm(userpin));
+                                                    syncDataCheckIn();  
+                                                    deleteLocalkm(userpin);
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);

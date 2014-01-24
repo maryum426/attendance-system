@@ -71,8 +71,8 @@
                 }
                 
                 $(document).ready(function(){
-                    $.when(setMessages(checkin)).done(takePicture());
-                    //takePicture();
+                    setMessages(checkin);
+                    takePicture();
                 });
                 
                 
