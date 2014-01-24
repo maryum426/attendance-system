@@ -1715,8 +1715,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.find({
                             success:function (results) {
                                 //console.log("Results Length: " +results.length);
-                                uploadPicToParse(picurl);
-                                results[0].set("userAvatarIn",userAvatar);
+                                results[0].set("userAvatarIn",picurl);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -1725,8 +1724,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        syncDataCheckIn();
-                                        setTimeout(function(){window.location = "index.html";},5000);
+                                        $.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
                                         
                                           
                                     },
@@ -1756,8 +1754,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.lessThanOrEqualTo("createdAt", checkEDate);
                         query.find({
                             success:function (results) {
-                                uploadPicToParse(picurl);
-                                results[0].set("userAvatarIn",userAvatar);
+                                
+                                results[0].set("userAvatarIn",picurl);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -1766,8 +1764,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        syncDataCheckIn(); 
-                                        setTimeout(function(){window.location = "index.html";},5000);
+                                        $.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1832,8 +1829,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                syncDataCheckIn();  
-                                                deleteLocalvf(userpin);
+                                                $.when(syncDataCheckIn()).done(deleteLocalvf(userpin));
 
                                             },
                                             error:function (pSweet, error) {
@@ -1893,8 +1889,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             results[0].save(null, {
                                                 success:function (kuali) {
                                                     console.log(kuali + " saved successfully");
-                                                    syncDataCheckIn();  
-                                                    deleteLocalkm(userpin);
+                                                    $.when(syncDataCheckIn()).done(deleteLocalkm(userpin));
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);
