@@ -58,6 +58,10 @@
             function onDeviceReady() {
                 // Register the event listener
                 document.addEventListener("backbutton", onBackKeyDown, false);
+                setMessages(checkin);
+                $(document).ready(function(){  
+                uploadFinal();
+            });
             }
             function onBackKeyDown() {
                 //alert("Exiting!");
@@ -77,7 +81,7 @@
                 }
                 picurl = window.localStorage.getItem("offlinepic");
             console.log("CheckIn: " + checkin);
-            setMessages(checkin);
+            //setMessages(checkin);
             $('#my_image').css({'left':'20px'});
             $('#my_image').attr('src',picurl);
             var currentDate = new Date();
@@ -91,9 +95,7 @@
             console.log("Current Time: " + currentTime);
             $('#time').text(currentTime);
             
-            $(document).ready(function(){  
-                uploadFinal();
-            });
+            
             
             //backToLogin();
             

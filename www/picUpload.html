@@ -41,6 +41,10 @@
                 function onDeviceReady() {
                     // Register the event listener
                     document.addEventListener("backbutton", onBackKeyDown, false);
+                    setMessages(checkin)
+                //$(document).ready(function(){
+                    takePicture();
+                //});
                 }
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var checkin,check;
@@ -69,9 +73,9 @@
                     $('.pic-text').css({'color':'#fff'});
                     $('.pic_upload').css({'top':'145px'});
                 }
-                setMessages(checkin)
+                //setMessages(checkin)
                 //$(document).ready(function(){
-                    takePicture();
+                   //takePicture();
                 //});
                 
                 
