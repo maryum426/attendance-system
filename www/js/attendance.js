@@ -262,7 +262,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         
                             if (company == 'virtualforce'){
                                 
-                               if (navigator.network.connection.type != Connection.NONE){
+                               if (navigator.connection.type != Connection.NONE){
                                 var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -297,13 +297,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }
                                 });
                                }
-                               else if(navigator.network.connection.type == Connection.NONE) {
+                               else if(navigator.connection.type == Connection.NONE) {
                                    it6(userpin,d);
                                }
                                  
                             }
                             else if (company == 'kualitatem'){
-                                if(navigator.network.connection.type != Connection.NONE){
+                                if(navigator.connection.type != Connection.NONE){
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -337,7 +337,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }
                                 });
                                 }
-                                else if(navigator.network.connection.type == Connection.NONE) {
+                                else if(navigator.connection.type == Connection.NONE) {
                                    it(userpin,d);    
                                 }
                              
@@ -448,7 +448,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
                 offPicData  = data2;
 
-                //if (navigator.network.connection.type != Connection.NONE){ //Online
+                //if (navigator.connection.type != Connection.NONE){ //Online
                     
                     //uploadParseFile(data2);
                     
@@ -847,7 +847,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     //console.log("In Virtual Force");
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
                         //syncDataCheckIn();
                         var query = new Parse.Query("VirtualForce");
@@ -889,7 +889,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 }
                 else if (company == 'kualitatem'){
 
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                         syncDataCheckIn(); 
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
@@ -941,7 +941,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var time=[];
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                             syncDataCheckIn(); 
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
@@ -1004,7 +1004,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 }
 
                 else if (company == 'kualitatem'){
-                            if (navigator.network.connection.type != Connection.NONE){
+                            if (navigator.connection.type != Connection.NONE){
                                 syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
@@ -1388,7 +1388,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var currentDate = new Date();
             
             if (check == 'true'){
-                if(navigator.network.connection.type != Connection.NONE){
+                if(navigator.connection.type != Connection.NONE){
                     var query = new Parse.Query("MessageConfig");
                     query.equalTo("messageType", 'checkin');
                     //query.equalTo("check", 'checkin');
@@ -1404,7 +1404,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         }
                     });     
                 }
-                else if(navigator.network.connection.type == Connection.NONE) {
+                else if(navigator.connection.type == Connection.NONE) {
                     $('.welcome-message').text("Happy Coding! :)");
                     $('.welcome-text').text('Welcome ');
                     $('#welcome-text2').text(fname[0] + '!');
@@ -1412,7 +1412,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 }
             }
             else{
-                if(navigator.network.connection.type != Connection.NONE){
+                if(navigator.connection.type != Connection.NONE){
                     var query = new Parse.Query("MessageConfig");
                     query.equalTo("messageType", 'checkout');
                     //query.equalTo("check", 'checkin');
@@ -1428,7 +1428,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         }
                     });
                 }
-                else if(navigator.network.connection.type == Connection.NONE) {
+                else if(navigator.connection.type == Connection.NONE) {
                      $('.welcome-message').text("See U tomorrow!");
                      $('.welcome-text').text('Goodbye ');
                      $('#welcome-text2').text(fname[0] + '!');
@@ -1709,7 +1709,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     //console.log("In Virtual Force");
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
                         //uploadPicToParse(picurl);
                         syncDataCheckIn();
@@ -1744,14 +1744,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                         });
                     }
-                    else if(navigator.network.connection.type == Connection.NONE) {
+                    else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},5000);
                         
                     }
                 }
                 else if (company == 'kualitatem'){
 
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                         //uploadPicToParse(picurl);
                         syncDataCheckIn();        
                         var query = new Parse.Query("Kualitatem");
@@ -1787,7 +1787,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                         });
                     }
-                    else if(navigator.network.connection.type == Connection.NONE) {
+                    else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},5000);
                     }
                 }
@@ -1800,7 +1800,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var time=[];
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
-                    if (navigator.network.connection.type != Connection.NONE){
+                    if (navigator.connection.type != Connection.NONE){
                             syncDataCheckIn();
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
@@ -1851,7 +1851,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     }
                             });
                         }
-                        else if(navigator.network.connection.type == Connection.NONE) {
+                        else if(navigator.connection.type == Connection.NONE) {
 
                             setTimeout(function(){window.location = "index.html";},5000);
 
@@ -1859,7 +1859,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 }
 
                 else if (company == 'kualitatem'){
-                            if (navigator.network.connection.type != Connection.NONE){
+                            if (navigator.connection.type != Connection.NONE){
                                 syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
@@ -1912,7 +1912,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 }
                             });
                         }
-                        else if(navigator.network.connection.type == Connection.NONE) {
+                        else if(navigator.connection.type == Connection.NONE) {
                            setTimeout(function(){window.location = "index.html";},5000);
                         }
                     }
