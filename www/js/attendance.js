@@ -187,14 +187,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        function upLocalvfIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
                 console.log("My Query Up local vf!");
-                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
+                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         
         function upLocalkmIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
                 console.log("My Query Up local km!");
-                t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
+                t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         function deleteLocalvf(up){
@@ -1096,6 +1096,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
             workHours = hours.toString();
             window.localStorage.setItem("picurl",offPicData);
+            
+                db.transaction(function(t){
+                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
+            });
+            
             db.transaction(function(t){
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
             });
@@ -1629,16 +1634,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
            department = window.localStorage.getItem("department");
            
             if (checkin == 'true'){
-                if (company == 'virtualforce'){
-                    window.localStorage.setItem("picurl",offPicData);
-                    upLocalvfIn(offPicData,currentTime,department,status,userpin);
-                                   
-                }
-                else if (company == 'kualitatem'){
-                    window.localStorage.setItem("picurl",offPicData);    
-                    upLocalkmIn(offPicData,currentTime,department,status,userpin);
-                         
-                }
+                
+                    if (company == 'virtualforce'){
+                        
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalvfIn(offPicData,currentTime,department,status,userpin);
+                            
+                    }
+                    else if (company == 'kualitatem'){
+
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalkmIn(offPicData,currentTime,department,status,userpin);
+
+                    }
+                
             }
             else{
                 if (company == 'virtualforce'){
@@ -1730,7 +1739,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        
+                                        db.transaction(function(t){
+                                            console.log("My Query Up local vf when online!");
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + up , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
+                                        });
                                         setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},5000)  
                                     },
                                     error:function (pSweet, error) {
@@ -1770,7 +1782,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        
+                                        db.transaction(function(t){
+                                            console.log("My Query Up local km when online!");
+                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + up , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
+                                        });
                                         setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},5000)  
                                     },
                                     error:function (pSweet, error) {
