@@ -1741,7 +1741,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log(kuali + " saved successfully");
                                         db.transaction(function(t){
                                             console.log("My Query Up local vf when online!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + up , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
                                         setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},5000)  
                                     },
@@ -1784,7 +1784,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log(kuali + " saved successfully");
                                         db.transaction(function(t){
                                             console.log("My Query Up local km when online!");
-                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + up , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
+                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
                                         setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},5000)  
                                     },
