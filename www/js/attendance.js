@@ -186,26 +186,26 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
-                alert("My Query Up local vf!");
+                console.log("My Query Up local vf!");
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         
         function upLocalkmIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
-                alert("My Query Up local km!");
+                console.log("My Query Up local km!");
                 t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'true1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         function deleteLocalvf(up){
             db.transaction(function(t){
-                alert("My Query Del local vf!");
+                console.log("My Query Del local vf!");
                 t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], function(){window.location = "index.html";}, errorCB);
             });
         }
         function deleteLocalkm(up){
             db.transaction(function(t){
-                alert("My Query Del local km!");
+                console.log("My Query Del local km!");
                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], function(){window.location = "index.html";}, errorCB);
             });
         }
@@ -525,10 +525,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log (parseFile.url());
                                             console.log("Ok");
                                             console.log("In Uploadfinal!");
+                                            return;
 
                                         }, function(error) {
                                             console.log("Error");
                                             console.log(error);
+                                            return;
                                         });
             
         }
@@ -1715,7 +1717,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.find({
                             success:function (results) {
                                 //console.log("Results Length: " +results.length);
-                                results[0].set("userAvatarIn",picurl);
+                                uploadPicToParse(picurl);
+                                console.log("Uploaded Avatar: " + userAvatar);
+                                results[0].set("userAvatarIn",userAvatar);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -1724,8 +1728,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        $.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
-                                        
+                                        //$.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
+                                        $.when(syncDataCheckIn()).done(console.log("Done Syncing and Uploading VF."));
                                           
                                     },
                                     error:function (pSweet, error) {
@@ -1754,8 +1758,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.lessThanOrEqualTo("createdAt", checkEDate);
                         query.find({
                             success:function (results) {
-                                
-                                results[0].set("userAvatarIn",picurl);
+                                uploadPicToParse(picurl);
+                                console.log("Uploaded Avatar: " + userAvatar);
+                                results[0].set("userAvatarIn",userAvatar);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -1764,7 +1769,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        $.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
+                                        //$.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
+                                        $.when(syncDataCheckIn()).done(console.log("Done Syncing and Uploading KM."));
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1822,6 +1828,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                       workHours = hours.toString();
                                         uploadPicToParse(picurl);
+                                        console.log("Uploaded Avatar: " + userAvatar);
                                         results[0].set("userAvatarOut",userAvatar);
                                         results[0].set("checkOutTime",currentTime);
                                         results[0].set("check","checkout");
@@ -1882,6 +1889,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                           console.log("Working Hours " + workHours);
 
                                             uploadPicToParse(picurl);
+                                            console.log("Uploaded Avatar: " + userAvatar);
                                             results[0].set("userAvatarOut",userAvatar);
                                             results[0].set("checkOutTime",currentTime);
                                             results[0].set("check","checkout");
