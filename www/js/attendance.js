@@ -529,7 +529,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                         }, function(error) {
                                             console.log("Error");
-                                            console.log(error);
+                                            console.log(error.code + ", " + error.message);
                                             
                                         });
             
@@ -1681,8 +1681,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setSeconds(59);
             
             var status;
-            console.log("Check Status: " + checkStatus.toString());
-            console.log("Current Date: " + currentDate.toString());
+            //console.log("Check Status: " + checkStatus.toString());
+            //console.log("Current Date: " + currentDate.toString());
             
             if ((currentDate < checkStatus || currentDate == checkStatus)){
                 status = 'ontime';
