@@ -525,12 +525,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log (parseFile.url());
                                             console.log("Ok");
                                             console.log("In Uploadfinal!");
-                                            return;
+                                            
 
                                         }, function(error) {
                                             console.log("Error");
                                             console.log(error);
-                                            return;
+                                            
                                         });
             
         }
@@ -538,7 +538,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                return;
+                
             }
             else{
                 console.log("Sync CheckIn");
@@ -581,7 +581,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     if ((result.rows.item(i).userpin).substr(0,1) == '1'){
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
-
+                               uploadPicToParse(result.rows.item(j).userAvatarIn);
                                var query = new Parse.Query("VirtualForce");
                                query.equalTo("userPin", result.rows.item(i).userpin);
                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -594,8 +594,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                        console.log("Results Found (Username): " + result.rows.item(j).username);
 
                                        //Upload Picture to Parse
-
-                                       uploadPicToParse(result.rows.item(j).userAvatarIn);
+                                       console.log("UserAvatar Uploaded: " + userAvatar);
+                                       
                                        results[0].set("userAvatarIn",userAvatar);
                                        results[0].set("checkInTime",result.rows.item(j).checkInTime);
                                        results[0].set("department",result.rows.item(j).department);
@@ -626,6 +626,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     }
                     else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
                         console.log("Called for KM!");
+                               uploadPicToParse(result.rows.item(k).userAvatarIn);
                                var query = new Parse.Query("Kualitatem");
                                query.equalTo("userPin", result.rows.item(i).userpin);
                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -635,7 +636,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                        //console.log("Results Length: " +results.length);
 
                                        //Upload Picture to Parse
-                                       uploadPicToParse(result.rows.item(k).userAvatarIn);
+                                       console.log("UserAvatar Uploaded: " + userAvatar);
                                        results[0].set("userAvatarIn",userAvatar);
                                        results[0].set("checkInTime",result.rows.item(k).checkInTime);
                                        results[0].set("department",result.rows.item(k).department);
@@ -674,7 +675,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                return;
+                
             }
             else{
                 var currentDate = new Date();
@@ -713,7 +714,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 for (var i=0;i<result.rows.length;i++){
                     if((result.rows.item(i).userpin).substr(0,1) == '1'){
-
+                                uploadPicToParse(result.rows.item(j).userAvatarOut);
                                 var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -724,7 +725,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log("Results Length: " + results.length);
 
                                         //Upload Picture to Parse
-                                        uploadPicToParse(result.rows.item(j).userAvatarOut);
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
 
                                         results[0].set("userAvatarOut",userAvatar);
                                         results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
@@ -751,6 +752,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 });
                     }
                     else if((result.rows.item(i).userpin).substr(0,1) == '2'){
+                        uploadPicToParse(result.rows.item(k).userAvatarOut);
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -761,7 +763,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log("Results Length: " + results.length);
 
                                         //Upload Picture to Parse
-                                        uploadPicToParse(result.rows.item(k).userAvatarOut);
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
                                         results[0].set("userAvatarOut",userAvatar);
                                         results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
                                         results[0].set("check","checkout");
@@ -797,7 +799,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
         
-         var uploadParsePic = function(url){
+         /*var uploadParsePic = function(url){
              //console.log("In UploadPic!");
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -1061,7 +1063,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     }
             }
 
-        }
+        }*/
         
         function calcOffWorkHourvf(tx,results){
             
@@ -1703,13 +1705,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
            company = window.localStorage.getItem("company");
            department = window.localStorage.getItem("department");
            picurl = window.localStorage.getItem("picurl");
-           
+           uploadPicToParse(picurl);
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     //console.log("In Virtual Force");
                     if (navigator.onLine){
                         console.log("Yes Em Online!");
-                        
+                        //uploadPicToParse(picurl);
+                        syncDataCheckIn();
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -1717,7 +1720,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         query.find({
                             success:function (results) {
                                 //console.log("Results Length: " +results.length);
-                                uploadPicToParse(picurl);
                                 console.log("Uploaded Avatar: " + userAvatar);
                                 results[0].set("userAvatarIn",userAvatar);
                                 results[0].set("checkInTime",currentTime);
@@ -1728,9 +1730,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        //$.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
-                                        $.when(syncDataCheckIn()).done(console.log("Done Syncing and Uploading VF."));
-                                          
+                                        
+                                        setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},5000)  
                                     },
                                     error:function (pSweet, error) {
                                     }
@@ -1751,14 +1752,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.onLine){
-                        
+                        //uploadPicToParse(picurl);
+                        syncDataCheckIn();        
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
                         query.find({
                             success:function (results) {
-                                uploadPicToParse(picurl);
                                 console.log("Uploaded Avatar: " + userAvatar);
                                 results[0].set("userAvatarIn",userAvatar);
                                 results[0].set("checkInTime",currentTime);
@@ -1769,8 +1770,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 results[0].save(null, {
                                     success:function (kuali) {
                                         console.log(kuali + " saved successfully");
-                                        //$.when(syncDataCheckIn()).done(setTimeout(function(){window.location = "index.html";},5000));
-                                        $.when(syncDataCheckIn()).done(console.log("Done Syncing and Uploading KM."));
+                                        
+                                        setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},5000)  
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1800,7 +1801,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.onLine){
-                            
+                            syncDataCheckIn();
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -1827,7 +1828,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //hours = [h.substr(-2) + ' hrs, ' + m.substr(-2) + ' mins'];
 
                                       workHours = hours.toString();
-                                        uploadPicToParse(picurl);
+                                        
                                         console.log("Uploaded Avatar: " + userAvatar);
                                         results[0].set("userAvatarOut",userAvatar);
                                         results[0].set("checkOutTime",currentTime);
@@ -1836,8 +1837,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                $.when(syncDataCheckIn()).done(deleteLocalvf(userpin));
-
+                                               
+                                                deleteLocalvf(userpin);
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1859,7 +1860,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 else if (company == 'kualitatem'){
                             if (navigator.onLine){
-                                
+                                syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
@@ -1888,7 +1889,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                           workHours = hours.toString();
                                           console.log("Working Hours " + workHours);
 
-                                            uploadPicToParse(picurl);
+                                            
                                             console.log("Uploaded Avatar: " + userAvatar);
                                             results[0].set("userAvatarOut",userAvatar);
                                             results[0].set("checkOutTime",currentTime);
@@ -1897,7 +1898,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             results[0].save(null, {
                                                 success:function (kuali) {
                                                     console.log(kuali + " saved successfully");
-                                                    $.when(syncDataCheckIn()).done(deleteLocalkm(userpin));
+                                                    
+                                                    deleteLocalvf(userpin);
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);
