@@ -278,7 +278,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     $('.code-holder').val(null);
                                                 }   
                                                 
-                                            if (results[0].get("check") == 'checkin')
+                                            else if (results[0].get("check") == 'checkin')
                                                 {
                                                     window.location = "picUpload.html?checkin=false";
                                                 }
@@ -319,7 +319,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     $('.code-holder').val(null);
                                                 }   
                                                 
-                                           if (results[0].get("check") == 'checkin')
+                                           else if (results[0].get("check") == 'checkin')
                                                 {
                                                     window.location = "picUpload.html?checkin=false";
                                                 }

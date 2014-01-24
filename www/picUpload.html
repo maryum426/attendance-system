@@ -69,9 +69,12 @@
                     $('.pic-text').css({'color':'#fff'});
                     $('.pic_upload').css({'top':'145px'});
                 }
-                setMessages(checkin);
                 
-                takePicture();
+                $(document).ready(function(){
+                    setMessages(checkin);
+                    takePicture();
+                });
+                
                 
                 function onBackKeyDown() {
                     //alert("Exiting!");
