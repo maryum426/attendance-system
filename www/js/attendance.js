@@ -408,7 +408,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var image = new Image();
             image.src = userAvatar;
             offlinePic = userAvatar;
-            
+            window.localStorage.setItem("offlinepic",offlinePic);
             //Resizing Image
             var canvas = document.createElement('canvas');
 
@@ -787,9 +787,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
        
         function queryHome(){
-            alert("Going to Redirect!");
-            alert("Checkin Value: " + checkin);
-            window.location = "home.html?checkin=" + checkin + "&pic=" + offlinePic;
+            console.log("Going to Redirect!");
+            console.log("Checkin Value: " + checkin);
+            window.location = "home.html?checkin=" + checkin;// + "&pic=" + offlinePic;
         }
 
         
