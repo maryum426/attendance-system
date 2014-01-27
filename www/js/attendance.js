@@ -88,7 +88,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
        
        function errorCB9 (err){	 	
             console.log("I am wild!")	 	
-        }
+       }
         
         // Query the success callback
         function querySuccess(tx, results) {
@@ -117,7 +117,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                     
                 
             }
-            else if(results.rows.length) {
+            else if(results.rows.length == 0) {
                 alert("User doesnot exist!");
                 $('#codeOk').removeAttr('disabled');
                 $('#codeOk').css({'opacity':'1.4'});
@@ -140,52 +140,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
         function errorCBout(err) {	 	
             console.log("Error in offline Checkout");	 	
         }
-        
-        /*function codePageOk() {
-            
-            $('.pic_upload').hide();
-            $('.btn-holder2').hide();
-            $('#codeOk').attr('disabled','disabled');
-            $('#codeOk').css({'opacity':'0.4'});
-            userpin = ($('.code-holder').val()).toString();
-            console.log("User Pin: " + userpin);
-            var query = new Parse.Query("Users");
-            //var query = new Auth();
-            query.equalTo('userPin',userpin);
-            query.find({
-                success:function (r_auth) {
-                    if (r_auth.length > 0) {
-                        username = r_auth[0].get("userName");
-                        company = r_auth[0].get("company");
-                        department = r_auth[0].get("department");
-                        
-                        //document.cookie = "pin=" + userpin + ";" ; 
-                        window.localStorage.setItem("pin",userpin);
-                        //document.cookie = "username=" + username + ";" ; 
-                        window.localStorage.setItem("username",username);
-                        //document.cookie = "company=" + company + ";"  ;
-                        window.localStorage.setItem("company",company);
-                        //document.cookie = "department=" + department + ";" ;
-                        window.localStorage.setItem("department",department);
-                        
-                        
-                            checkCheckIn();
 
-                    }
-                    else {
-                       console.log("User doesnot exist!");
-                       $('#codeOk').removeAttr('disabled');
-                       $('#codeOk').css({'opacity':'1.4'});
-                       $('.code-holder').val(null);
-                    }
-                },
-                error:function (error) {
-                    console.log("Error -> " + error.code + " " + error.message);
-                }
-
-            });
-            
-        }*/
        
        //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
@@ -348,16 +303,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                             }
             
         }
-        
-        /*function codePageBack(){
-            if (checkin == true){
-                window.location = "index.html";
-            }
-            else {
-                window.location = "index.html";
-            }
-        }*/
-                            
+                  
         function capturePicture(){
                 
                 $('.pic_upload').css({'display':'block'});
@@ -460,7 +406,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                 //else{ //Offline
                     uploadLocal(); 
                 //}
-
+            }
                         
         }
         
@@ -475,7 +421,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
             parseFile.save().then(function() {
                                             //console.log("Got it!");
                                             userAvatar = parseFile.url();
-                                            uploadParsePic(userAvatar,pf);
+                                            uploadParsePic();
                                             console.log (parseFile.url());
                                             console.log("Ok");
                                             console.log("In Uploadfinal!");
@@ -484,7 +430,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                             console.log("Error");
                                             console.log(error);
                                         });
-            }
+            
         }
         
         function uploadBack(){
@@ -1563,10 +1509,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                         
                     }
                 });
-        }
+            }
         }
     
-             var uploadLocal = function(url){
+        var uploadLocal = function(){
              //console.log("In UploadPic!");
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -1693,7 +1639,6 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
            department = window.localStorage.getItem("department");
            picurl = window.localStorage.getItem("picurl");
            
-           uploadParsePic(picurl);
-
+           uploadParseFile(picurl);
 
         }
