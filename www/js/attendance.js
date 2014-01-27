@@ -546,11 +546,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
                                temp_userpin = result.rows.item(i).userpin;
-                               temp_username = result.rows.item(j).username;
-                               temp_department = result.rows.item(j).department;
-                               temp_checkin = result.rows.item(j).checkInTime;
-                               temp_status = result.rows.item(j).status;
-                               uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
+                               temp_username = result.rows.item(i).username;
+                               temp_department = result.rows.item(i).department;
+                               temp_checkin = result.rows.item(i).checkInTime;
+                               temp_status = result.rows.item(i).status;
+                               uploadPicToParse(result.rows.item(i).userAvatarIn,"vfin");
                                j++;
                                
                                
@@ -563,11 +563,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                             console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
                                temp_userpin = result.rows.item(i).userpin;
-                               temp_username = result.rows.item(k).username;
-                               temp_department = result.rows.item(k).department;
-                               temp_checkin = result.rows.item(k).checkInTime;
-                               temp_status = result.rows.item(k).status;
-                               uploadPicToParse(result.rows.item(k).userAvatarIn,"kmin");
+                               temp_username = result.rows.item(i).username;
+                               temp_department = result.rows.item(i).department;
+                               temp_checkin = result.rows.item(i).checkInTime;
+                               temp_status = result.rows.item(i).status;
+                               uploadPicToParse(result.rows.item(i).userAvatarIn,"kmin");
                                k++;
                                
                     }
@@ -739,10 +739,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
                                
-                               temp_checkout = result.rows.item(j).checkOutTime;
-                               temp_workH = result.rows.item(j).workingHours;
+                               temp_checkout = result.rows.item(i).checkOutTime;
+                               temp_workH = result.rows.item(i).workingHours;
                                
-                               uploadPicToParse(result.rows.item(j).userAvatarOut,"vfout");
+                               uploadPicToParse(result.rows.item(i).userAvatarOut,"vfout");
                                j++;
                                 
                     }
@@ -751,10 +751,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
                                
-                               temp_checkout = result.rows.item(k).checkOutTime;
-                               temp_workH = result.rows.item(k).workingHours;
+                               temp_checkout = result.rows.item(i).checkOutTime;
+                               temp_workH = result.rows.item(i).workingHours;
                                
-                               uploadPicToParse(result.rows.item(k).userAvatarOut,"kmout");
+                               uploadPicToParse(result.rows.item(i).userAvatarOut,"kmout");
                                k++;
                                 
                     }
