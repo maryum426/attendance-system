@@ -539,7 +539,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                
                                //Pic Upload Process
 
-                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(i).userAvatarIn});
 
                                 //Uploading Pic to Parse
                                 parseF.save().then(function() {
@@ -557,21 +557,21 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                                                 success:function (results) {
                                                                     console.log("Result in VF found");
                                                                     console.log("Results Length in VF sync: " +results.length);
-                                                                    console.log("Results Found: " + result.rows.item(j).checkInTime);
-                                                                    console.log("Results Found (Username): " + result.rows.item(j).username);
+                                                                    console.log("Results Found: " + result.rows.item(i).checkInTime);
+                                                                    console.log("Results Found (Username): " + result.rows.item(i).username);
 
                                                                     //Upload Picture to Parse
                                                                     console.log("UserAvatar Uploaded: " + userAvatar);
 
                                                                     results[0].set("userAvatarIn",userAvatar);
-                                                                    results[0].set("checkInTime",result.rows.item(j).checkInTime);
-                                                                    results[0].set("department",result.rows.item(j).department);
+                                                                    results[0].set("checkInTime",result.rows.item(i).checkInTime);
+                                                                    results[0].set("department",result.rows.item(i).department);
                                                                     results[0].set("check","checkin");
                                                                     results[0].set("createdAt",currentDate);
-                                                                    results[0].set("status",result.rows.item(j).status);
+                                                                    results[0].set("status",result.rows.item(i).status);
                                                                     db.transaction(function(t){
                                                                         console.log("My Query Home Called!");
-                                                                        t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                                                        t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
                                                                     });
                                                                     j++;
                                                                     results[0].save(null, {
@@ -605,7 +605,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                         console.log("Called for KM!");
                                 //Pic Upload Process
 
-                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(i).userAvatarIn});
 
                                 //Uploading Pic to Parse
                                 parseF.save().then(function() {
@@ -626,16 +626,16 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                                                         //Upload Picture to Parse
                                                                         console.log("UserAvatar Uploaded: " + userAvatar);
                                                                         results[0].set("userAvatarIn",userAvatar);
-                                                                        results[0].set("checkInTime",result.rows.item(k).checkInTime);
-                                                                        results[0].set("department",result.rows.item(k).department);
+                                                                        results[0].set("checkInTime",result.rows.item(i).checkInTime);
+                                                                        results[0].set("department",result.rows.item(i).department);
                                                                         results[0].set("check","checkin");
                                                                         results[0].set("createdAt",currentDate);
-                                                                        results[0].set("status",result.rows.item(k).status);
+                                                                        results[0].set("status",result.rows.item(i).status);
                                                                         db.transaction(function(t){
                                                                             console.log("My Query Home Called!");
 
                                                                             //Update record locally
-                                                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
                                                                         });
                                                                         k++;
                                                                         results[0].save(null, {
@@ -691,6 +691,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                 checkEDate.setSeconds(59);
 
                 var status;
+                
+                 //Initialize Parse
+                Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+                var parseFOut;
+                
                 console.log("Check Status: " + checkStatus.toString());
                 console.log("Current Date: " + currentDate.toString());
 
@@ -712,10 +717,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                 
                                 //Pic Upload Process
 
-                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+                                parseFOut = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
 
                                 //Uploading Pic to Parse
-                                parseF.save().then(function() {
+                                parseFOut.save().then(function() {
                                                                 //console.log("Got it!");
                                                                 userAvatar = parseF.url();
                                                                 console.log (parseF.url());
@@ -769,10 +774,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                         
                         //Pic Upload Process
 
-                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+                                parseFOut = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
 
                                 //Uploading Pic to Parse
-                                parseF.save().then(function() {
+                                parseFOut.save().then(function() {
                                                                 //console.log("Got it!");
                                                                 userAvatar = parseF.url();
                                                                 console.log (parseF.url());
