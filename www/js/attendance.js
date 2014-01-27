@@ -805,6 +805,23 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
         
          var uploadParsePic = function(){
             
+            var currentDate = new Date();
+            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+            
+            var checkStatus = new Date(); // Status : late,ontime
+            checkStatus.setHours(9);
+            checkStatus.setMinutes(30);
+            checkStatus.setSeconds(59);
+            
+            var checkSDate = new Date(); //Start Date
+            checkSDate.setHours(00);
+            checkSDate.setMinutes(00);
+            checkSDate.setSeconds(00);
+            
+            var checkEDate = new Date(); //End Date
+            checkEDate.setHours(23);
+            checkEDate.setMinutes(59);
+            checkEDate.setSeconds(59);
            
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
