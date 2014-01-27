@@ -548,7 +548,12 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                                                                 console.log (parseF.url());
                                                                 console.log("Ok");
                                                                 console.log("In Uploadfinal!");
-                                                                
+                                                               }, function(error) {
+                                                                console.log("Error");
+                                                                console.log(error.code + ", " + error.message);
+
+                                                            });
+                                
                                                                 var query = new Parse.Query("VirtualForce");
                                                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -591,12 +596,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
 
                                                             });
 
-                                                            }, function(error) {
-                                                                console.log("Error");
-                                                                console.log(error.code + ", " + error.message);
-
-                                                            });
-                               
+                                                            
                                //Pic Uploaded
                                //uploadPicToParse(result.rows.item(j).userAvatarIn);
                                
