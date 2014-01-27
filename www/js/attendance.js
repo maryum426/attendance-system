@@ -1676,7 +1676,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
            department = window.localStorage.getItem("department");
            picurl = window.localStorage.getItem("picurl");
            
-           uploadParseFile(picurl);
+           uploadParsePic(picurl);
 
 
         }
