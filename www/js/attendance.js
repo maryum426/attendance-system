@@ -511,7 +511,12 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                 checkEDate.setSeconds(59);
 
                 var status;
-
+                
+                //Initialize Parse
+                Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+                var parseF;
+                
+                
                 console.log("Check Status: " + checkStatus.toString());
                 console.log("Current Date: " + currentDate.toString());
 
@@ -531,91 +536,130 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
                     if ((result.rows.item(i).userpin).substr(0,1) == '1'){
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
-                               uploadPicToParse(result.rows.item(j).userAvatarIn);
-                               var query = new Parse.Query("VirtualForce");
-                               query.equalTo("userPin", result.rows.item(i).userpin);
-                               query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                               query.lessThanOrEqualTo("createdAt", checkEDate);
-                               query.find({
-                                   success:function (results) {
-                                       console.log("Result in VF found");
-                                       console.log("Results Length in VF sync: " +results.length);
-                                       console.log("Results Found: " + result.rows.item(j).checkInTime);
-                                       console.log("Results Found (Username): " + result.rows.item(j).username);
+                               
+                               //Pic Upload Process
 
-                                       //Upload Picture to Parse
-                                       console.log("UserAvatar Uploaded: " + userAvatar);
-                                       
-                                       results[0].set("userAvatarIn",userAvatar);
-                                       results[0].set("checkInTime",result.rows.item(j).checkInTime);
-                                       results[0].set("department",result.rows.item(j).department);
-                                       results[0].set("check","checkin");
-                                       results[0].set("createdAt",currentDate);
-                                       results[0].set("status",result.rows.item(j).status);
-                                       db.transaction(function(t){
-                                           console.log("My Query Home Called!");
-                                           t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                       });
-                                       j++;
-                                       results[0].save(null, {
-                                           success:function (kuali) {
-                                               console.log(kuali + " saved successfully");
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
 
-                                           },
-                                           error:function (pSweet, error) {
-                                               console.log("saveRecord() -> " + error.code + " " + error.message);
-                                           }
+                                //Uploading Pic to Parse
+                                parseF.save().then(function() {
+                                                                //console.log("Got it!");
+                                                                userAvatar = parseF.url();
+                                                                console.log (parseF.url());
+                                                                console.log("Ok");
+                                                                console.log("In Uploadfinal!");
+                                                                
+                                                                var query = new Parse.Query("VirtualForce");
+                                                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                                                query.find({
+                                                                success:function (results) {
+                                                                    console.log("Result in VF found");
+                                                                    console.log("Results Length in VF sync: " +results.length);
+                                                                    console.log("Results Found: " + result.rows.item(j).checkInTime);
+                                                                    console.log("Results Found (Username): " + result.rows.item(j).username);
 
-                                       });
-                                   },
-                                   error:function (pSweet, error) {
-                                       console.log("saveRecord() -> " + error.code + " " + error.message);
-                                   }
+                                                                    //Upload Picture to Parse
+                                                                    console.log("UserAvatar Uploaded: " + userAvatar);
 
-                               });
+                                                                    results[0].set("userAvatarIn",userAvatar);
+                                                                    results[0].set("checkInTime",result.rows.item(j).checkInTime);
+                                                                    results[0].set("department",result.rows.item(j).department);
+                                                                    results[0].set("check","checkin");
+                                                                    results[0].set("createdAt",currentDate);
+                                                                    results[0].set("status",result.rows.item(j).status);
+                                                                    db.transaction(function(t){
+                                                                        console.log("My Query Home Called!");
+                                                                        t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                                                    });
+                                                                    j++;
+                                                                    results[0].save(null, {
+                                                                        success:function (kuali) {
+                                                                            console.log(kuali + " saved successfully");
+
+                                                                        },
+                                                                        error:function (pSweet, error) {
+                                                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                                        }
+
+                                                                    });
+                                                                },
+                                                                error:function (pSweet, error) {
+                                                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                                }
+
+                                                            });
+
+                                                            }, function(error) {
+                                                                console.log("Error");
+                                                                console.log(error.code + ", " + error.message);
+
+                                                            });
+                               
+                               //Pic Uploaded
+                               //uploadPicToParse(result.rows.item(j).userAvatarIn);
+                               
                     }
                     else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
                         console.log("Called for KM!");
-                               uploadPicToParse(result.rows.item(k).userAvatarIn);
-                               var query = new Parse.Query("Kualitatem");
-                               query.equalTo("userPin", result.rows.item(i).userpin);
-                               query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                               query.lessThanOrEqualTo("createdAt", checkEDate);
-                               query.find({
-                                   success:function (results) {
-                                       //console.log("Results Length: " +results.length);
+                                //Pic Upload Process
 
-                                       //Upload Picture to Parse
-                                       console.log("UserAvatar Uploaded: " + userAvatar);
-                                       results[0].set("userAvatarIn",userAvatar);
-                                       results[0].set("checkInTime",result.rows.item(k).checkInTime);
-                                       results[0].set("department",result.rows.item(k).department);
-                                       results[0].set("check","checkin");
-                                       results[0].set("createdAt",currentDate);
-                                       results[0].set("status",result.rows.item(k).status);
-                                       db.transaction(function(t){
-                                           console.log("My Query Home Called!");
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
 
-                                           //Update record locally
-                                           t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                       });
-                                       k++;
-                                       results[0].save(null, {
-                                           success:function (kuali) {
-                                               console.log(kuali + " saved successfully");
+                                //Uploading Pic to Parse
+                                parseF.save().then(function() {
+                                                                //console.log("Got it!");
+                                                                userAvatar = parseF.url();
+                                                                console.log (parseF.url());
+                                                                console.log("Ok");
+                                                                console.log("In Uploadfinal!");
+                                                                
+                                                                var query = new Parse.Query("Kualitatem");
+                                                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                                                query.find({
+                                                                    success:function (results) {
+                                                                        //console.log("Results Length: " +results.length);
 
-                                           },
-                                           error:function (pSweet, error) {
-                                               console.log("saveRecord() -> " + error.code + " " + error.message);
-                                           }
+                                                                        //Upload Picture to Parse
+                                                                        console.log("UserAvatar Uploaded: " + userAvatar);
+                                                                        results[0].set("userAvatarIn",userAvatar);
+                                                                        results[0].set("checkInTime",result.rows.item(k).checkInTime);
+                                                                        results[0].set("department",result.rows.item(k).department);
+                                                                        results[0].set("check","checkin");
+                                                                        results[0].set("createdAt",currentDate);
+                                                                        results[0].set("status",result.rows.item(k).status);
+                                                                        db.transaction(function(t){
+                                                                            console.log("My Query Home Called!");
 
-                                       });
-                                   },
-                                   error:function (pSweet, error) {
-                                       console.log("saveRecord() -> " + error.code + " " + error.message);
-                                   }
+                                                                            //Update record locally
+                                                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                                                        });
+                                                                        k++;
+                                                                        results[0].save(null, {
+                                                                            success:function (kuali) {
+                                                                                console.log(kuali + " saved successfully");
+
+                                                                            },
+                                                                            error:function (pSweet, error) {
+                                                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                                            }
+
+                                                                        });
+                                                                    },
+                                                                    error:function (pSweet, error) {
+                                                                        console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                                    }
+
+                                                                });
+                                    }, function(error) {
+                                   console.log("Error");
+                                   console.log(error.code + ", " + error.message);
 
                                });
+                               
                     }
                 }
             }
@@ -664,7 +708,21 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
 
                 for (var i=0;i<result.rows.length;i++){
                     if((result.rows.item(i).userpin).substr(0,1) == '1'){
-                                uploadPicToParse(result.rows.item(j).userAvatarOut);
+                                //uploadPicToParse(result.rows.item(j).userAvatarOut);
+                                
+                                //Pic Upload Process
+
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+
+                                //Uploading Pic to Parse
+                                parseF.save().then(function() {
+                                                                //console.log("Got it!");
+                                                                userAvatar = parseF.url();
+                                                                console.log (parseF.url());
+                                                                console.log("Ok");
+                                                                console.log("In Uploadfinal!");
+                                                                
+                                
                                 var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -700,9 +758,28 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
 
                                     }
                                 });
+                                }, function(error) {
+                                   console.log("Error");
+                                   console.log(error.code + ", " + error.message);
+
+                               });
                     }
                     else if((result.rows.item(i).userpin).substr(0,1) == '2'){
-                        uploadPicToParse(result.rows.item(k).userAvatarOut);
+                        //uploadPicToParse(result.rows.item(k).userAvatarOut);
+                        
+                        //Pic Upload Process
+
+                                parseF = new Parse.File("mypic.jpg", {base64:result.rows.item(j).userAvatarIn});
+
+                                //Uploading Pic to Parse
+                                parseF.save().then(function() {
+                                                                //console.log("Got it!");
+                                                                userAvatar = parseF.url();
+                                                                console.log (parseF.url());
+                                                                console.log("Ok");
+                                                                console.log("In Uploadfinal!");
+                                                                
+                                
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -735,6 +812,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar;
 
                                     }
                                 });
+                                 }, function(error) {
+                                   console.log("Error");
+                                   console.log(error.code + ", " + error.message);
+
+                               });
                     }
                 }
             }
