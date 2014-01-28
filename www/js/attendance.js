@@ -358,6 +358,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             var image = new Image();
             image.src = userAvatar;
             offlinePic = userAvatar;
+            console.log("DataURI: " + userAvatar);
+            console.log("offlinePic: " + offlinePic);
             window.localStorage.setItem("offlinepic",offlinePic);
             //Resizing Image
             var canvas = document.createElement('canvas');
@@ -463,6 +465,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         function uploadPicToParse(pic3,sync_flag){
             console.log("Here in Pic Parse");
+            console.log("Pic3: "+pic3);
              $.ajax({
                     type: "POST",
                     beforeSend: function(request) {
@@ -472,6 +475,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     },
                     url: userAvatar,
                     data: pic3,
+                    async: false,
                     processData: false,
                     contentType: false,
                     success: function(data) {
@@ -496,7 +500,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log(obj.error);
                     }
                     });
-            
+            return;
         }
         
         function querySyncIn(t,result){  //Sync Check-In Records
