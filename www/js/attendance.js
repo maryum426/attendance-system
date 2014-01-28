@@ -509,8 +509,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         userAvatar = data.url;
                        
                         console.log("PicUrl: " + userAvatar);
-                        
-                        if(sync_flag == "vfin"){
+                        return userAvatar;
+                        /*if(sync_flag == "vfin"){
                             //syncInVF();
                             return;
                             
@@ -633,7 +633,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 }
                             });
                           
-                        }
+                        }*/
                     
                     },
                     error: function(data){
@@ -691,15 +691,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
-                               temp_userpin = result.rows.item(i).userpin;
-                               temp_username = result.rows.item(j).username;
-                               temp_department = result.rows.item(j).department;
-                               temp_checkin = result.rows.item(j).checkInTime;
-                               temp_status = result.rows.item(j).status;
-                               uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
+//                               temp_userpin = result.rows.item(i).userpin;
+//                               temp_department = result.rows.item(j).department;
+//                               temp_checkin = result.rows.item(j).checkInTime;
+//                               temp_status = result.rows.item(j).status;
+                               
                                
                                var query = new Parse.Query("VirtualForce");
-                                query.equalTo("userPin", temp_userpin);
+                                query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
                                 query.lessThanOrEqualTo("createdAt", checkEDate);
                                 query.find({
@@ -708,13 +707,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         console.log("Results Length in VF sync: " +results.length);
 
                                         //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
                                         console.log("UserAvatar Uploaded: " + userAvatar);
 
                                         results[0].set("userAvatarIn",userAvatar);
-                                        results[0].set("checkInTime",temp_checkin);
-                                        results[0].set("department",temp_department);
+                                        results[0].set("checkInTime",result.rows.item(j).checkInTime);
+                                        results[0].set("department",result.rows.item(j).department);
                                         results[0].set("check","checkin");
-                                        results[0].set("status",temp_status);
+                                        results[0].set("status",result.rows.item(j).status);
                                         db.transaction(function(t){
                                             console.log("My Query Home Called!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
