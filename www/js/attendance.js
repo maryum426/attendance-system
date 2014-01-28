@@ -507,15 +507,19 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         console.log("PicUrl: " + userAvatar);
                         if(sync_flag == "vfin"){
                             syncInVF();
+                            return;
                         }
                         else if(sync_flag == "kmin"){
                             syncInKM();
+                            return;
                         }
                         else if(sync_flag == "vfout"){
                             syncOutVF();
+                            return;
                         }
                         else if(sync_flag == "kmout"){
                             syncOutKM();
+                            return;
                         }
                     
                     },
@@ -524,7 +528,6 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log(obj.error);
                     }
                     });
-            return;
         }
         
         function querySyncIn(t,result){  //Sync Check-In Records
