@@ -476,11 +476,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             var binImg = atob(pic3);
             var length = binImg.length;
             var ab = new ArrayBuffer(length);
+            var dv = new DataView(ab);
             var ua = new Uint8Array(ab);
             for (var i = 0; i < length; i++) {
                 ua[i] = binImg.charCodeAt(i);
             }
-            var blob = new Blob(ab,{type:"image/jpeg"});
+            console.log("Creating Blob1!");
+            var blob = new Blob([dv],{type:"image/jpeg"});
 
             var userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
             
