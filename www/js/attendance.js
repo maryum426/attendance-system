@@ -466,6 +466,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function uploadPicToParse(pic3,sync_flag){
             console.log("Here in Pic Parse");
             console.log("Pic3: "+pic3);
+            console.log("PicType: " + pic3.type);
              $.ajax({
                     type: "POST",
                     beforeSend: function(request) {
@@ -480,6 +481,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     contentType: false,
                     success: function(data) {
                         userAvatar = data.url;
+                       
                         console.log("PicUrl: " + userAvatar);
                         if(sync_flag == "vfin"){
                             syncInVF();
