@@ -481,7 +481,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             for(var i = 0; i < blobin.length; i++) {
                 array.push(blobin.charCodeAt(i));
             }
-            var blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+            var blob = new WebKitBlobBuilder([new Uint8Array(array)], {type: 'image/jpeg'});
             
             userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
             
