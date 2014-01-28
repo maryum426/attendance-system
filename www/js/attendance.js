@@ -396,10 +396,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 }
 
                 context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
-                canvas.toBlob(function(blob){
-                    syncImage = blob;
-                    console.log("Image Converted to Blob!");
-                },'image/jpeg');
+                
                 var data2 = canvas.toDataURL('image/jpeg');
 
                 data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
@@ -478,51 +475,12 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             //console.log("Pic3: "+pic3);
             //console.log("PicType: " + pic3.type);
             
-            var thumbnail = 400;
-            var ppWidth, ppHeight;
-            //console.log("Image: " + data);
-            var image = new Image();
-            image.src = pic3;
-            
-            //Resizing Image
-            var canvas1 = document.createElement('canvas');
-
-            canvas1.width = thumbnail;
-            canvas1.height = thumbnail;
-
-
-            image.onload = function(){
-                
-                ppWidth = image.width;
-                ppHeight = image.height;
-
-                var context = canvas1.getContext('2d');
-                context.clearRect(0, 0, thumbnail, thumbnail);
-                var imageWidth;
-                var imageHeight;
-                var offsetX = 0;
-                var offsetY = 0;
-
-
-
-                if (image.width > image.height) {
-                    imageWidth = Math.round(thumbnail * image.width / image.height);
-                    imageHeight = thumbnail;
-                    offsetX = - Math.round((imageWidth - thumbnail) / 2);
-                    //console.log("IF");
-                } else {
-                    imageHeight = Math.round(thumbnail * image.height / image.width);
-                    imageWidth = thumbnail;    
-                    offsetY = - Math.round((imageHeight - thumbnail) / 2);            
-                    //console.log("ELSE");
-                }
-
-                context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
-                canvas1.toBlob(function(blob){
-                    syncImage = blob;
-                    console.log("Image Converted to Blob!");
-                },'image/jpeg');
-            };
+           var blobBin = atob(pic3.split(',')[1]);
+            var array = [];
+            for(var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             
             userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
             
@@ -1755,14 +1713,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 
                     if (company == 'virtualforce'){
                         
-                            window.localStorage.setItem("picurl",offlinePic);
-                            upLocalvfIn(offlinePic,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalvfIn(offPicData,currentTime,department,status,userpin);
                             
                     }
                     else if (company == 'kualitatem'){
 
-                            window.localStorage.setItem("picurl",offlinePic);
-                            upLocalkmIn(offlinePic,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalkmIn(offPicData,currentTime,department,status,userpin);
 
                     }
                 
