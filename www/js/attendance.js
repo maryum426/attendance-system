@@ -475,6 +475,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             //console.log("Pic3: "+pic3);
             //console.log("PicType: " + pic3.type);
             
+            pic3 = pic3.replace(/\s/g, '');
            var blobin = atob(pic3.split(',')[1]);
             var array = [];
             for(var i = 0; i < blobin.length; i++) {
