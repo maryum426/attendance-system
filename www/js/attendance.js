@@ -398,8 +398,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 var data2 = canvas.toDataURL('image/jpeg');
 
                 data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
-                offPicData  = data2;
+                
+                
 
+                offPicData  = data2;
+                
+                
+                
                 //if (navigator.connection.type != Connection.NONE){ //Online
                     
                     //uploadParseFile(data2);
@@ -465,17 +470,29 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         function uploadPicToParse(pic3,sync_flag){
             console.log("Here in Pic Parse");
-            console.log("Pic3: "+pic3);
-            console.log("PicType: " + pic3.type);
+            //console.log("Pic3: "+pic3);
+            //console.log("PicType: " + pic3.type);
+            
+            var binImg = atob(pic3);
+            var length = binImg.length;
+            var ab = new ArrayBuffer(length);
+            var ua = new Uint8Array(ab);
+            for (var i = 0; i < length; i++) {
+                ua[i] = binImg.charCodeAt(i);
+            }
+            var blob = new Blob([ab],{type:"image/jpeg"});
+
+            var userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
+            
              $.ajax({
                     type: "POST",
                     beforeSend: function(request) {
                         request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
                         request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
-                        request.setRequestHeader("Content-Type",  'image/jpeg' );
+                        request.setRequestHeader("Content-Type", 'image/jpeg');
                     },
                     url: userAvatar,
-                    data: pic3,
+                    data: blob,
                     async: false,
                     processData: false,
                     contentType: false,
