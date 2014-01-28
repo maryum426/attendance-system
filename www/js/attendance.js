@@ -509,45 +509,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         userAvatar = data.url;
                        
                         console.log("PicUrl: " + userAvatar);
+                        
                         if(sync_flag == "vfin"){
                             //syncInVF();
-                            var query = new Parse.Query("VirtualForce");
-                            query.equalTo("userPin", temp_userpin);
-                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                            query.lessThanOrEqualTo("createdAt", checkEDate);
-                            query.find({
-                                success:function (results) {
-                                    console.log("Result in VF found");
-                                    console.log("Results Length in VF sync: " +results.length);
-
-                                    //Upload Picture to Parse
-                                    console.log("UserAvatar Uploaded: " + userAvatar);
-
-                                    results[0].set("userAvatarIn",userAvatar);
-                                    results[0].set("checkInTime",temp_checkin);
-                                    results[0].set("department",temp_department);
-                                    results[0].set("check","checkin");
-                                    results[0].set("status",temp_status);
-                                    db.transaction(function(t){
-                                        console.log("My Query Home Called!");
-                                        t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + temp_userpin , [], (function(){console.log("Success!");}), errorCB);
-                                    });
-                                    results[0].save(null, {
-                                        success:function (kuali) {
-                                            console.log(kuali + " saved successfully");
-                                            return;
-                                        },
-                                        error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
-                                        }
-
-                                    });
-                                },
-                                error:function (pSweet, error) {
-                                    console.log("saveRecord() -> " + error.code + " " + error.message);
-                                }
-
-                            });
+                            return;
                             
                         }
                         else if(sync_flag == "kmin"){
@@ -715,27 +680,62 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     status = 'late';
                 }
 
-                var j=0;
-                var k=0;
+               var i=0;
+               var j=0;
+               var k=0;
                 
                 //console.log("Query Results: " + result.rows.length);
-                for (var i=0;i<result.rows.length;i++){
+                while (i<result.rows.length){
                      //console.log("In Loop!");
                     if ((result.rows.item(i).userpin).substr(0,1) == '1'){
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
                                temp_userpin = result.rows.item(i).userpin;
-                               temp_username = result.rows.item(i).username;
-                               temp_department = result.rows.item(i).department;
-                               temp_checkin = result.rows.item(i).checkInTime;
-                               temp_status = result.rows.item(i).status;
-                               uploadPicToParse(result.rows.item(i).userAvatarIn,"vfin");
-                               j++;
+                               temp_username = result.rows.item(j).username;
+                               temp_department = result.rows.item(j).department;
+                               temp_checkin = result.rows.item(j).checkInTime;
+                               temp_status = result.rows.item(j).status;
+                               uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
                                
-                               
-                               
+                               var query = new Parse.Query("VirtualForce");
+                                query.equalTo("userPin", temp_userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
+                                        console.log("Result in VF found");
+                                        console.log("Results Length in VF sync: " +results.length);
 
+                                        //Upload Picture to Parse
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
+
+                                        results[0].set("userAvatarIn",userAvatar);
+                                        results[0].set("checkInTime",temp_checkin);
+                                        results[0].set("department",temp_department);
+                                        results[0].set("check","checkin");
+                                        results[0].set("status",temp_status);
+                                        db.transaction(function(t){
+                                            console.log("My Query Home Called!");
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + temp_userpin , [], (function(){console.log("Success!");}), errorCB);
+                                        });
+                                        results[0].save(null, {
+                                            success:function (kuali) {
+                                                console.log(kuali + " saved successfully");
+
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            }
+
+                                        });
+                                    },
+                                    error:function (pSweet, error) {
+                                        console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    }
+
+                                });
+                               
                     }
                     else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
                         console.log("Called for KM!");
@@ -748,9 +748,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                temp_checkin = result.rows.item(i).checkInTime;
                                temp_status = result.rows.item(i).status;
                                uploadPicToParse(result.rows.item(i).userAvatarIn,"kmin");
-                               k++;
                                
                     }
+                    i++;
                 }
             }
         }
@@ -910,10 +910,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                 console.log("Query Results: " + result.rows.length);
 
-                var j=0;
-                var k=0;
+                var i=0;
 
-                for (var i=0;i<result.rows.length;i++){
+                while (i<result.rows.length){
                     if((result.rows.item(i).userpin).substr(0,1) == '1'){
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
@@ -923,7 +922,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                temp_workH = result.rows.item(i).workingHours;
                                
                                uploadPicToParse(result.rows.item(i).userAvatarOut,"vfout");
-                               j++;
+                               
                                 
                     }
                     else if((result.rows.item(i).userpin).substr(0,1) == '2'){
@@ -935,9 +934,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                temp_workH = result.rows.item(i).workingHours;
                                
                                uploadPicToParse(result.rows.item(i).userAvatarOut,"kmout");
-                               k++;
                                 
                     }
+                    i++;
                 }
             }
         }
