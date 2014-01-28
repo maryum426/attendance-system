@@ -480,7 +480,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             for (var i = 0; i < length; i++) {
                 ua[i] = binImg.charCodeAt(i);
             }
-            var blob = new Blob([ab],{type:"image/jpeg"});
+            var blob = new Blob(ab,{type:"image/jpeg"});
 
             var userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
             
