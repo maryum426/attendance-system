@@ -221,7 +221,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         
                             if (company == 'virtualforce'){
                                 
-                               //if (navigator.connection.type != Connection.NONE){
+                               if (navigator.connection.type != Connection.NONE){
                                 var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -255,10 +255,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                                         }
                                 });
-                               //}
-                               //else if(navigator.connection.type == Connection.NONE) {
-                                //   it6(userpin,d);
-                               //}
+                               }
+                               else if(navigator.connection.type == Connection.NONE) {
+                                   it6(userpin,d);
+                               }
                                  
                             }
                             else if (company == 'kualitatem'){
@@ -1445,7 +1445,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             var currentDate = new Date();
             
             if (check == 'true'){
-                //if(navigator.connection.type != Connection.NONE){
+                if(navigator.connection.type != Connection.NONE){
                     var query = new Parse.Query("MessageConfig");
                     query.equalTo("messageType", 'checkin');
                     //query.equalTo("check", 'checkin');
@@ -1460,13 +1460,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                         }
                     });     
-                //}
-                //else if(navigator.connection.type == Connection.NONE) {
-                    //$('.welcome-message').text("Happy Coding! :)");
-                    //$('.welcome-text').text('Welcome ');
-                    //$('#welcome-text2').text(fname[0] + '!');
-                    //$('.check-text').text("You checked in at");
-                //}
+                }
+                else if(navigator.connection.type == Connection.NONE) {
+                    $('.welcome-message').text("Happy Coding! :)");
+                    $('.welcome-text').text('Welcome ');
+                    $('#welcome-text2').text(fname[0] + '!');
+                    $('.check-text').text("You checked in at");
+                }
             }
             else{
                 if(navigator.connection.type != Connection.NONE){
