@@ -475,13 +475,20 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             //console.log("Pic3: "+pic3);
             //console.log("PicType: " + pic3.type);
             
-            pic3 = pic3.replace(/\s/g, '');
-           var blobin = atob(pic3.split(','));
-            var array = [];
-            for(var i = 0; i < blobin.length; i++) {
-                array.push(blobin.charCodeAt(i));
+           var binaryImg = atob(pic3);
+            var length = binaryImg.length;
+            var ab = new ArrayBuffer(length);
+            var ua = new Uint8Array(ab);
+            for (var i = 0; i < length; i++) {
+                ua[i] = binaryImg.charCodeAt(i);
             }
-            var blob = new WebKitBlobBuilder([new Uint8Array(array)], {type: 'image/jpeg'});
+            var blob = new WebKitBlobBuilder([ab],{type:"image/jpeg"});
+//           var blobin = atob(pic3.split(','));
+//            var array = [];
+//            for(var i = 0; i < blobin.length; i++) {
+//                array.push(blobin.charCodeAt(i));
+//            }
+//            var blob = new WebKitBlobBuilder([new Uint8Array(array)], {type: 'image/jpeg'});
             
             userAvatar = 'https://api.parse.com/1/files/' + 'mypicLocal.jpg';
             
