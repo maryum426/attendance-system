@@ -358,8 +358,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             var image = new Image();
             image.src = userAvatar;
             offlinePic = userAvatar;
-            console.log("DataURI: " + userAvatar);
-            console.log("offlinePic: " + offlinePic);
+            //console.log("DataURI: " + userAvatar);
+            //console.log("offlinePic: " + offlinePic);
             window.localStorage.setItem("offlinepic",offlinePic);
             //Resizing Image
             var canvas = document.createElement('canvas');
@@ -472,7 +472,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     beforeSend: function(request) {
                         request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
                         request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
-                        request.setRequestHeader("Content-Type", pic3.type);
+                        request.setRequestHeader("Content-Type",  'image/jpeg' );
                     },
                     url: userAvatar,
                     data: pic3,
@@ -1696,14 +1696,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 
                     if (company == 'virtualforce'){
                         
-                            window.localStorage.setItem("picurl",offlinePic);
-                            upLocalvfIn(offlinePic,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalvfIn(offPicData,currentTime,department,status,userpin);
                             
                     }
                     else if (company == 'kualitatem'){
 
-                            window.localStorage.setItem("picurl",offlinePic);
-                            upLocalkmIn(offlinePic,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offPicData);
+                            upLocalkmIn(offPicData,currentTime,department,status,userpin);
 
                     }
                 
