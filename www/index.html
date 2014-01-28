@@ -38,8 +38,9 @@
             function onDeviceReady() {
                 // Register the event listener
                 document.addEventListener("backbutton", onBackKeyDown, false);
-            }
-            window.onload = firstFunc();
+                
+                
+                window.onload = firstFunc();
             
             function firstFunc(){
                 var cDate = new Date();
@@ -86,6 +87,8 @@
                     //alert("Exiting!");
                     navigator.app.exitApp();
                 }
+            }
+            
                            
             
         </script>
