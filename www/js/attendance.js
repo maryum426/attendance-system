@@ -717,8 +717,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("status",temp_status);
                                         db.transaction(function(t){
                                             console.log("My Query Home Called!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + temp_userpin , [], (function(){console.log("Success!");}), errorCB);
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
                                         });
+                                        j++;
                                         results[0].save(null, {
                                             success:function (kuali) {
                                                 console.log(kuali + " saved successfully");
