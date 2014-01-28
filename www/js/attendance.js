@@ -462,7 +462,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         }
         
         function uploadPicToParse(pic3,sync_flag){
-            
+            console.log("Here in Pic Parse");
              $.ajax({
                     type: "POST",
                     beforeSend: function(request) {
@@ -495,7 +495,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                              var obj = jQuery.parseJSON(data);
                                 console.log(obj.error);
                     }
-                    })
+                    });
             
         }
         
@@ -1690,14 +1690,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 
                     if (company == 'virtualforce'){
                         
-                            window.localStorage.setItem("picurl",offPicData);
-                            upLocalvfIn(offPicData,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offlinePic);
+                            upLocalvfIn(offlinePic,currentTime,department,status,userpin);
                             
                     }
                     else if (company == 'kualitatem'){
 
-                            window.localStorage.setItem("picurl",offPicData);
-                            upLocalkmIn(offPicData,currentTime,department,status,userpin);
+                            window.localStorage.setItem("picurl",offlinePic);
+                            upLocalkmIn(offlinePic,currentTime,department,status,userpin);
 
                     }
                 
