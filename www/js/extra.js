@@ -221,7 +221,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         
                             if (company == 'virtualforce'){
                                 
-                               if (navigator.connection.type != Connection.NONE){
+                               //if (navigator.connection.type != Connection.NONE){
                                 var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -255,10 +255,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                                         }
                                 });
-                               }
-                               else if(navigator.connection.type == Connection.NONE) {
-                                   it6(userpin,d);
-                               }
+                               //}
+                               //else if(navigator.connection.type == Connection.NONE) {
+                                //   it6(userpin,d);
+                               //}
                                  
                             }
                             else if (company == 'kualitatem'){
