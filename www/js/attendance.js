@@ -431,24 +431,58 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         function uploadParseFile(pf){
             
-            //Initialize Parse
-            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+//            //Initialize Parse
+//            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+//
+//            var parseFile = new Parse.File("mypic.jpg", {base64:pf});
+//            
+//            //Uploading file to Parse
+//            parseFile.save().then(function() {
+//                                            //console.log("Got it!");
+//                                            userAvatar = parseFile.url();
+//                                            uploadParsePic();
+//                                            console.log (parseFile.url());
+//                                            console.log("Ok");
+//                                            console.log("In Uploadfinal!");
+//
+//                                        }, function(error) {
+//                                            console.log("Error");
+//                                            console.log(error);
+//                                        });
 
-            var parseFile = new Parse.File("mypic.jpg", {base64:pf});
-            
-            //Uploading file to Parse
-            parseFile.save().then(function() {
-                                            //console.log("Got it!");
-                                            userAvatar = parseFile.url();
-                                            uploadParsePic();
-                                            console.log (parseFile.url());
-                                            console.log("Ok");
-                                            console.log("In Uploadfinal!");
 
-                                        }, function(error) {
-                                            console.log("Error");
-                                            console.log(error);
-                                        });
+                pf = pf.substring(pf.indexOf(',')+1);
+                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
+                var blob = JSON.stringify(jsonData);
+
+                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
+
+                 $.ajax({
+                        type: "POST",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+                            request.setRequestHeader("Content-Type", 'text/plain');
+                        },
+                        url: userAvatar,
+                        data: blob,
+                        async: false,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            //userAvatar = data.url;
+                            window.localStorage.setItem("picurl",data.url);
+                            uploadParsePic(data.url);
+                            //console.log("PicUrl: " + userAvatar);
+                            return data.url;
+
+                        },
+                        error: function(data){
+                                 var obj = jQuery.parseJSON(data);
+                                    console.log(obj.error);
+                        }
+                        });
+        
             
         }
         
@@ -811,7 +845,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         
         
-         var uploadParsePic = function(){
+         var uploadParsePic = function(url){
             
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -836,7 +870,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     //console.log("In Virtual Force");
                     if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
-                        //syncDataCheckIn();
+                        syncDataCheckIn();
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -844,8 +878,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         query.find({
                             success:function (results) {
                                 //console.log("Results Length: " +results.length);
-                                console.log("Uploaded Avatar: " + userAvatar);
-                                results[0].set("userAvatarIn",userAvatar);
+                                console.log("Uploaded Avatar: " + url);
+                                url = window.localStorage.getItem("picurl");
+                                results[0].set("userAvatarIn",url);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -880,15 +915,16 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                     if (navigator.connection.type != Connection.NONE){
                         //uploadPicToParse(picurl);
-                        //syncDataCheckIn();        
+                        syncDataCheckIn();        
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
                         query.find({
                             success:function (results) {
-                                console.log("Uploaded Avatar: " + userAvatar);
-                                results[0].set("userAvatarIn",userAvatar);
+                                console.log("Uploaded Avatar: " + url);
+                                url = window.localStorage.getItem("picurl");
+                                results[0].set("userAvatarIn",url);
                                 results[0].set("checkInTime",currentTime);
                                 results[0].set("department",department);
                                 results[0].set("check","checkin");
@@ -931,7 +967,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                            //syncDataCheckIn();
+                            syncDataCheckIn();
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -959,8 +995,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                                       workHours = hours.toString();
                                         
-                                        console.log("Uploaded Avatar: " + userAvatar);
-                                        results[0].set("userAvatarOut",userAvatar);
+                                        console.log("Uploaded Avatar: " + url);
+                                        url = window.localStorage.getItem("picurl");
+                                        results[0].set("userAvatarOut",url);
                                         results[0].set("checkOutTime",currentTime);
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",workHours);
@@ -990,7 +1027,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
-                                //syncDataCheckIn();
+                                syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
@@ -1020,8 +1057,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                           console.log("Working Hours " + workHours);
 
                                             
-                                            console.log("Uploaded Avatar: " + userAvatar);
-                                            results[0].set("userAvatarOut",userAvatar);
+                                            console.log("Uploaded Avatar: " + url);
+                                            url = window.localStorage.getItem("picurl");
+                                            results[0].set("userAvatarOut",url);
                                             results[0].set("checkOutTime",currentTime);
                                             results[0].set("check","checkout");
                                             results[0].set("workingHours",workHours);
@@ -1703,7 +1741,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
         if (navigator.connection.type != Connection.NONE){
              console.log("Yes Em Online1!");
-            syncDataCheckIn();
+            //syncDataCheckIn();
             uploadParseFile(picurl);
          }
          else if(navigator.connection.type == Connection.NONE) {
