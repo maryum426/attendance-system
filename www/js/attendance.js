@@ -855,7 +855,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         
         
-         var uploadParsePic = function(){
+         var uploadParsePic = function(url){
             
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -1752,7 +1752,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         if (navigator.connection.type != Connection.NONE){
              console.log("Yes Em Online1!");
             //syncDataCheckIn();
-            uploadParseFile();
+            uploadParseFile(picurl);
          }
          else if(navigator.connection.type == Connection.NONE) {
              setTimeout(function(){window.location = "index.html";},2000);
