@@ -569,7 +569,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                //setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
             else{
                 console.log("Sync CheckIn");
@@ -702,15 +702,16 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     }
                     i++;
                 }
-                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                
             }
+            setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
         }
        
         function querySyncOut(t,result){ //Sync Check-out Records
             
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                //setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
             else{
                 var currentDate = new Date();
@@ -843,8 +844,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     }
                     i++;
                 }
-                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                
             }
+            setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
         }
        
         function queryHome(){
