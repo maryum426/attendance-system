@@ -363,7 +363,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             $('#submit1').css({'opacity':'0.4'});
                     
                    
-            var thumbnail = 400;
+            var thumbnailw = 400;
+            var thumbnailh = 533;
             var ppWidth, ppHeight;
             //console.log("Image: " + data);
             var image = new Image();
@@ -375,8 +376,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             //Resizing Image
             var canvas = document.createElement('canvas');
 
-            canvas.width = thumbnail;
-            canvas.height = thumbnail;
+            canvas.width = thumbnailw;
+            canvas.height = thumbnailh;
 
 
             image.onload = function(){
@@ -385,7 +386,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 ppHeight = image.height;
 
                 var context = canvas.getContext('2d');
-                context.clearRect(0, 0, thumbnail, thumbnail);
+                context.clearRect(0, 0, thumbnailw, thumbnailh);
                 var imageWidth;
                 var imageHeight;
                 var offsetX = 0;
@@ -394,14 +395,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
 
                 if (image.width > image.height) {
-                    imageWidth = Math.round(thumbnail * image.width / image.height);
-                    imageHeight = thumbnail;
-                    offsetX = - Math.round((imageWidth - thumbnail) / 2);
+                    imageWidth = Math.round(thumbnailw * image.width / image.height);
+                    imageHeight = thumbnailh;
+                    offsetX = - Math.round((imageWidth - thumbnailw) / 2);
                     //console.log("IF");
                 } else {
-                    imageHeight = Math.round(thumbnail * image.height / image.width);
-                    imageWidth = thumbnail;    
-                    offsetY = - Math.round((imageHeight - thumbnail) / 2);            
+                    imageHeight = Math.round(thumbnailh * image.height / image.width);
+                    imageWidth = thumbnailw;    
+                    offsetY = - Math.round((imageHeight - thumbnailh) / 2);            
                     //console.log("ELSE");
                 }
 
@@ -451,37 +452,38 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 //                                        });
 
 
-                pf = pf.substring(pf.indexOf(',')+1);
-                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
-                var blob = JSON.stringify(jsonData);
-
-                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
-
-                 $.ajax({
-                        type: "POST",
-                        beforeSend: function(request) {
-                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
-                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
-                            request.setRequestHeader("Content-Type", 'text/plain');
-                        },
-                        url: userAvatar,
-                        data: blob,
-                        async: false,
-                        processData: false,
-                        contentType: false,
-                        success: function(data) {
-                            //userAvatar = data.url;
-                            window.localStorage.setItem("picurl",data.url);
-                            uploadParsePic(data.url);
-                            //console.log("PicUrl: " + userAvatar);
-                            return data.url;
-
-                        },
-                        error: function(data){
-                                 var obj = jQuery.parseJSON(data);
-                                    console.log(obj.error);
-                        }
-                        });
+//                pf = pf.substring(pf.indexOf(',')+1);
+//                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
+//                var blob = JSON.stringify(jsonData);
+//
+//                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
+//
+//                 $.ajax({
+//                        type: "POST",
+//                        beforeSend: function(request) {
+//                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+//                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+//                            request.setRequestHeader("Content-Type", 'text/plain');
+//                        },
+//                        url: userAvatar,
+//                        data: blob,
+//                        async: false,
+//                        processData: false,
+//                        contentType: false,
+//                        success: function(data) {
+//                            //userAvatar = data.url;
+//                            window.localStorage.setItem("picurl",data.url);
+//                            uploadParsePic(data.url);
+//                            //console.log("PicUrl: " + userAvatar);
+//                            return data.url;
+//
+//                        },
+//                        error: function(data){
+//                                 var obj = jQuery.parseJSON(data);
+//                                    console.log(obj.error);
+//                        }
+//                        });
+                        uploadParsePic();
         
             
         }
@@ -699,6 +701,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     }
                     i++;
                 }
+                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
         }
        
@@ -765,8 +768,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",result.rows.item(j).workingHours);
-
-                                        deleteLocalvf(result.rows.item(j).userpin);
+                                        
+                                        db.transaction(function(t){
+                                            console.log("My Query Del local vf!");
+                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(j).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
+                                        });
                                         j++;
                                         results[0].save(null, {
                                             success:function (virtualf) {
@@ -809,7 +815,10 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("workingHours",result.rows.item(k).workingHours);
                                         
                                         //Deleting local record
-                                        deleteLocalvf(result.rows.item(k).userpin);
+                                        db.transaction(function(t){
+                                            console.log("My Query Del local km!");
+                                            t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + result.rows.item(k).userpin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
+                                        });
                                         k++;
                                         results[0].save(null, {
                                             success:function (virtualf) {
@@ -833,6 +842,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     }
                     i++;
                 }
+                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
         }
        
@@ -845,7 +855,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         
         
-         var uploadParsePic = function(url){
+         var uploadParsePic = function(){
             
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -871,7 +881,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
                         syncDataCheckIn();
-                        var query = new Parse.Query("VirtualForce");
+                        /*var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -904,7 +914,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
-                        });
+                        });*/
                     }
                     else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},2000);
@@ -916,7 +926,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     if (navigator.connection.type != Connection.NONE){
                         //uploadPicToParse(picurl);
                         syncDataCheckIn();        
-                        var query = new Parse.Query("Kualitatem");
+                        /*var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -951,7 +961,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
-                        });
+                        });*/
                     }
                     else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},2000);
@@ -968,7 +978,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
                             syncDataCheckIn();
-                            var query = new Parse.Query("VirtualForce");
+                            /*var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
                             //query.equalTo("check", 'checkin');
@@ -1016,7 +1026,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     error:function (error) {
 
                                     }
-                            });
+                            });*/
                         }
                         else if(navigator.connection.type == Connection.NONE) {
 
@@ -1028,7 +1038,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
                                 syncDataCheckIn();
-                                var query = new Parse.Query("Kualitatem");
+                                /*var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
                                 //query.equalTo("check", 'checkin');
@@ -1078,7 +1088,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 error:function (error) {
 
                                 }
-                            });
+                            });*/
                         }
                         else if(navigator.connection.type == Connection.NONE) {
                            setTimeout(function(){window.location = "index.html";},2000);
@@ -1742,7 +1752,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         if (navigator.connection.type != Connection.NONE){
              console.log("Yes Em Online1!");
             //syncDataCheckIn();
-            uploadParseFile(picurl);
+            uploadParseFile();
          }
          else if(navigator.connection.type == Connection.NONE) {
              setTimeout(function(){window.location = "index.html";},2000);
