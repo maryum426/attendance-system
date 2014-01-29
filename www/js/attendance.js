@@ -160,13 +160,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function deleteLocalvf(up){
             db.transaction(function(t){
                 console.log("My Query Del local vf!");
-                t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], function(){window.location = "index.html";}, errorCB);
+                t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], function(){ syncDataCheckIn();}, errorCB);
             });
         }
         function deleteLocalkm(up){
             db.transaction(function(t){
                 console.log("My Query Del local km!");
-                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], function(){window.location = "index.html";}, errorCB);
+                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], function(){ syncDataCheckIn();}, errorCB);
             });
         }
         
@@ -452,38 +452,38 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 //                                        });
 
 
-//                pf = pf.substring(pf.indexOf(',')+1);
-//                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
-//                var blob = JSON.stringify(jsonData);
-//
-//                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
-//
-//                 $.ajax({
-//                        type: "POST",
-//                        beforeSend: function(request) {
-//                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
-//                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
-//                            request.setRequestHeader("Content-Type", 'text/plain');
-//                        },
-//                        url: userAvatar,
-//                        data: blob,
-//                        async: false,
-//                        processData: false,
-//                        contentType: false,
-//                        success: function(data) {
-//                            //userAvatar = data.url;
-//                            window.localStorage.setItem("picurl",data.url);
-//                            uploadParsePic(data.url);
-//                            //console.log("PicUrl: " + userAvatar);
-//                            return data.url;
-//
-//                        },
-//                        error: function(data){
-//                                 var obj = jQuery.parseJSON(data);
-//                                    console.log(obj.error);
-//                        }
-//                        });
-                        uploadParsePic();
+                pf = pf.substring(pf.indexOf(',')+1);
+                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
+                var blob = JSON.stringify(jsonData);
+
+                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
+
+                 $.ajax({
+                        type: "POST",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+                            request.setRequestHeader("Content-Type", 'text/plain');
+                        },
+                        url: userAvatar,
+                        data: blob,
+                        async: false,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            //userAvatar = data.url;
+                            window.localStorage.setItem("picurl",data.url);
+                            uploadParsePic(data.url);
+                            //console.log("PicUrl: " + userAvatar);
+                            return data.url;
+
+                        },
+                        error: function(data){
+                                 var obj = jQuery.parseJSON(data);
+                                    console.log(obj.error);
+                        }
+                        });
+                        //uploadParsePic();
         
             
         }
@@ -568,7 +568,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                
+                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
             else{
                 console.log("Sync CheckIn");
@@ -709,7 +709,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                
+                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
             }
             else{
                 var currentDate = new Date();
@@ -880,8 +880,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     //console.log("In Virtual Force");
                     if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
-                        syncDataCheckIn();
-                        /*var query = new Parse.Query("VirtualForce");
+                        
+                        var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -903,7 +903,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                                        syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
                                     }
@@ -914,7 +914,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
-                        });*/
+                        });
                     }
                     else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},2000);
@@ -925,8 +925,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                     if (navigator.connection.type != Connection.NONE){
                         //uploadPicToParse(picurl);
-                        syncDataCheckIn();        
-                        /*var query = new Parse.Query("Kualitatem");
+                            
+                        var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
                         query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -947,7 +947,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)  
+                                        syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -961,7 +961,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                             }
 
-                        });*/
+                        });
                     }
                     else if(navigator.connection.type == Connection.NONE) {
                         setTimeout(function(){window.location = "index.html";},2000);
@@ -977,8 +977,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                            syncDataCheckIn();
-                            /*var query = new Parse.Query("VirtualForce");
+                           
+                            var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
                             //query.equalTo("check", 'checkin');
@@ -1026,7 +1026,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     error:function (error) {
 
                                     }
-                            });*/
+                            });
                         }
                         else if(navigator.connection.type == Connection.NONE) {
 
@@ -1037,8 +1037,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
-                                syncDataCheckIn();
-                                /*var query = new Parse.Query("Kualitatem");
+                                
+                                var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
                                 //query.equalTo("check", 'checkin');
@@ -1077,7 +1077,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                                 success:function (kuali) {
                                                     console.log(kuali + " saved successfully");
                                                     
-                                                    deleteLocalvf(userpin);
+                                                    deleteLocalkm(userpin);
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1088,7 +1088,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 error:function (error) {
 
                                 }
-                            });*/
+                            });
                         }
                         else if(navigator.connection.type == Connection.NONE) {
                            setTimeout(function(){window.location = "index.html";},2000);
