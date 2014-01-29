@@ -569,7 +569,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function querySyncIn(t,result){  //Sync Check-In Records
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                //setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                setTimeout(function(){console.log("No result found VF/KM.");window.location = "index.html";},1500)  
             }
             else{
                 console.log("Sync CheckIn");
@@ -615,6 +615,12 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                      
                                var query = new Parse.Query("VirtualForce");
+                               
+                               db.transaction(function(t){
+                                    console.log("My Query Home Called!");
+                                    t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                });
+                               
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
                                 query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -632,10 +638,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("department",result.rows.item(j).department);
                                         results[0].set("check","checkin");
                                         results[0].set("status",result.rows.item(j).status);
-                                        db.transaction(function(t){
-                                            console.log("My Query Home Called!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                        });
+                                        
                                         j++;
                                         results[0].save(null, {
                                             success:function (kuali) {
@@ -662,6 +665,12 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         console.log("Called for KM!");
                         
                             console.log("UserPin to find: " + result.rows.item(i).userpin);
+                            
+                            db.transaction(function(t){
+                                console.log("My Query Home Called!");
+                                t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
+                            });
+                            
                              var query = new Parse.Query("Kualitatem");
                             query.equalTo("userPin", result.rows.item(i).userpin);
                             query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -680,10 +689,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     results[0].set("department",result.rows.item(k).department);
                                     results[0].set("check","checkin");
                                     results[0].set("status",result.rows.item(k).status);
-                                    db.transaction(function(t){
-                                        console.log("My Query Home Called!");
-                                        t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
-                                    });
+                                    
                                     k++;
                                     results[0].save(null, {
                                         success:function (kuali) {
@@ -718,7 +724,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             
             if(result.rows.length == 0){
                 console.log("No Result found!");
-                //setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+                setTimeout(function(){console.log("No result found VF/KM.");window.location = "index.html";},1500)  
             }
             else{
                 var currentDate = new Date();
@@ -761,6 +767,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("Called for VF!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
+                                db.transaction(function(t){
+                                    console.log("My Query Del local vf!");
+                                    t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
+                                });
+                                        
                                var query = new Parse.Query("VirtualForce");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -778,15 +789,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",result.rows.item(j).workingHours);
                                         
-                                        db.transaction(function(t){
-                                            console.log("My Query Del local vf!");
-                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
-                                        });
+
                                         j++;
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                return;
+                                                if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                                 }
 
                                             },
                                             error:function (pSweet, error) {
@@ -806,6 +816,11 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                console.log("Called for KM!");
                                console.log("UserPin to find: " + result.rows.item(i).userpin);
                                
+                               db.transaction(function(t){
+                                    console.log("My Query Del local vf!");
+                                    t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
+                                });
+                               
                                var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", result.rows.item(i).userpin);
                                 query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -824,15 +839,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("workingHours",result.rows.item(k).workingHours);
                                         
                                         //Deleting local record
-                                        db.transaction(function(t){
-                                            console.log("My Query Del local km!");
-                                            t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
-                                        });
+                                        
                                         k++;
                                         results[0].save(null, {
                                             success:function (virtualf) {
                                                 console.log(virtualf + " saved successfully");
-                                                return;
+                                                if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                                 }
 
                                             },
                                             error:function (pSweet, error) {
