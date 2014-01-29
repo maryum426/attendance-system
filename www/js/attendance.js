@@ -289,7 +289,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                                 }
                                             else if (results[0].get("check") == '' || results[0].get("check") == null)
                                                 {
-                                                    window.location = "checkpicUpload.html?checkin=true";
+                                                    window.location = "picUpload.html?checkin=true";
                                                 }
                                         },
                                         error:function (error) {
@@ -972,7 +972,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},5000)  
+                                        setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
                                     },
                                     error:function (pSweet, error) {
                                     }
@@ -986,7 +986,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         });
                     }
                     else if(navigator.connection.type == Connection.NONE) {
-                        setTimeout(function(){window.location = "index.html";},5000);
+                        setTimeout(function(){window.location = "index.html";},2000);
                         
                     }
                 }
@@ -1015,7 +1015,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},5000)  
+                                        setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)  
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1032,7 +1032,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         });
                     }
                     else if(navigator.connection.type == Connection.NONE) {
-                        setTimeout(function(){window.location = "index.html";},5000);
+                        setTimeout(function(){window.location = "index.html";},2000);
                     }
                 }
             }
@@ -1097,7 +1097,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         }
                         else if(navigator.connection.type == Connection.NONE) {
 
-                            setTimeout(function(){window.location = "index.html";},5000);
+                            setTimeout(function(){window.location = "index.html";},2000);
 
                         }
                 }
@@ -1157,7 +1157,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                             });
                         }
                         else if(navigator.connection.type == Connection.NONE) {
-                           setTimeout(function(){window.location = "index.html";},5000);
+                           setTimeout(function(){window.location = "index.html";},2000);
                         }
                     }
             }
@@ -1253,7 +1253,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         function takePicture(){
             setTimeout(function(){
                 capturePicture();
-            },3000);
+            },1500);
             
         }
         
@@ -1820,7 +1820,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             uploadParseFile(picurl);
          }
          else if(navigator.connection.type == Connection.NONE) {
-             setTimeout(function(){window.location = "index.html";},5000);
+             setTimeout(function(){window.location = "index.html";},2000);
 
          }
            
