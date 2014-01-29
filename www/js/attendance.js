@@ -441,8 +441,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             parseFile.save().then(function() {
                                             //console.log("Got it!");
                                             userAvatar = parseFile.url();
-                                            window.localStorage.setItem("picurl",data.url);
-                                            uploadParsePic(data.url);
+                                            window.localStorage.setItem("picurl",userAvatar);
+                                            uploadParsePic(userAvatar);
                                             console.log (parseFile.url());
                                             console.log("Ok");
                                             console.log("In Uploadfinal!");
