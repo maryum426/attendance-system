@@ -701,10 +701,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                
                     }
                     i++;
+                    
+                    if(i == result.rows.length){
+                       setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                    }
                 }
                 
             }
-            setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)  
+            
         }
        
         function querySyncOut(t,result){ //Sync Check-out Records
@@ -843,6 +847,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 
                     }
                     i++;
+                    if(i == result.rows.length){
+                       setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                    }
                 }
                 
             }
