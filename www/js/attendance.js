@@ -8,7 +8,7 @@ var offlinePic  = null;
 var offPicData = null;
 var syncImage = null;
 var picurl;
-var db = window.openDatabase("users", "1.0", "Users", 15728640);
+var db = window.openDatabase("users", "1.0", "Users", 52428800);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
 
 
@@ -773,6 +773,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
                                         results[0].set("check","checkout");
                                         results[0].set("workingHours",result.rows.item(k).workingHours);
+                                        
                                         //Deleting local record
                                         deleteLocalvf(result.rows.item(k).userpin);
                                         k++;
@@ -835,8 +836,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     //console.log("In Virtual Force");
                     if (navigator.connection.type != Connection.NONE){
                         console.log("Yes Em Online!");
-                        //uploadPicToParse(picurl);
-                        syncDataCheckIn();
+                        //syncDataCheckIn();
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -880,7 +880,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                     if (navigator.connection.type != Connection.NONE){
                         //uploadPicToParse(picurl);
-                        syncDataCheckIn();        
+                        //syncDataCheckIn();        
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -931,7 +931,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                            syncDataCheckIn();
+                            //syncDataCheckIn();
                             var query = new Parse.Query("VirtualForce");
                             //query.ascending("checkInOutTime");
                             query.equalTo("userPin", userpin);
@@ -990,7 +990,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
-                                syncDataCheckIn();
+                                //syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 //query.ascending("checkInOutTime");
                                 query.equalTo("userPin", userpin);
@@ -1703,6 +1703,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
 
         if (navigator.connection.type != Connection.NONE){
              console.log("Yes Em Online1!");
+            syncDataCheckIn();
             uploadParseFile(picurl);
          }
          else if(navigator.connection.type == Connection.NONE) {
