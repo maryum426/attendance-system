@@ -640,6 +640,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].save(null, {
                                             success:function (kuali) {
                                                 console.log(kuali + " saved successfully");
+                                                 if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                                 }
 
                                             },
                                             error:function (pSweet, error) {
@@ -685,7 +688,9 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     results[0].save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
-
+                                            if(i == result.rows.length){
+                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                             }
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -702,9 +707,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                     }
                     i++;
                     
-                    if(i == result.rows.length){
-                       setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-                    }
+                   
                 }
                 
             }
