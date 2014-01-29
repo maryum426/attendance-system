@@ -363,7 +363,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             $('#submit1').css({'opacity':'0.4'});
                     
                    
-            var thumbnailw = 400;
+            var thumbnailw = 430;
             var thumbnailh = 533;
             var ppWidth, ppHeight;
             //console.log("Image: " + data);
@@ -432,57 +432,58 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
         
         function uploadParseFile(pf){
             
-//            //Initialize Parse
-//            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+            //Initialize Parse
+            Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+
+            var parseFile = new Parse.File("mypic.jpg", {base64:pf});
+            
+            //Uploading file to Parse
+            parseFile.save().then(function() {
+                                            //console.log("Got it!");
+                                            userAvatar = parseFile.url();
+                                            window.localStorage.setItem("picurl",data.url);
+                                            uploadParsePic(data.url);
+                                            console.log (parseFile.url());
+                                            console.log("Ok");
+                                            console.log("In Uploadfinal!");
+
+                                        }, function(error) {
+                                            console.log("Error");
+                                            console.log(error);
+                                        });
+
+
+//                pf = pf.substring(pf.indexOf(',')+1);
+//                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
+//                var blob = JSON.stringify(jsonData);
 //
-//            var parseFile = new Parse.File("mypic.jpg", {base64:pf});
-//            
-//            //Uploading file to Parse
-//            parseFile.save().then(function() {
-//                                            //console.log("Got it!");
-//                                            userAvatar = parseFile.url();
-//                                            uploadParsePic();
-//                                            console.log (parseFile.url());
-//                                            console.log("Ok");
-//                                            console.log("In Uploadfinal!");
+//                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
 //
-//                                        }, function(error) {
-//                                            console.log("Error");
-//                                            console.log(error);
-//                                        });
-
-
-                pf = pf.substring(pf.indexOf(',')+1);
-                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
-                var blob = JSON.stringify(jsonData);
-
-                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
-
-                 $.ajax({
-                        type: "POST",
-                        beforeSend: function(request) {
-                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
-                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
-                            request.setRequestHeader("Content-Type", 'text/plain');
-                        },
-                        url: userAvatar,
-                        data: blob,
-                        async: false,
-                        processData: false,
-                        contentType: false,
-                        success: function(data) {
-                            //userAvatar = data.url;
-                            window.localStorage.setItem("picurl",data.url);
-                            uploadParsePic(data.url);
-                            //console.log("PicUrl: " + userAvatar);
-                            return data.url;
-
-                        },
-                        error: function(data){
-                                 var obj = jQuery.parseJSON(data);
-                                    console.log(obj.error);
-                        }
-                        });
+//                 $.ajax({
+//                        type: "POST",
+//                        beforeSend: function(request) {
+//                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+//                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+//                            request.setRequestHeader("Content-Type", 'text/plain');
+//                        },
+//                        url: userAvatar,
+//                        data: blob,
+//                        async: false,
+//                        processData: false,
+//                        contentType: false,
+//                        success: function(data) {
+//                            //userAvatar = data.url;
+//                            window.localStorage.setItem("picurl",data.url);
+//                            uploadParsePic(data.url);
+//                            //console.log("PicUrl: " + userAvatar);
+//                            return data.url;
+//
+//                        },
+//                        error: function(data){
+//                                 var obj = jQuery.parseJSON(data);
+//                                    console.log(obj.error);
+//                        }
+//                        });
                         //uploadParsePic();
         
             
