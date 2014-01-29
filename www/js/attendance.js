@@ -634,7 +634,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         results[0].set("status",result.rows.item(j).status);
                                         db.transaction(function(t){
                                             console.log("My Query Home Called!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(j).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
                                         });
                                         j++;
                                         results[0].save(null, {
@@ -682,7 +682,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     results[0].set("status",result.rows.item(k).status);
                                     db.transaction(function(t){
                                         console.log("My Query Home Called!");
-                                        t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(k).userpin , [], (function(){console.log("Success!");}), errorCB);
+                                        t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + result.rows.item(i).userpin , [], (function(){console.log("Success!");}), errorCB);
                                     });
                                     k++;
                                     results[0].save(null, {
@@ -780,7 +780,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         
                                         db.transaction(function(t){
                                             console.log("My Query Del local vf!");
-                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(j).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
+                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
                                         });
                                         j++;
                                         results[0].save(null, {
@@ -826,7 +826,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         //Deleting local record
                                         db.transaction(function(t){
                                             console.log("My Query Del local km!");
-                                            t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + result.rows.item(k).userpin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
+                                            t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + result.rows.item(i).userpin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
                                         });
                                         k++;
                                         results[0].save(null, {
