@@ -8,7 +8,7 @@ var offlinePic  = null;
 var offPicData = null;
 var syncImage = null;
 var picurl;
-var db = window.openDatabase("users", "1.0", "Users", 2048576);
+var db = window.openDatabase("users", "1.0", "Users", 15728640);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
 
 
@@ -207,6 +207,16 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             });
         };
         
+        function itkm(up,cd){
+                                
+            db.transaction(function(t1){
+                console.log("In checkCheckIn2!");
+                console.log("Userpin: " + up);
+                console.log("Date: " + cd);
+                t1.executeSql("SELECT * FROM KUALITATEM WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
+            });
+        };
+        
         function offCheckkm(up,cd){
             //console.log("In DB!");
             db.transaction(function(t){
@@ -298,7 +308,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                 });
                                 }
                                 else if(navigator.connection.type == Connection.NONE) {
-                                   it(userpin,d);    
+                                   itkm(userpin,d);    
                                 }
                              
                             }
