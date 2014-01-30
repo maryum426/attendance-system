@@ -73,6 +73,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             
+            if(/^[0-9]*$/.test(userpin) == false) {
+                alert('Your code contains illegal characters. Enter again.');
+                $('#codeOk').removeAttr('disabled');
+                $('#codeOk').css({'opacity':'1.4'});
+                $('.code-holder').val(null);
+            }
+            
             //Getting User Info
             function it(up){
                 
