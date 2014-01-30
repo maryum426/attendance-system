@@ -73,8 +73,8 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             
-            if(/^[0-9]*$/.test(userpin) == false) {
-                alert('Your code contains illegal characters. Enter again.');
+            if(/^[0-9]*$/.test(userpin) == false || userpin == null || userpin == '') {
+                alert('Invalid Input. Enter again.');
                 $('#codeOk').removeAttr('disabled');
                 $('#codeOk').css({'opacity':'1.4'});
                 $('.code-holder').val(null);
@@ -89,7 +89,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                 
             };
             it(userpin);
-            checkCheckIn();
+           
             
             
        }
@@ -224,12 +224,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             });
         };
         
-        function offCheckkm(up,cd){
-            //console.log("In DB!");
-            db.transaction(function(t){
-                t.executeSql("SELECT substr(checkInTime,0,15) FROM KUALITATEM WHERE userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
-            });
-        }
+       
         
         function checkCheckIn(){
             console.log("In checkCheckIn!");
@@ -239,84 +234,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                         
                             if (company == 'virtualforce'){
                                 
-                               if (navigator.connection.type != Connection.NONE){
-                                var query = new Parse.Query("VirtualForce");
-                                query.equalTo("userPin", userpin);
-                                query.startsWith("checkInTime", currentDate.toDateString());
-                                query.find({
-                                    success:function (results) {
-                                        console.log("Results Length: " + results.length);
-                                            
-                                            if (results.length == 0)
-                                                {
-                                                    console.log("User doesnot exist!");
-                                                    $('#codeOk').removeAttr('disabled');
-                                                    $('#codeOk').css({'opacity':'1.4'});
-                                                    $('.code-holder').val(null);
-                                                }   
-                                                
-                                            else if (results[0].get("check") == 'checkin')
-                                                {
-                                                    window.location = "picUpload.html?checkin=false";
-                                                }
-                                            else if (results[0].get("check") == 'checkout')
-                                                {
-                                                    window.location = "picUpload.html?checkin=true";
-                                                }
-                                            else if (results[0].get("check") == '' || results[0].get("check") == null)
-                                                {
-                                                    window.location = "picUpload.html?checkin=true";
-                                                }
-                                            
-                                        },
-                                        error:function (error) {
-
-                                        }
-                                });
-                               }
-                               else if(navigator.connection.type == Connection.NONE) {
                                    it6(userpin,d);
-                               }
+                
                                  
                             }
                             else if (company == 'kualitatem'){
-                                if(navigator.connection.type != Connection.NONE){
-                                var query = new Parse.Query("Kualitatem");
-                                query.equalTo("userPin", userpin);
-                                query.startsWith("checkInTime", currentDate.toDateString());
-                                query.find({
-                                    success:function (results) {
-                                        console.log("Results Length: " + results.length);
-
-                                            if (results.length == 0)
-                                                {
-                                                    console.log("User doesnot exist!");
-                                                    $('#codeOk').removeAttr('disabled');
-                                                    $('#codeOk').css({'opacity':'1.4'});
-                                                    $('.code-holder').val(null);
-                                                }   
-                                                
-                                           else if (results[0].get("check") == 'checkin')
-                                                {
-                                                    window.location = "picUpload.html?checkin=false";
-                                                }
-                                            else if (results[0].get("check") == 'checkout')
-                                                {
-                                                    window.location = "picUpload.html?checkin=true";
-                                                }
-                                            else if (results[0].get("check") == '' || results[0].get("check") == null)
-                                                {
-                                                    window.location = "picUpload.html?checkin=true";
-                                                }
-                                        },
-                                        error:function (error) {
-
-                                        }
-                                });
-                                }
-                                else if(navigator.connection.type == Connection.NONE) {
+                               
                                    itkm(userpin,d);    
-                                }
+                       
                              
                             }
             
@@ -656,12 +581,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1000)   
                                             }
 
                                         });
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
 
                                 });
@@ -706,12 +633,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                 }
 
                             });
@@ -808,12 +737,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                             }
 
                                         });
                                     },
                                     error:function (error) {
-
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
                                 });
                                
@@ -861,12 +791,13 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                             }
 
                                         });
                                     },
                                     error:function (error) {
-
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
                                 });
                                
@@ -940,12 +871,14 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                         syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                             }
 
                         });
@@ -985,6 +918,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
 
                                 });
@@ -993,6 +927,7 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                             }
 
                         });
