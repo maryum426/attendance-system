@@ -839,6 +839,17 @@ var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar,
             checkEDate.setHours(23);
             checkEDate.setMinutes(59);
             checkEDate.setSeconds(59);
+            
+            var status;
+               console.log("Check Status: " + checkStatus.toString());
+               console.log("Current Date: " + currentDate.toString());
+
+               if ((currentDate < checkStatus || currentDate == checkStatus)){
+                   status = 'ontime';
+               }
+               else{
+                   status = 'late';
+               }
            
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
