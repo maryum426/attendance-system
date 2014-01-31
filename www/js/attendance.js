@@ -395,7 +395,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     error: function(data){
                         var obj = jQuery.parseJSON(data);
                         console.log(obj.error);
-                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                        console.log("Some Exception.");
+                        window.location = "index.html";
                     }
                     });
         }
@@ -485,14 +486,18 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
-                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                            console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            console.log("Some Exception.");
+                                            window.location = "index.html";
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    console.log("Some Exception.");
+                                    window.location = "index.html";
                                 }
 
                             });
@@ -538,14 +543,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
-                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                            console.log("Some Exception.");
+                                            window.location = "index.html";
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    console.log("Some Exception.");
+                                    window.location = "index.html";
                                 }
 
                             });
@@ -645,13 +653,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                          }
 
                                      });
                                  },
                                  error:function (error) {
-                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                  }
                              });   
                     }
@@ -695,13 +706,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                          }
 
                                      });
                                  },
                                  error:function (error) {
-                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                  }
                              });
                     }
@@ -781,14 +795,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
-                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    console.log("Some Exception.");
+                                    window.location = "index.html";
                             }
 
                         });
@@ -829,14 +846,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
-                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    console.log("Some Exception.");
+                                    window.location = "index.html";
                             }
 
                         });
@@ -894,13 +914,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                                console.log("Some Exception.");
+                                                window.location = "index.html";
                                             }
 
                                         });
                                     },
                                     error:function (error) {
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                     }
                             });
                         }
@@ -953,14 +976,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     deleteLocalkm(userpin);
                                                 },
                                                 error:function (pSweet, error) {
-                                                    console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                                        console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                        console.log("Some Exception.");
+                                                        window.location = "index.html";
                                                 }
 
                                             });
                                     },
                                 error:function (error) {
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             console.log("Some Exception.");
+                                             window.location = "index.html";
                                 }
                             });
                         }
