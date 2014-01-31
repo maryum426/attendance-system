@@ -46,6 +46,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             
+            if(/^[0-9]*$/.test(userpin) == false || userpin == null || userpin == '') {  
+	        alert('Invalid Input. Enter again.');	 	
+                $('#codeOk').removeAttr('disabled');	 	
+                $('#codeOk').css({'opacity':'1.4'});	 	
+                $('.code-holder').val(null);	 	
+            }
             getInfo(userpin);
             
        }
@@ -472,12 +478,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                 }
 
                             });
@@ -523,12 +531,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                 }
 
                             });
@@ -627,12 +637,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                          }
 
                                      });
                                  },
                                  error:function (error) {
-
+                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                  }
                              });   
                     }
@@ -675,12 +686,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
+                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                          }
 
                                      });
                                  },
                                  error:function (error) {
-
+                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                  }
                              });
                     }
@@ -716,7 +728,18 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setHours(23);
             checkEDate.setMinutes(59);
             checkEDate.setSeconds(59);
-           
+            
+            var status;	 	
+            console.log("Check Status: " + checkStatus.toString());	 	
+            console.log("Current Date: " + currentDate.toString());	 	
+		 	
+            if ((currentDate < checkStatus || currentDate == checkStatus)){	 	
+                status = 'ontime';	 	
+            }	 	
+            else{	 	
+                status = 'late';	 	
+            }
+            
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
@@ -747,12 +770,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                             }
 
                         });
@@ -791,12 +816,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                             }
 
                         });
@@ -857,12 +884,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                             }
 
                                         });
                                     },
                                     error:function (error) {
-
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                     }
                             });
                         }
@@ -919,12 +947,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                                 }
 
                                             });
                                     },
                                 error:function (error) {
-
+                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                 }
                             });
                         }
