@@ -486,9 +486,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
                                             console.log("Some Exception.");
-                                            if(i == result.rows.length){
-                                                setTimeout(function(){window.location = "index.html";},1500)   
-                                             };
+
                                         }
 
                                     });
@@ -546,16 +544,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
                                             console.log("Some Exception.");
-                                            if(i == result.rows.length){
-                                                setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+                                             
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    console.log("Some Exception.");
                                     console.log("Some Exception.");
                                     if(i == result.rows.length){
                                         setTimeout(function(){window.location = "index.html";},1500)   
@@ -660,9 +655,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("Some Exception.");
-                                             if(i == result.rows.length){
-                                                setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+
                                          }
 
                                      });
@@ -715,9 +708,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             if(i == result.rows.length){
-                                                setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+
                                          }
 
                                      });
@@ -861,9 +852,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("Some Exception.");
-                                             if(i == result.rows.length){
-                                                setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+
                                     }
 
                                 });
@@ -932,9 +921,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                                                 console.log("Some Exception.");
-                                                if(i == result.rows.length){
-                                                   setTimeout(function(){window.location = "index.html";},1500)   
-                                                }
                                             }
 
                                         });
