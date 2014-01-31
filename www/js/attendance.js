@@ -315,6 +315,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }, function(error) {
                                             console.log("Error");
                                             console.log(error);
+                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                         });
 
         }
@@ -394,6 +395,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     error: function(data){
                         var obj = jQuery.parseJSON(data);
                         console.log(obj.error);
+                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                     }
                     });
         }
@@ -1038,7 +1040,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             workHours = hours.toString();
             window.localStorage.setItem("picurl",offPicData);
             db.transaction(function(t){
-                t.executeSql("UPDATE KUALITATEM SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCBout);
+                t.executeSql("UPDATE KUALITATEM SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
             });
             
         }
