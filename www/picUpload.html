@@ -20,20 +20,17 @@
         
             <img id="background" src="" alt="bg-image">
             <div class="pic_upload">
-<!--                <input type="file" accept="image/*" id="capture" capture="camera" class="ios-btn" size="0" >-->
-<!--                <img id="my_image" src="images/profile-image3.png" onclick="capturePicture()">-->
                 <img id="my_image" src="images/profile-image3.png" onclick="capturePicture()">
             </div>
             <div id="snap-text">
                     <p class="pic-text">Get ready to take your picture!</p>
             </div>
             <div class="btn-holder2">
-<!--                <input class="code-btn-cancel ios-btn" type="button" value="Back" onclick="uploadBack()">-->
                 <input id ="submit1" class="code-btn-ok ios-btn" type="button" value="Submit" onclick="uploadOk()">
             </div>
             <input id ="submit" class="code-btn-cancel ios-btn2" type="button" onclick="uploadBack()">
         </div>
-            <script src="js/extra.js"></script>
+            <script src="js/attendance.js"></script>
             <script type="text/javascript" src="js/parse-min.js"></script>
             <script>
                 
@@ -74,12 +71,7 @@
                     $('.pic-text').css({'color':'#fff'});
                     $('.pic_upload').css({'top':'145px'});
                 }
-                //setMessages(checkin)
-                //$(document).ready(function(){
-                   //takePicture();
-                //});
-                
-                
+               
                 function onBackKeyDown() {
                     //alert("Exiting!");
                     window.location = "index.html";

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
         <link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
-        <script src="js/extra.js"></script>
+        <script src="js/attendance.js"></script>
         <script type="text/javascript" src="js/parse-min.js"></script>
         <script src="phonegap.js"></script>
         <meta http-equiv="cache-control" content="cache" />
@@ -13,8 +13,7 @@
         <meta name="viewport" content="user-scalable=no,width=device-width">
     </head>
     <body>
-         <header>
-<!--            <img src="images/kualitatem-logo.png"/>-->
+        <header>
         </header>
         <div class="main-wrapper">
             <img id="background" src="" alt="bg-image">
@@ -52,35 +51,21 @@
                    console.log (window.localStorage.getItem("tdate"));
                    console.log (cDate.toDateString());
                    console.log (window.localStorage.getItem("launch"));
-                    //$('#launch').css({'display':'none'});
-                   //$('#login').css({'display':'block'});
                    window.localStorage.removeItem("launch");
                }
-//               else{
-//                   window.localStorage.removeItem("launch");
-//               }
 
                 $('#background').attr('src','images/background-1.jpg');
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var currentDate = new Date();
                 var yesterday = new Date();
                 yesterday.setDate(currentDate.getDate()-1);
-                //var ca = document.cookie.split(';');
                 var laun = window.localStorage.getItem("launch");
-    //                for(var i=0; i< ca.length; i++) 
-    //                  {
-    //                      var c = ca[i].trim();
-    //                   if (c.indexOf("launch")== 0) {
-    //                        laun = (c.substring(c.indexOf("launch").length,c.length)).split("=");
-    //                        laun = unescape(laun[1]);
-
-                            if (laun == 'true'){
-                                $('#launch').css({'display':'none'});
-                                $('#login').css({'display':'block'});
-                            }
-                        //}
-                      //}
-                      //alert("Cookie Support: " + navigator.cookieEnabled);
+   
+                if (laun == 'true'){
+                    $('#launch').css({'display':'none'});
+                    $('#login').css({'display':'block'});
+                }
+              
                 console.log("Yesterday's Date: " + yesterday.toDateString()+', '+ yesterday.getHours()+':'+yesterday.getMinutes());
 
                 }

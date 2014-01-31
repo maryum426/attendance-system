@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
         <link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
-        <script src="js/extra.js"></script>
+        <script src="js/attendance.js"></script>
         <meta http-equiv="cache-control" content="cache" />
         <script type="text/javascript" src="js/parse-min.js"></script>
         <script src="phonegap.js"></script>
@@ -29,13 +29,13 @@
                 <p class="check-text"></p>
                 <p id="time" class="time"></p>
                 <p class="welcome-message"></p>
-    <!--            <div class="send-email" onclick="sendEmail()">Send Email</div>-->
             </div>
         </div>
         
          <script>
           
             $('.pic_upload').css({'display':'block'});
+            
             var current = new Date();
             var checkStatus = new Date();
             checkStatus.setHours(17);
@@ -79,11 +79,11 @@
                     }
                     
                 }
-                picurl = window.localStorage.getItem("offlinepic");
+            picurl = window.localStorage.getItem("offlinepic");
             console.log("CheckIn: " + checkin);
-            //setMessages(checkin);
             $('#my_image').css({'left':'50px'});
             $('#my_image').attr('src',picurl);
+            
             var currentDate = new Date();
             var hours = currentDate.getHours(); 
             var minutes = currentDate.getMinutes();
@@ -94,10 +94,6 @@
             var currentTime = hours + ':' + minutes + ' ' + ampm;
             console.log("Current Time: " + currentTime);
             $('#time').text(currentTime);
-            
-            
-            
-            //backToLogin();
             
         </script>
       </body>

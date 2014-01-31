@@ -10,15 +10,51 @@ var syncImage = null;
 var picurl;
 var db = window.openDatabase("users", "1.0", "Users", 52428800);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
-      
-       
+
+
+//Temp Var
+
+var temp_username, temp_userpin, temp_department, temp_company, temp_userAvatar, temp_checkin, temp_checkout, temp_status, temp_workH;
+        
+        function checkIn(){
+            checkin = true;
+            console.log('CheckIn');
+            if (check == 'checkin')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
+                }
+            else if (check == 'checkout')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkout";
+                }
+            else if (check == 'no')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=no";
+                }    
+            
+        }
+        
+        function checkOut(){
+            checkin = false;
+            console.log('CheckOut');
+            if (check == 'checkin')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkin";
+                }
+            else if (check == 'checkout')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=checkout";
+                }
+            else if (check == 'no')
+                {
+                    window.location = "picUpload.html?checkin=" + checkin + "&check=no";
+                }    
+        }
+        
         function logout(){
             window.location = "index.html";
         }
         
-        
-        // This function will only be called once, at the start of the day to insert the records and email 
-        //previous day's report. 
         function launch(){
             
             $('#launch').attr('disabled','disabled');
@@ -28,16 +64,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
            
         }
         
-       //Getting User Info
-        function getInfo(up){
-
-            db.transaction(function(t){
-                t.executeSql('SELECT * FROM USERS WHERE userpin ==' + up , [], querySuccess, errorCB);
-            });
-
-        }; 
         
-       //Check Info in localDB
        function queryDB() {
             $('.pic_upload').hide();
             $('.btn-holder2').hide();
@@ -46,23 +73,36 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             userpin = ($('.code-holder').val()).toString();
             console.log("User Pin: " + userpin);
             
-            if(/^[0-9]*$/.test(userpin) == false || userpin == null || userpin == '') {  
-	        alert('Invalid Input. Enter again.');	 	
-                $('#codeOk').removeAttr('disabled');	 	
-                $('#codeOk').css({'opacity':'1.4'});	 	
-                $('.code-holder').val(null);	 	
+            if(/^[0-9]*$/.test(userpin) == false || userpin == null || userpin == '') {
+                alert('Invalid Input. Enter again.');
+                $('#codeOk').removeAttr('disabled');
+                $('#codeOk').css({'opacity':'1.4'});
+                $('.code-holder').val(null);
             }
-            getInfo(userpin);
+            
+            //Getting User Info
+            function it(up){
+                
+                db.transaction(function(t){
+                    t.executeSql('SELECT * FROM USERS WHERE userpin ==' + up , [], querySuccess, errorCB);
+                });
+                
+            };
+            it(userpin);
+           
+            
             
        }
        
+       function errorCB9 (err){	 	
+            console.log("I am wild!")	 	
+       }
+        
         // Query the success callback
-        //Result Found! Now check "CheckIn/Out status"
         function querySuccess(tx, results) {
             
             console.log("Returned rows = " + results.rows.length);
-            
-            // If result found
+            // This will be true since it was a SELECT statement and so rowsAffected was 0
             var len = results.rows.length;
             if (len > 0){
                     console.log("Username: " + results.rows.item(0).username);
@@ -72,33 +112,45 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     company = results.rows.item(0).company;
                     department = results.rows.item(0).department;
                     
-                    //Storing data in local storage to use efficiently throughout the app.
+                    
+                    //Storing data in local storage  for efficiency
                     window.localStorage.setItem("pin",userpin);
+                    
                     window.localStorage.setItem("username",username);
+                    
                     window.localStorage.setItem("company",company);
+                    
                     window.localStorage.setItem("department",department);
                     
-                    checkCheckIn();
+                    
+                
             }
             else if(results.rows.length == 0) {
                 alert("User doesnot exist!");
                 $('#codeOk').removeAttr('disabled');
                 $('#codeOk').css({'opacity':'1.4'});
                 $('.code-holder').val(null);
-            }
+             }
             
+            checkCheckIn();
         }
 
         // Transaction error callbacks
+    
         function errorCB(err) {
             console.log("Error processing SQL: "+err.code);
         }
         
+        function errorCB2(err) {
+            console.log("Error processing SQL: "+err.code);
+        }
         
-       // ----------------- Save/Delete records locally ------------------//
-       // Updating local records for CheckIn
-       // Getting userpin *up* to delete the uploaded record.
+        function errorCBout(err) {	 	
+            console.log("Error in offline Checkout");	 	
+        }
+
        
+       //Save records locally
        function upLocalvfIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
                 console.log("My Query Up local vf!");
@@ -125,109 +177,113 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             });
         }
         
-        // --------------------------- End -----------------------------//
-        
-        // When Offline: Record Found in Local DB
         function queryRedirect(tx,results){
-            
+            //WHERE  userpin ='" + up + "'"+"AND SUBSTR(checkInTime,1,7) =' " + cd + "'
             console.log("Results Length: " + results.rows.length);
-     
-            if (results.rows.length == 0){
-                alert("You've already checked out!\n Bubye! :D");
-                $('#codeOk').removeAttr('disabled');
-                $('#codeOk').css({'opacity':'1.4'});
-                $('.code-holder').val(null);
-            }   
+            //console.log("checkintime : " + results.rows.item(0).Newcol);
+                
+            if (results.rows.length == 0)
+                    {
+                       alert("You've already checked out!\n Bubye! :D");
+                       $('#codeOk').removeAttr('disabled');
+                       $('#codeOk').css({'opacity':'1.4'});
+                       $('.code-holder').val(null);
+                    }   
 
-            if (results.rows.item(0).checkstat == 'checkin'){
-                window.location = "picUpload.html?checkin=false";
-            }
-            else if (results.rows.item(0).checkstat == 'checkout'){
-                window.location = "picUpload.html?checkin=true";
-            }
-            else if (results.rows.item(0).checkstat == '' || results.rows.item(0).check == null){
-                window.location = "picUpload.html?checkin=true";
-            }
+                if (results.rows.item(0).checkstat == 'checkin')
+                    {
+                        window.location = "picUpload.html?checkin=false";
+                    }
+                else if (results.rows.item(0).checkstat == 'checkout')
+                    {
+                        window.location = "picUpload.html?checkin=true";
+                    }
+                else if (results.rows.item(0).checkstat == '' || results.rows.item(0).check == null)
+                    {
+                        window.location = "picUpload.html?checkin=true";
+                    }
         }
         
-        function chkvf(up,cd){
+        function it6(up,cd){
                                 
             db.transaction(function(t1){
                 console.log("In checkCheckIn2!");
                 console.log("Userpin: " + up);
                 console.log("Date: " + cd);
-                t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB);
+                t1.executeSql("SELECT * FROM VIRTUALFORCE WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
             });
         };
         
-        function chkkm(up,cd){
+        function itkm(up,cd){
                                 
             db.transaction(function(t1){
                 console.log("In checkCheckIn2!");
                 console.log("Userpin: " + up);
                 console.log("Date: " + cd);
-                t1.executeSql("SELECT * FROM KUALITATEM WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB);
+                t1.executeSql("SELECT * FROM KUALITATEM WHERE  userpin ='" + up + "'", [] ,queryRedirect, errorCB2);
             });
         };
+        
+       
         
         function checkCheckIn(){
             console.log("In checkCheckIn!");
             var currentDate = new Date();
             var d = currentDate.toDateString();
-            
-            //Check checkin/out status            
-            if (company == 'virtualforce'){
-
-                chkvf(userpin,d);
-
-            }
-            else if (company == 'kualitatem'){
-
-                chkkm(userpin,d);    
-
-            }
+            //Check checkin/out status
+                        
+                            if (company == 'virtualforce'){
+                                
+                                   it6(userpin,d);
+                
+                                 
+                            }
+                            else if (company == 'kualitatem'){
+                               
+                                   itkm(userpin,d);    
+                       
+                             
+                            }
             
         }
-        
-        //Take Picture Using PhoneGap Camera API
+                  
         function capturePicture(){
                 
-            $('.pic_upload').css({'display':'block'});
-            $('.btn-holder2').css({'display':'block'});
-            $('#snap-text').css({'display':'none','margin-top':'0'});
-            $('.pic-text').css({'display':'none','margin-top':'0'});
-            $('#submit1').removeAttr('disabled');
-            $('#submit1').css({'opacity':'1.4'});
-
-            var options =   {
-                quality: 50,
-                cameraDirection:1,
-                sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-                correctOrientation: true,
-                destinationType: navigator.camera.DestinationType.DATA_URL
+                $('.pic_upload').css({'display':'block'});
+                $('.btn-holder2').css({'display':'block'});
+                $('#snap-text').css({'display':'none','margin-top':'0'});
+                $('.pic-text').css({'display':'none','margin-top':'0'});
+                $('#submit1').removeAttr('disabled');
+                $('#submit1').css({'opacity':'1.4'});
+                var options =   {
+                    quality: 50,
+                    cameraDirection:1,
+                    sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+                    correctOrientation: true,
+                    destinationType: navigator.camera.DestinationType.DATA_URL
+                    //allowEdit: true
+                };
+                
+                // Take picture using device camera and retrieve image as base64-encoded string
+                navigator.camera.getPicture(onSuccess,onFail,options);
+          }
+          var onSuccess = function(data3) {
+              
+                    //console.log("On success called");      
+                    userAvatar = data3;
+                    var data;
+                    data = "data:image/jpeg;base64," + userAvatar;
+                    $("#my_image").attr("src",data);
+                    userAvatar = data;
             };
 
-            // Take picture using device camera and retrieve image as base64-encoded string
-            navigator.camera.getPicture(onSuccess,onFail,options);
-        }
-        
-        //Picture Successfully Taken
-        var onSuccess = function(data3) {
-              
-            userAvatar = data3;
-            var data;
-            data = "data:image/jpeg;base64," + userAvatar;
-            $("#my_image").attr("src",data);
-            userAvatar = data;
-        };
-
         var onFail = function(e) {
-            console.log("On fail " + e);
+            //console.log("On fail " + e);
+            //console.log("Profile Picture Progress: " + $rootScope.loginInProgress_profile);
         };
         
-        //Submit Picture
         function uploadOk(){
-            
+            //console.log("In Upload!");
             if (userAvatar == null){
                 alert("Take a picture first!");
                 $('#submit1').removeAttr('disabled');
@@ -242,16 +298,19 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var thumbnailw = 400;
             var thumbnailh = 683;
             var ppWidth, ppHeight;
+            //console.log("Image: " + data);
             var image = new Image();
-            
             image.src = userAvatar;
             offlinePic = userAvatar;
+            //console.log("DataURI: " + userAvatar);
+            //console.log("offlinePic: " + offlinePic);
             window.localStorage.setItem("offlinepic",offlinePic);
-            
             //Resizing Image
             var canvas = document.createElement('canvas');
+
             canvas.width = thumbnailw;
             canvas.height = thumbnailh;
+
 
             image.onload = function(){
                 
@@ -265,16 +324,18 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var offsetX = 0;
                 var offsetY = 0;
 
+
+
                 if (image.width > image.height) {
                     imageWidth = Math.round(thumbnailw * image.width / image.height);
                     imageHeight = thumbnailh;
                     offsetX = - Math.round((imageWidth - thumbnailw) / 2);
-                    
+                    //console.log("IF");
                 } else {
                     imageHeight = Math.round(thumbnailh * image.height / image.width);
                     imageWidth = thumbnailw;    
                     offsetY = - Math.round((imageHeight - thumbnailh) / 2);            
-                    
+                    //console.log("ELSE");
                 }
 
                 context.drawImage(image, offsetX, offsetY, imageWidth, imageHeight);
@@ -283,10 +344,21 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 data2 = data2.replace(/^data:image\/(png|jpeg);base64,/, "");
                 
-                offPicData  = data2; //Save PicData locally
                 
-                uploadLocal(); 
-            };
+
+                offPicData  = data2;
+                
+                
+                
+                //if (navigator.connection.type != Connection.NONE){ //Online
+                    
+                    //uploadParseFile(data2);
+                    
+                //}
+                //else{ //Offline
+                    uploadLocal(); 
+                //}
+            }
                         
         }
         
@@ -299,7 +371,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             
             //Uploading file to Parse
             parseFile.save().then(function() {
-
+                                            //console.log("Got it!");
                                             userAvatar = parseFile.url();
                                             window.localStorage.setItem("picurl",userAvatar);
                                             uploadParsePic(userAvatar);
@@ -312,13 +384,47 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log(error);
                                         });
 
+
+//                pf = pf.substring(pf.indexOf(',')+1);
+//                var jsonData = { "base64":pf,"_ContentType":"image/jpeg" };
+//                var blob = JSON.stringify(jsonData);
+//
+//                userAvatar = 'https://api.parse.com/1/files/' + 'mypiccurrent.jpg';
+//
+//                 $.ajax({
+//                        type: "POST",
+//                        beforeSend: function(request) {
+//                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+//                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+//                            request.setRequestHeader("Content-Type", 'text/plain');
+//                        },
+//                        url: userAvatar,
+//                        data: blob,
+//                        async: false,
+//                        processData: false,
+//                        contentType: false,
+//                        success: function(data) {
+//                            //userAvatar = data.url;
+//                            window.localStorage.setItem("picurl",data.url);
+//                            uploadParsePic(data.url);
+//                            //console.log("PicUrl: " + userAvatar);
+//                            return data.url;
+//
+//                        },
+//                        error: function(data){
+//                                 var obj = jQuery.parseJSON(data);
+//                                    console.log(obj.error);
+//                        }
+//                        });
+                        //uploadParsePic();
+        
+            
         }
         
         function uploadBack(){
             window.location = "index.html";
         }
         
-        //Sync local data
         function syncDataCheckIn(){
             console.log("Sync Data Called");
             
@@ -344,8 +450,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         }
         
         function uploadPicToParse(pic3,sync_flag){
-            
-            //console.log("Here in Pic Parse");
+            console.log("Here in Pic Parse");
             var checkStatus = new Date(); // Status : late,ontime
             checkStatus.setHours(9);
             checkStatus.setMinutes(30);
@@ -360,7 +465,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setHours(23);
             checkEDate.setMinutes(59);
             checkEDate.setSeconds(59); 
-            
             
             pic3 = pic3.substring(pic3.indexOf(',')+1);
             var jsonData = { "base64":pic3,"_ContentType":"image/jpeg" };
@@ -382,20 +486,20 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     contentType: false,
                     success: function(data) {
                         userAvatar = data.url;
+                       
                         console.log("PicUrl: " + userAvatar);
                         return userAvatar;
                     
                     },
                     error: function(data){
-                        var obj = jQuery.parseJSON(data);
-                        console.log(obj.error);
+                             var obj = jQuery.parseJSON(data);
+                                console.log(obj.error);
                     }
                     });
         }
         
         function querySyncIn(t,result){  //Sync Check-In Records
-            
-            if(result.rows.length == 0){ //Go back if no record is found to sync.
+            if(result.rows.length == 0){
                 console.log("No Result found!");
                 setTimeout(function(){console.log("No result found VF/KM.");window.location = "index.html";},1500)  
             }
@@ -435,69 +539,67 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                var j=0;
                var k=0;
                var current_pin = 0;
-                
-               while (i<result.rows.length){
+                //console.log("Query Results: " + result.rows.length);
+                while (i<result.rows.length){
+                     //console.log("In Loop!");
+                    if ((result.rows.item(i).userpin).substr(0,1) == '1'){
+                               console.log("Called for VF!");
+                               console.log("UserPin to find: " + result.rows.item(i).userpin);
+                               
+                               var query = new Parse.Query("VirtualForce");
+                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
+                                        console.log("Result in VF found");
+                                        console.log("Results Length in VF sync: " +results.length);
 
-                    if ((result.rows.item(i).userpin).substr(0,1) == '1'){ //Virtual Force
-                           console.log("Called for VF!");
-                           console.log("UserPin to find: " + result.rows.item(i).userpin);
+                                        //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
 
-                           //Upload Record to Parse
-                            var query = new Parse.Query("VirtualForce");
-                            query.equalTo("userPin", result.rows.item(i).userpin);
-                            query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                            query.lessThanOrEqualTo("createdAt", checkEDate);
-                            query.find({
-                                success:function (results) {
-                                    console.log("Result in VF found");
-                                    console.log("Results Length in VF sync: " +results.length);
+                                        results[0].set("userAvatarIn",userAvatar);
+                                        results[0].set("checkInTime",result.rows.item(j).checkInTime);
+                                        results[0].set("department",result.rows.item(j).department);
+                                        results[0].set("check","checkin");
+                                        results[0].set("status",result.rows.item(j).status);
+                                        
+                                        j++;
+                                        results[0].save(null, {
+                                            success:function (kuali) {
+                                                console.log(kuali + " saved successfully");
+                                                db.transaction(function(t){
+                                                    console.log("My Query Home Called!");
+                                                    current_pin = results[0].get("userPin");
+                                                    t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
+                                                });
+                                                 if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                                 }
 
-                                    //Upload Picture to Parse
-                                    uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
-                                    console.log("UserAvatar Uploaded: " + userAvatar);
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1000)   
+                                            }
 
-                                    results[0].set("userAvatarIn",userAvatar);
-                                    results[0].set("checkInTime",result.rows.item(j).checkInTime);
-                                    results[0].set("department",result.rows.item(j).department);
-                                    results[0].set("check","checkin");
-                                    results[0].set("status",result.rows.item(j).status);
+                                        });
+                                    },
+                                    error:function (pSweet, error) {
+                                        console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
+                                    }
 
-                                    j++;
-                                    results[0].save(null, {
-                                        success:function (kuali) {
-                                            console.log(kuali + " saved successfully");
-                                            db.transaction(function(t){
-                                                console.log("My Query Home Called!");
-                                                current_pin = results[0].get("userPin");
-                                                t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
-                                            });
-                                             if(i == result.rows.length){
-                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-                                             }
-
-                                        },
-                                        error:function (pSweet, error) {
-                                            console.log("saveRecord() -> " + error.code + " " + error.message);
-                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                        }
-
-                                    });
-                                },
-                                error:function (pSweet, error) {
-                                    console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                }
-
-                            });
-
+                                });
+                               
                     }
-                    else if ((result.rows.item(i).userpin).substr(0,1) == '2'){ //Kualitatem
+                    else if ((result.rows.item(i).userpin).substr(0,1) == '2'){
                         console.log("Called for KM!");
-
+                        
                             console.log("UserPin to find: " + result.rows.item(i).userpin);
                             
-                            //Upload Record to Parse
-                            var query = new Parse.Query("Kualitatem");
+                             var query = new Parse.Query("Kualitatem");
                             query.equalTo("userPin", result.rows.item(i).userpin);
                             query.greaterThanOrEqualTo( "createdAt", checkSDate );
                             query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -515,7 +617,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].set("department",result.rows.item(k).department);
                                     results[0].set("check","checkin");
                                     results[0].set("status",result.rows.item(k).status);
-
+                                    
                                     k++;
                                     results[0].save(null, {
                                         success:function (kuali) {
@@ -531,22 +633,22 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
-                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                            setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                         }
 
                                     });
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                 }
 
                             });
-
+                               
                     }
                     i++;
-
-
+                    
+                   
                 }
                 
             }
@@ -598,118 +700,127 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 while (i<result.rows.length){
                     if((result.rows.item(i).userpin).substr(0,1) == '1'){
-                            console.log("Called for VF!");
-                            console.log("UserPin to find: " + result.rows.item(i).userpin);
+                               console.log("Called for VF!");
+                               console.log("UserPin to find: " + result.rows.item(i).userpin);
+                               
+                               var query = new Parse.Query("VirtualForce");
+                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
 
-                            //Upload record to parse
-                             var query = new Parse.Query("VirtualForce");
-                             query.equalTo("userPin", result.rows.item(i).userpin);
-                             query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                             query.lessThanOrEqualTo("createdAt", checkEDate);
-                             query.find({
-                                 success:function (results) {
+                                        console.log("Results Length: " + results.length);
 
-                                     console.log("Results Length: " + results.length);
+                                        //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(j).userAvatarOut,"kmout");
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
+                                        results[0].set("userAvatarOut",userAvatar);
+                                        results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
+                                        results[0].set("check","checkout");
+                                        results[0].set("workingHours",result.rows.item(j).workingHours);
+                                        
 
-                                     //Upload Picture to Parse
-                                     uploadPicToParse(result.rows.item(j).userAvatarOut,"kmout");
-                                     console.log("UserAvatar Uploaded: " + userAvatar);
-                                     results[0].set("userAvatarOut",userAvatar);
-                                     results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
-                                     results[0].set("check","checkout");
-                                     results[0].set("workingHours",result.rows.item(j).workingHours);
+                                        j++;
+                                        results[0].save(null, {
+                                            success:function (virtualf) {
+                                                console.log(virtualf + " saved successfully");
+                                                db.transaction(function(t){
+                                                    console.log("My Query Del local vf!");
+                                                    current_pin = results[0].get("userPin");
+                                                    t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
+                                                });
+                                                if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                                 }
 
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
+                                            }
 
-                                     j++;
-                                     results[0].save(null, {
-                                         success:function (virtualf) {
-                                             console.log(virtualf + " saved successfully");
-                                             //Deleting local record
-                                             db.transaction(function(t){
-                                                 console.log("My Query Del local vf!");
-                                                 current_pin = results[0].get("userPin");
-                                                 t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
-                                             });
-                                             if(i == result.rows.length){
-                                                 setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-                                              }
-
-                                         },
-                                         error:function (pSweet, error) {
-                                             console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                         }
-
-                                     });
-                                 },
-                                 error:function (error) {
-                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                 }
-                             });   
+                                        });
+                                    },
+                                    error:function (error) {
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
+                                    }
+                                });
+                               
+                                
                     }
                     else if((result.rows.item(i).userpin).substr(0,1) == '2'){
-                            console.log("Called for KM!");
-                            console.log("UserPin to find: " + result.rows.item(i).userpin);
+                               console.log("Called for KM!");
+                               console.log("UserPin to find: " + result.rows.item(i).userpin);
+                               
+                               
+                               var query = new Parse.Query("Kualitatem");
+                                query.equalTo("userPin", result.rows.item(i).userpin);
+                                query.greaterThanOrEqualTo( "createdAt", checkSDate );
+                                query.lessThanOrEqualTo("createdAt", checkEDate);
+                                query.find({
+                                    success:function (results) {
 
-                            //Upload record to parse
-                             var query = new Parse.Query("Kualitatem");
-                             query.equalTo("userPin", result.rows.item(i).userpin);
-                             query.greaterThanOrEqualTo( "createdAt", checkSDate );
-                             query.lessThanOrEqualTo("createdAt", checkEDate);
-                             query.find({
-                                 success:function (results) {
+                                        console.log("Results Length: " + results.length);
 
-                                     console.log("Results Length: " + results.length);
+                                        //Upload Picture to Parse
+                                        uploadPicToParse(result.rows.item(k).userAvatarOut,"kmout");
+                                        console.log("UserAvatar Uploaded: " + userAvatar);
+                                        results[0].set("userAvatarOut",userAvatar);
+                                        results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
+                                        results[0].set("check","checkout");
+                                        results[0].set("workingHours",result.rows.item(k).workingHours);
+                                        
+                                        //Deleting local record
+                                        
+                                        k++;
+                                        results[0].save(null, {
+                                            success:function (virtualf) {
+                                                console.log(virtualf + " saved successfully");
+                                                
+                                                db.transaction(function(t){
+                                                    console.log("My Query Del local km!");
+                                                    current_pin = results[0].get("userPin");
+                                                    t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
+                                                });
+                                                
+                                                if(i == result.rows.length){
+                                                    setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)   
+                                                 }
 
-                                     //Upload Picture to Parse
-                                     uploadPicToParse(result.rows.item(k).userAvatarOut,"kmout");
-                                     console.log("UserAvatar Uploaded: " + userAvatar);
-                                     results[0].set("userAvatarOut",userAvatar);
-                                     results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
-                                     results[0].set("check","checkout");
-                                     results[0].set("workingHours",result.rows.item(k).workingHours);
-                                     k++;
-                                     results[0].save(null, {
-                                         success:function (virtualf) {
-                                             console.log(virtualf + " saved successfully");
-                                             //Deleting local record
-                                             db.transaction(function(t){
-                                                 console.log("My Query Del local km!");
-                                                 current_pin = results[0].get("userPin");
-                                                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
-                                             });
+                                            },
+                                            error:function (pSweet, error) {
+                                                console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
+                                            }
 
-                                             if(i == result.rows.length){
-                                                 setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)   
-                                              }
-
-                                         },
-                                         error:function (pSweet, error) {
-                                             console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                         }
-
-                                     });
-                                 },
-                                 error:function (error) {
-                                     setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
-                                 }
-                             });
+                                        });
+                                    },
+                                    error:function (error) {
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
+                                    }
+                                });
+                               
+                               
+                                
                     }
-                    i++; 
+                    i++;
+                    
                 }
+                
             }
         }
        
-        //Redirect to Home/Last Screen
         function queryHome(){
             console.log("Going to Redirect!");
             console.log("Checkin Value: " + checkin);
-            window.location = "home.html?checkin=" + checkin;
+            window.location = "home.html?checkin=" + checkin;// + "&pic=" + offlinePic;
         }
+
         
-        //Upload Current Record to Parse
-        var uploadParsePic = function(url){
+        
+        
+         var uploadParsePic = function(url){
             
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -729,22 +840,23 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             checkEDate.setMinutes(59);
             checkEDate.setSeconds(59);
             
-            var status;	 	
-            console.log("Check Status: " + checkStatus.toString());	 	
-            console.log("Current Date: " + currentDate.toString());	 	
-		 	
-            if ((currentDate < checkStatus || currentDate == checkStatus)){	 	
-                status = 'ontime';	 	
-            }	 	
-            else{	 	
-                status = 'late';	 	
-            }
-            
+            var status;
+               console.log("Check Status: " + checkStatus.toString());
+               console.log("Current Date: " + currentDate.toString());
+
+               if ((currentDate < checkStatus || currentDate == checkStatus)){
+                   status = 'ontime';
+               }
+               else{
+                   status = 'late';
+               }
+           
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
+                    //console.log("In Virtual Force");
                     if (navigator.connection.type != Connection.NONE){
-                        
                         console.log("Yes Em Online!");
+                        
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -770,14 +882,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
-                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                             }
 
                         });
@@ -790,6 +902,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.connection.type != Connection.NONE){
+                        //uploadPicToParse(picurl);
                             
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
@@ -816,14 +929,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                                     }
 
                                 });
+
+                                //cb(pSweet);
                             },
                             error:function (pSweet, error) {
                                 console.log("saveRecord() -> " + error.code + " " + error.message);
-                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)   
                             }
 
                         });
@@ -884,13 +999,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                             }
 
                                         });
                                     },
                                     error:function (error) {
-                                        setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+
                                     }
                             });
                         }
@@ -947,13 +1061,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 },
                                                 error:function (pSweet, error) {
                                                     console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
                                                 }
 
                                             });
                                     },
                                 error:function (error) {
-                                    setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+
                                 }
                             });
                         }
