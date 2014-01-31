@@ -613,6 +613,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                              query.equalTo("userPin", result.rows.item(i).userpin);
                              query.greaterThanOrEqualTo( "createdAt", checkSDate );
                              query.lessThanOrEqualTo("createdAt", checkEDate);
+                             query.equalTo("check","checkin");
                              query.find({
                                  success:function (results) {
 
@@ -663,6 +664,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                              query.equalTo("userPin", result.rows.item(i).userpin);
                              query.greaterThanOrEqualTo( "createdAt", checkSDate );
                              query.lessThanOrEqualTo("createdAt", checkEDate);
+                             query.equalTo("check","checkin");
                              query.find({
                                  success:function (results) {
 
