@@ -767,7 +767,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                        
+                        syncDataCheckIn();
                         console.log("Yes Em Online!");
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
@@ -793,7 +793,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        syncDataCheckIn();
+                                        
                                     },
                                     error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -815,7 +815,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.connection.type != Connection.NONE){
-                            
+                        syncDataCheckIn();    
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -839,7 +839,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        syncDataCheckIn();    
+                                        //syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -871,7 +871,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                           
+                            syncDataCheckIn();
                             var query = new Parse.Query("VirtualForce");
                             query.equalTo("userPin", userpin);
                             query.startsWith("checkInTime", currentDate.toDateString());
@@ -907,7 +907,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 
                                                 console.log(virtualf + " saved successfully");
                                                 deleteLocalvf(userpin);
-                                                syncDataCheckIn();
+                                                //syncDataCheckIn();
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -932,7 +932,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
-                                
+                                syncDataCheckIn();
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -970,7 +970,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     
                                                     console.log(kuali + " saved successfully");
                                                     deleteLocalkm(userpin);
-                                                    syncDataCheckIn();
+                                                    //syncDataCheckIn();
                                                 },
                                                 error:function (pSweet, error) {
                                                         console.log("saveRecord() -> " + error.code + " " + error.message);
