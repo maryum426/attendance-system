@@ -734,7 +734,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 19.")
+            console.log("Commit: Check sync 20.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -899,6 +899,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         hours = [h.substr(-2), m.substr(-2)].join(':');
 
                                       workHours = hours.toString();
+                                      if (workHours == '23:60'){
+                                          workHours = '00:00';
+                                      }
                                         
                                         console.log("Uploaded Avatar: " + url);
                                         url = window.localStorage.getItem("picurl");
@@ -962,6 +965,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             hours = [h.substr(-2), m.substr(-2)].join(':');
 
                                           workHours = hours.toString();
+                                          if (workHours == '23:60'){
+                                            workHours = '00:00';
+                                          }
                                           console.log("Working Hours " + workHours);
 
                                             
@@ -1031,6 +1037,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
               hours = [h.substr(-2), m.substr(-2)].join(':');
 
             workHours = hours.toString();
+            if (workHours == '23:60'){
+                workHours = '00:00';
+            }
             window.localStorage.setItem("picurl",offPicData);
             
             db.transaction(function(t){
@@ -1068,6 +1077,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
               hours = [h.substr(-2), m.substr(-2)].join(':');
 
             workHours = hours.toString();
+            if (workHours == '23:60'){
+                workHours = '00:00';
+            }
             window.localStorage.setItem("picurl",offPicData);
             db.transaction(function(t){
                 t.executeSql("UPDATE KUALITATEM SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploadedOut = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
