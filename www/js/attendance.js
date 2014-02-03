@@ -8,14 +8,11 @@ var offlinePic  = null;
 var offPicData = null;
 var syncImage = null;
 var picurl;
+var coun = 0;
 var db = window.openDatabase("users", "1.0", "Users", 52428800);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
       
        
-        function logout(){
-            window.location = "index.html";
-        }
-        
         
         // This function will only be called once, at the start of the day to insert the records and email 
         //previous day's report. 
@@ -402,11 +399,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function querySyncIn(t,result){  //Sync Check-In Records
             
-            if(result.rows.length == 0){ //Go back if no record is found to sync.
+            if(result.rows.length == 0 && coun == 0){ //Go back if no record is found to sync.
                 console.log("No Result found!");
-                setTimeout(function(){console.log("No result found VF/KM.");window.location = "index.html";},1500)  
+                window.location = "index.html";
             }
             else{
+                coun = 1;
                 console.log("Sync CheckIn");
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -570,11 +568,12 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        
         function querySyncOut(t,result){ //Sync Check-out Records
             
-            if(result.rows.length == 0){
+            if(result.rows.length == 0 && coun == 0){
                 console.log("No Result found!");
-                setTimeout(function(){console.log("No result found VF/KM.");window.location = "index.html";},1500)  
+                window.location = "index.html";
             }
             else{
+                coun =1;
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
@@ -734,7 +733,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            
+            console.log("Commit: Check sync 9.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -767,7 +766,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             if (checkin == 'true'){
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                        syncDataCheckIn();
+                        
                         console.log("Yes Em Online!");
                         var query = new Parse.Query("VirtualForce");
                         query.equalTo("userPin", userpin);
@@ -793,7 +792,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        
+                                        syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -815,7 +814,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 else if (company == 'kualitatem'){
 
                     if (navigator.connection.type != Connection.NONE){
-                        syncDataCheckIn();    
+                        
                         var query = new Parse.Query("Kualitatem");
                         query.equalTo("userPin", userpin);
                         query.greaterThanOrEqualTo( "createdAt", checkSDate );
@@ -839,7 +838,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        //syncDataCheckIn();    
+                                        syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -871,7 +870,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var checkinHr,checkinMn;
                 if (company == 'virtualforce'){
                     if (navigator.connection.type != Connection.NONE){
-                            syncDataCheckIn();
+                            
                             var query = new Parse.Query("VirtualForce");
                             query.equalTo("userPin", userpin);
                             query.startsWith("checkInTime", currentDate.toDateString());
@@ -907,7 +906,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 
                                                 console.log(virtualf + " saved successfully");
                                                 deleteLocalvf(userpin);
-                                                //syncDataCheckIn();
+                                                syncDataCheckIn();
                                             },
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -932,7 +931,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                 else if (company == 'kualitatem'){
                             if (navigator.connection.type != Connection.NONE){
-                                syncDataCheckIn();
+                                
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", userpin);
                                 query.startsWith("checkInTime", currentDate.toDateString());
@@ -970,7 +969,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     
                                                     console.log(kuali + " saved successfully");
                                                     deleteLocalkm(userpin);
-                                                    //syncDataCheckIn();
+                                                    syncDataCheckIn();
                                                 },
                                                 error:function (pSweet, error) {
                                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1028,10 +1027,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             db.transaction(function(t){
                 t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
             });
-            
-            db.transaction(function(t){
-                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
-            });
+           
             
         }
         
