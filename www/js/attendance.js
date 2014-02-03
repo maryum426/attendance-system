@@ -476,9 +476,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 current_pin = results[0].get("userPin");
                                                 t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
                                             });
-//                                             if(i == result.rows.length){
-//                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-//                                             }
+                                            if(i == result.rows.length){
+                                               setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                            }
 
                                         },
                                         error:function (pSweet, error) {
@@ -534,9 +534,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                     current_pin = results[0].get("userPin");
                                                     t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
                                                 });
-//                                            if(i == result.rows.length){
-//                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-//                                             }
+                                            if(i == result.rows.length){
+                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                             }
                                         },
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -645,9 +645,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                  current_pin = results[0].get("userPin");
                                                  t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted VF!")}, errorCB);
                                              });
-//                                             if(i == result.rows.length){
-//                                                 setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-//                                              }
+                                             if(i == result.rows.length){
+                                                 setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                              }
 
                                          },
                                          error:function (pSweet, error) {
@@ -699,9 +699,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                  t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + current_pin , [], function(){console.log("Record successfully deleted KM!")}, errorCB);
                                              });
 
-//                                             if(i == result.rows.length){
-//                                                 setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)   
-//                                              }
+                                             if(i == result.rows.length){
+                                                 setTimeout(function(){console.log("Done Syncing and Uploading KM.");window.location = "index.html";},1500)   
+                                              }
 
                                          },
                                          error:function (pSweet, error) {
@@ -733,7 +733,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 9.")
+            console.log("Commit: Check sync 10.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -795,7 +795,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
-                                             console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        console.log("saveRecord() -> " + error.code + " " + error.message);
                                     }
 
                                 });
