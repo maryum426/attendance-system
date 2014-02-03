@@ -8,7 +8,8 @@ var offlinePic  = null;
 var offPicData = null;
 var syncImage = null;
 var picurl;
-var coun = 0;
+var v_coun = 1;
+var k_coun = 1;
 var db = window.openDatabase("users", "1.0", "Users", 52428800);
 var table = '<table style="border:1px solid #000;text-align: center;border-collapse:collapse;margin-top:10px;margin-bottom:20px;">';
       
@@ -399,15 +400,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function querySyncIn(t,result){  //Sync Check-In Records
             
-            if(result.rows.length == 0 && coun == 1){ //Go back if no record is found to sync.
+            if(result.rows.length == 0 && v_coun == 0){ //Go back if no record is found to sync.
                 console.log("No Result found!");
                 window.location = "index.html";
             }
-            else if (result.rows.length == 0 && coun == 0){
-                coun = 1;
+            else if (result.rows.length == 0){
+                v_coun = 0;
+                k_coun = 0;
             }
             else{
-                coun = 1;
+                v_coun = 1;
                 console.log("Sync CheckIn");
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
@@ -731,7 +733,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 12.")
+            console.log("Commit: Check sync 13.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
