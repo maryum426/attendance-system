@@ -313,7 +313,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }, function(error) {
                                             console.log("Error");
                                             console.log(error);
-                                            //setTimeout(function(){console.log("Some Exception.");window.location = "index.html";},1500)
+                                            window.location = "index.html";
                                         });
 
         }
