@@ -100,14 +100,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        function upLocalvfIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
                 console.log("My Query Up local vf!");
-                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
+                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploadedIn = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         
         function upLocalkmIn(offpic,ct,dep,stat,up){
             db.transaction(function(t){
                 console.log("My Query Up local km!");
-                t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploaded = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
+                t.executeSql("UPDATE KUALITATEM SET userAvatarIn = '"+ offpic+ "', checkInTime = '" + ct + "', department = '" + dep + "', checkstat = 'checkin', status = '" + stat + "', uploadedIn = 'false1' WHERE userpin ==" + up , [], queryHome, errorCB);
             });
         }
         function deleteLocalvf(up){
@@ -331,8 +331,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("Sync Data Called Checkin!");
                     db.transaction(function(t){
                         console.log("This query called!");
-                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploaded == 'false1' OR uploaded == 'false2')", [], querySyncIn, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploaded == 'false1' OR uploaded == 'false2')", [], querySyncIn, errorCB);
+                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
                     });
                 
             }
@@ -340,8 +340,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 
                 console.log("Sync Data Called Checkout!");
                     db.transaction(function(t){
-                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploaded == 'false2'", [], querySyncOut, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE uploaded == 'false2'", [], querySyncOut, errorCB);
+                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploadedOut == 'false2'", [], querySyncOut, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE uploadedOut == 'false2'", [], querySyncOut, errorCB);
                     });
                 
             }
@@ -479,7 +479,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             db.transaction(function(t){
                                                 console.log("My Query Home Called!");
                                                 current_pin = results[0].get("userPin");
-                                                t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
+                                                t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
                                             });
                                             if(i == result.rows.length){
                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
@@ -535,7 +535,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             db.transaction(function(t){
                                                     console.log("My Query Home Called!");
                                                     current_pin = results[0].get("userPin");
-                                                    t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
+                                                    t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Success!");}), errorCB);
                                                 });
                                             if(i == result.rows.length){
                                                 setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
@@ -734,7 +734,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 17.")
+            console.log("Commit: Check sync 18.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -791,7 +791,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //Update local record.
                                         db.transaction(function(t){
                                             console.log("My Query Up local vf when online!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
                                         syncDataCheckIn();
                                     },
@@ -839,7 +839,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //Upload local record
                                         db.transaction(function(t){
                                             console.log("My Query Up local km when online!");
-                                            t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
+                                            t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
                                         syncDataCheckIn();    
                                     },
@@ -1034,7 +1034,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             window.localStorage.setItem("picurl",offPicData);
             
             db.transaction(function(t){
-                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
+                t.executeSql("UPDATE VIRTUALFORCE SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploadedOut = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
             });
            
             
@@ -1070,7 +1070,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             workHours = hours.toString();
             window.localStorage.setItem("picurl",offPicData);
             db.transaction(function(t){
-                t.executeSql("UPDATE KUALITATEM SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploaded = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
+                t.executeSql("UPDATE KUALITATEM SET userAvatarOut ='"+ offPicData + "', checkOutTime = '" + currentTime + "', workingHours = '" + workHours + "', checkstat = 'checkout', uploadedOut = 'false2' WHERE userpin ==" + userpin , [], queryHome, errorCB);
             });
             
         }
@@ -1370,10 +1370,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             tx.executeSql('CREATE TABLE IF NOT EXISTS USERS (id TEXT PRIMARY_KEY, username TEXT, userpin TEXT, company TEXT, department TEXT)');
             
             tx.executeSql('DROP TABLE IF EXISTS VIRTUALFORCE');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS VIRTUALFORCE (id TEXT PRIMARY_KEY, username TEXT, userpin TEXT, checkInTime TEXT, checkOutTime TEXT, workingHours TEXT, department TEXT, userAvatarIn TEXT, userAvatarOut TEXT, status TEXT, checkstat TEXT, uploaded TEXT)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS VIRTUALFORCE (id TEXT PRIMARY_KEY, username TEXT, userpin TEXT, checkInTime TEXT, checkOutTime TEXT, workingHours TEXT, department TEXT, userAvatarIn TEXT, userAvatarOut TEXT, status TEXT, checkstat TEXT, uploadedIn TEXT, uploadedOut TEXT)');
             
             tx.executeSql('DROP TABLE IF EXISTS KUALITATEM');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS KUALITATEM (id TEXT PRIMARY_KEY, username TEXT, userpin TEXT, checkInTime TEXT, checkOutTime TEXT, workingHours TEXT, department TEXT, userAvatarIn TEXT, userAvatarOut TEXT, status TEXT, checkstat TEXT, uploaded TEXT)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS KUALITATEM (id TEXT PRIMARY_KEY, username TEXT, userpin TEXT, checkInTime TEXT, checkOutTime TEXT, workingHours TEXT, department TEXT, userAvatarIn TEXT, userAvatarOut TEXT, status TEXT, checkstat TEXT, uploadedIn TEXT, uploadedOut TEXT)');
          
             var query = new Parse.Query("Users");
                 query.find({
@@ -1385,17 +1385,17 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 userpin = r_auth[i].get("userPin");
                                 department = r_auth[i].get("department");
                                 
-                                function it2(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
+                                function it2(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout){
                                         console.log("In VFDB!");
                                         db.transaction(function(t){
-                                            t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
+                                            t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
                                         });
                                 };
                                 
-                                function it3(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload){
+                                function it3(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout){
                                         console.log("In KMDB!");
                                         db.transaction(function(t){
-                                            t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploaded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,upload]);
+                                            t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
                                         });
                                 };
                                 function it(value,un,up,com,dep){
@@ -1415,7 +1415,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                    
                                     var virtualF = Parse.Object.extend("VirtualForce");
                                     
-                                    it2(i,username,userpin,currentTime,"","",department,"","","absent","","");
+                                    it2(i,username,userpin,currentTime,"","",department,"","","absent","","","");
                                     
                                     var vf = new virtualF();
                                     vf.set("userPin",userpin);
@@ -1442,7 +1442,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     
                                     var kualitatem = Parse.Object.extend("Kualitatem");
                                     
-                                    it3(i,username,userpin,currentTime,"","",department,"","","absent","","");
+                                    it3(i,username,userpin,currentTime,"","",department,"","","absent","","","");
                                     var km = new kualitatem();
                                     km.set("userPin",userpin);
                                     km.set("userName",username);
