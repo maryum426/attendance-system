@@ -734,7 +734,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 18.")
+            console.log("Commit: Check sync 19.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -1388,14 +1388,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 function it2(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout){
                                         console.log("In VFDB!");
                                         db.transaction(function(t){
-                                            t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
+                                            t.executeSql('INSERT INTO VIRTUALFORCE (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
                                         });
                                 };
                                 
                                 function it3(value,un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout){
                                         console.log("In KMDB!");
                                         db.transaction(function(t){
-                                            t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
+                                            t.executeSql('INSERT INTO KUALITATEM (id, username, userpin, checkInTime, checkOutTime, workingHours, department, userAvatarIn, userAvatarOut, status, checkstat, uploadedIn, uploadedOut) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',[value, un,up,cit,coutt,wh,dept,uai,uao,stat,chk,uploadin,uploadout]);
                                         });
                                 };
                                 function it(value,un,up,com,dep){
