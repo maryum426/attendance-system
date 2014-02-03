@@ -331,8 +331,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("Sync Data Called Checkin!");
                     db.transaction(function(t){
                         console.log("This query called!");
-                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploaded == 'false1' || uploaded == 'false2')", [], querySyncIn, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploaded == 'false1' || uploaded == 'false2')", [], querySyncIn, errorCB);
+                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploaded == 'false1' OR uploaded == 'false2')", [], querySyncIn, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploaded == 'false1' OR uploaded == 'false2')", [], querySyncIn, errorCB);
                     });
                 
             }
@@ -734,7 +734,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 15.")
+            console.log("Commit: Check sync 16.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
