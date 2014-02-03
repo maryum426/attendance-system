@@ -494,7 +494,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
                                     console.log("Some Exception.");
-                                    console.log("Some Exception.");
                                     if(i == result.rows.length){
                                         //setTimeout(function(){window.location = "index.html";},1500)   
                                      }
@@ -794,7 +793,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        syncDataCheckIn();
+                                        
                                     },
                                     error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -840,7 +839,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploaded = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        syncDataCheckIn();    
+                                        //syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -991,7 +990,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                         }
                     }
             }
-
+            syncDataCheckIn();
         }
         
         function calcOffWorkHourvf(tx,results){
