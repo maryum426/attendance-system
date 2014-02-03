@@ -484,7 +484,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
                                             console.log("Some Exception.");
-
+                                            window.location = "index.html";
                                         }
 
                                     });
@@ -492,9 +492,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
                                     console.log("Some Exception.");
-                                    if(i == result.rows.length){
-                                        //setTimeout(function(){window.location = "index.html";},1500)   
-                                     }
+                                    window.location = "index.html";
                                 }
 
                             });
@@ -541,7 +539,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         error:function (pSweet, error) {
                                             console.log("saveRecord() -> " + error.code + " " + error.message);
                                             console.log("Some Exception.");
-                                             
+                                            window.location = "index.html"; 
                                         }
 
                                     });
@@ -549,9 +547,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
                                     console.log("Some Exception.");
-                                    if(i == result.rows.length){
-                                        //setTimeout(function(){window.location = "index.html";},1500)   
-                                     }
+                                    window.location = "index.html";
                                 }
 
                             });
@@ -653,16 +649,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("Some Exception.");
-
+                                             window.location = "index.html";
                                          }
 
                                      });
                                  },
                                  error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             if(i == result.rows.length){
-                                                //setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+                                             window.location = "index.html";
                                  }
                              });   
                     }
@@ -706,16 +700,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          },
                                          error:function (pSweet, error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-
+                                             window.location = "index.html";
                                          }
 
                                      });
                                  },
                                  error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
-                                             if(i == result.rows.length){
-                                                //setTimeout(function(){window.location = "index.html";},1500)   
-                                             }
+                                             window.location = "index.html";
                                  }
                              });
                     }
@@ -733,7 +725,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 10.")
+            console.log("Commit: Check sync 11.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -796,12 +788,14 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
+                                        window.location = "index.html";
                                     }
 
                                 });
                             },
                             error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
+                                    window.location = "index.html";
                             }
 
                         });
@@ -843,6 +837,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
                                         console.log("Some Exception.");
+                                        window.location = "index.html";
 
                                     }
 
@@ -851,6 +846,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
                                     console.log("Some Exception.");
+                                    window.location = "index.html";
                                              
                             }
 
@@ -911,6 +907,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             error:function (pSweet, error) {
                                                 console.log("saveRecord() -> " + error.code + " " + error.message);
                                                 console.log("Some Exception.");
+                                                window.location = "index.html";
                                             }
 
                                         });
@@ -918,6 +915,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("Some Exception.");
+                                             window.location = "index.html";
                                              
                                     }
                             });
@@ -974,6 +972,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                 error:function (pSweet, error) {
                                                         console.log("saveRecord() -> " + error.code + " " + error.message);
                                                         console.log("Some Exception.");
+                                                        window.location = "index.html";
                                                         
                                                 }
 
@@ -982,6 +981,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
                                              console.log("Some Exception.");
+                                             window.location = "index.html";
                                             
                                 }
                             });
