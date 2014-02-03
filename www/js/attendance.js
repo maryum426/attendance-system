@@ -569,15 +569,16 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        
         function querySyncOut(t,result){ //Sync Check-out Records
             
-            if(result.rows.length == 0 && coun == 1){ //Go back if no record is found to sync.
+            if(result.rows.length == 0 && v_coun == 0){ //Go back if no record is found to sync.
                 console.log("No Result found!");
                 window.location = "index.html";
             }
-            else if (result.rows.length == 0 && coun == 0){
-                coun = 1;
+            else if (result.rows.length == 0){
+                v_coun = 0;
+                k_coun = 0;
             }
             else{
-                coun = 1 ;
+                v_coun = 1 ;
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
@@ -733,7 +734,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 13.")
+            console.log("Commit: Check sync 14.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
