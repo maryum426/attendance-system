@@ -340,8 +340,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 
                 console.log("Sync Data Called Checkout!");
                     db.transaction(function(t){
-                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE uploadedOut == 'false2'", [], querySyncOut, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE uploadedOut == 'false2'", [], querySyncOut, errorCB);
+                        t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
                     });
                 
             }
@@ -625,12 +625,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                              query.equalTo("userPin", result.rows.item(i).userpin);
                              query.greaterThanOrEqualTo( "createdAt", checkSDate );
                              query.lessThanOrEqualTo("createdAt", checkEDate);
-                             query.equalTo("check","checkin");
                              query.find({
                                  success:function (results) {
 
                                      console.log("Results Length: " + results.length);
-
+                                     
                                      //Upload Picture to Parse
                                      uploadPicToParse(result.rows.item(j).userAvatarOut,"kmout");
                                      console.log("UserAvatar Uploaded: " + userAvatar);
@@ -678,7 +677,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                              query.equalTo("userPin", result.rows.item(i).userpin);
                              query.greaterThanOrEqualTo( "createdAt", checkSDate );
                              query.lessThanOrEqualTo("createdAt", checkEDate);
-                             query.equalTo("check","checkin");
                              query.find({
                                  success:function (results) {
 
@@ -734,7 +732,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 20.")
+            console.log("Commit: Check sync 21.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
