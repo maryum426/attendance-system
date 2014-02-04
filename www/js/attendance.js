@@ -473,7 +473,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].set("check","checkin");
                                     results[0].set("status",result.rows.item(j).status);
 
-                                    j++;
+                                    
                                     results[0].save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
@@ -494,6 +494,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }
 
                                     });
+                                    j++;
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -530,7 +531,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     results[0].set("check","checkin");
                                     results[0].set("status",result.rows.item(k).status);
 
-                                    k++;
+                                    
                                     results[0].save(null, {
                                         success:function (kuali) {
                                             console.log(kuali + " saved successfully");
@@ -550,6 +551,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         }
 
                                     });
+                                    k++;
                                 },
                                 error:function (pSweet, error) {
                                     console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -641,8 +643,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                      results[0].set("check","checkout");
                                      results[0].set("workingHours",result.rows.item(j).workingHours);
 
-
-                                     j++;
+                                     
                                      results[0].save(null, {
                                          success:function (virtualf) {
                                              console.log(virtualf + " saved successfully");
@@ -664,6 +665,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          }
 
                                      });
+                                     j++;
                                  },
                                  error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -693,7 +695,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                      results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
                                      results[0].set("check","checkout");
                                      results[0].set("workingHours",result.rows.item(k).workingHours);
-                                     k++;
+                                     
                                      results[0].save(null, {
                                          success:function (virtualf) {
                                              console.log(virtualf + " saved successfully");
@@ -715,6 +717,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                          }
 
                                      });
+                                     k++;
                                  },
                                  error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -736,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 24.")
+            console.log("Commit: Check sync 25.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
