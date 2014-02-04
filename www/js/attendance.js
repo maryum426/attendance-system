@@ -732,7 +732,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 21.")
+            console.log("Commit: Check sync 22.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -876,51 +876,58 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             
                             var query = new Parse.Query("VirtualForce");
                             query.equalTo("userPin", userpin);
+                            query.equalTo("check","checkin");
                             query.startsWith("checkInTime", currentDate.toDateString());
                             query.find({
                                 success:function (results) {
                                     console.log("Results Length: " + results.length);
-                                      time2 = results[0].get("checkInTime");
-                                      time2 = time2.substr(time2.length -5);
-                                      time = time2.split(":");
-                                      checkinHr = time[0];
-                                      checkinMn = time[1];
-                                      checkinTime.setHours(checkinHr);
-                                      checkinTime.setMinutes(checkinMn);
-                                      hours = currentDate - checkinTime;
-
-                                       var cd = 24 * 60 * 60 * 1000,
-                                            ch = 60 * 60 * 1000,
-                                            d = Math.floor(hours / cd),
-                                            h = '0' + Math.floor( (hours - d * cd) / ch),
-                                            m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
-                                        hours = [h.substr(-2), m.substr(-2)].join(':');
-
-                                      workHours = hours.toString();
-                                      if (workHours == '23:60'){
-                                          workHours = '00:00';
+                                    
+                                      if (results.length == 0){
+                                            syncDataCheckIn();
                                       }
-                                        
-                                        console.log("Uploaded Avatar: " + url);
-                                        url = window.localStorage.getItem("picurl");
-                                        results[0].set("userAvatarOut",url);
-                                        results[0].set("checkOutTime",currentTime);
-                                        results[0].set("check","checkout");
-                                        results[0].set("workingHours",workHours);
-                                        results[0].save(null, {
-                                            success:function (virtualf) {
-                                                
-                                                console.log(virtualf + " saved successfully");
-                                                deleteLocalvf(userpin);
-                                                syncDataCheckIn();
-                                            },
-                                            error:function (pSweet, error) {
-                                                console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                console.log("Some Exception.");
-                                                window.location = "index.html";
+                                      else{
+                                            time2 = results[0].get("checkInTime");
+                                            time2 = time2.substr(time2.length -5);
+                                            time = time2.split(":");
+                                            checkinHr = time[0];
+                                            checkinMn = time[1];
+                                            checkinTime.setHours(checkinHr);
+                                            checkinTime.setMinutes(checkinMn);
+                                            hours = currentDate - checkinTime;
+
+                                             var cd = 24 * 60 * 60 * 1000,
+                                                  ch = 60 * 60 * 1000,
+                                                  d = Math.floor(hours / cd),
+                                                  h = '0' + Math.floor( (hours - d * cd) / ch),
+                                                  m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
+                                              hours = [h.substr(-2), m.substr(-2)].join(':');
+
+                                            workHours = hours.toString();
+                                            if (workHours == '23:60'){
+                                                workHours = '00:00';
                                             }
 
-                                        });
+                                              console.log("Uploaded Avatar: " + url);
+                                              url = window.localStorage.getItem("picurl");
+                                              results[0].set("userAvatarOut",url);
+                                              results[0].set("checkOutTime",currentTime);
+                                              results[0].set("check","checkout");
+                                              results[0].set("workingHours",workHours);
+                                              results[0].save(null, {
+                                                  success:function (virtualf) {
+
+                                                      console.log(virtualf + " saved successfully");
+                                                      deleteLocalvf(userpin);
+                                                      syncDataCheckIn();
+                                                  },
+                                                  error:function (pSweet, error) {
+                                                      console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                      console.log("Some Exception.");
+                                                      window.location = "index.html";
+                                                  }
+
+                                              });
+                                      }
                                     },
                                     error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -942,54 +949,61 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                 
                                 var query = new Parse.Query("Kualitatem");
                                 query.equalTo("userPin", userpin);
+                                query.equalTo("check","checkin");
                                 query.startsWith("checkInTime", currentDate.toDateString());
                                 query.find({
                                     success:function (results) {
                                         console.log("Results Length: " + results.length);
-                                          time2 = results[0].get("checkInTime");
-                                          time2 = time2.substr(time2.length -5);
-                                          time = time2.split(":");
-                                          checkinHr = time[0];
-                                          checkinMn = time[1];
-                                          checkinTime.setHours(checkinHr);
-                                          checkinTime.setMinutes(checkinMn);
-                                          hours = currentDate - checkinTime;
+                                        
+                                        if (results.length == 0){
+                                                syncDataCheckIn();
+                                        }
+                                        else{
+                                                time2 = results[0].get("checkInTime");
+                                                time2 = time2.substr(time2.length -5);
+                                                time = time2.split(":");
+                                                checkinHr = time[0];
+                                                checkinMn = time[1];
+                                                checkinTime.setHours(checkinHr);
+                                                checkinTime.setMinutes(checkinMn);
+                                                hours = currentDate - checkinTime;
 
-                                           var cd = 24 * 60 * 60 * 1000,
-                                                ch = 60 * 60 * 1000,
-                                                d = Math.floor(hours / cd),
-                                                h = '0' + Math.floor( (hours - d * cd) / ch),
-                                                m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
-                                            hours = [h.substr(-2), m.substr(-2)].join(':');
+                                                 var cd = 24 * 60 * 60 * 1000,
+                                                      ch = 60 * 60 * 1000,
+                                                      d = Math.floor(hours / cd),
+                                                      h = '0' + Math.floor( (hours - d * cd) / ch),
+                                                      m = '0' + Math.round( (hours - d * cd - h * ch) / 60000);
+                                                  hours = [h.substr(-2), m.substr(-2)].join(':');
 
-                                          workHours = hours.toString();
-                                          if (workHours == '23:60'){
-                                            workHours = '00:00';
-                                          }
-                                          console.log("Working Hours " + workHours);
-
-                                            
-                                            console.log("Uploaded Avatar: " + url);
-                                            url = window.localStorage.getItem("picurl");
-                                            results[0].set("userAvatarOut",url);
-                                            results[0].set("checkOutTime",currentTime);
-                                            results[0].set("check","checkout");
-                                            results[0].set("workingHours",workHours);
-                                            results[0].save(null, {
-                                                success:function (kuali) {
-                                                    
-                                                    console.log(kuali + " saved successfully");
-                                                    deleteLocalkm(userpin);
-                                                    syncDataCheckIn();
-                                                },
-                                                error:function (pSweet, error) {
-                                                        console.log("saveRecord() -> " + error.code + " " + error.message);
-                                                        console.log("Some Exception.");
-                                                        window.location = "index.html";
-                                                        
+                                                workHours = hours.toString();
+                                                if (workHours == '23:60'){
+                                                  workHours = '00:00';
                                                 }
+                                                console.log("Working Hours " + workHours);
 
-                                            });
+
+                                                  console.log("Uploaded Avatar: " + url);
+                                                  url = window.localStorage.getItem("picurl");
+                                                  results[0].set("userAvatarOut",url);
+                                                  results[0].set("checkOutTime",currentTime);
+                                                  results[0].set("check","checkout");
+                                                  results[0].set("workingHours",workHours);
+                                                  results[0].save(null, {
+                                                      success:function (kuali) {
+
+                                                          console.log(kuali + " saved successfully");
+                                                          deleteLocalkm(userpin);
+                                                          syncDataCheckIn();
+                                                      },
+                                                      error:function (pSweet, error) {
+                                                              console.log("saveRecord() -> " + error.code + " " + error.message);
+                                                              console.log("Some Exception.");
+                                                              window.location = "index.html";
+
+                                                      }
+
+                                                  });
+                                          }
                                     },
                                 error:function (error) {
                                              console.log("saveRecord() -> " + error.code + " " + error.message);
