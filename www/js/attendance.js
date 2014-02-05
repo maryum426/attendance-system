@@ -113,13 +113,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         function deleteLocalvf(up){
             db.transaction(function(t){
                 console.log("My Query Del local vf!");
-                t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], function(){ syncDataCheckIn();}, errorCB);
+                t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + up , [], function(){ console.log("Record Deleteed!")}, errorCB);
             });
         }
         function deleteLocalkm(up){
             db.transaction(function(t){
                 console.log("My Query Del local km!");
-                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], function(){ syncDataCheckIn();}, errorCB);
+                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + up , [], function(){ console.log("Record Deleteed!")}, errorCB);
             });
         }
         
@@ -739,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 29.")
+            console.log("Commit: Check sync 30.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -925,7 +925,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                   success:function (virtualf) {
 
                                                       console.log(virtualf + " saved successfully");
-                                                      deleteLocalvf(userpin);
+                                                      db.transaction(function(t){
+                                                            console.log("My Query Del local vf!");
+                                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!")}, errorCB);
+                                                      });
+                                                      syncDataCheckIn();
                                                   },
                                                   error:function (pSweet, error) {
                                                       console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1000,7 +1004,11 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                       success:function (kuali) {
 
                                                           console.log(kuali + " saved successfully");
-                                                          deleteLocalkm(userpin);
+                                                          db.transaction(function(t){
+                                                                console.log("My Query Del local km!");
+                                                                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!")}, errorCB);
+                                                          });
+                                                          syncDataCheckIn();
                                                       },
                                                       error:function (pSweet, error) {
                                                               console.log("saveRecord() -> " + error.code + " " + error.message);
