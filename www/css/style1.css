@@ -139,7 +139,7 @@ src: url(chalkboard-bold.ttf);
 
 .main-wrapper {
 	width: 480px;
-	min-height: 694px;
+	min-height: 777px;
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
@@ -405,8 +405,7 @@ header{
     position: absolute;
     width: 350px;
     height: 350px;
-    margin: 20px auto 0 auto;
-    top: 315px;
+    top: 380px;
     left: 70px;
     background: url(../images/clock.png);
     list-style: none;
