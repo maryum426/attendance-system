@@ -138,8 +138,8 @@ src: url(chalkboard-bold.ttf);
 }
 
 .main-wrapper {
-	width: 598px;
-	min-height: 800px;
+	width: 480px;
+	min-height: 694px;
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
@@ -311,8 +311,8 @@ header{
 
 #launch{
     position: absolute;
-    top: 90px;
-    left: 90px;
+    top: 58px;
+    left: 65px;
 }
 
 .pic_upload{
@@ -400,3 +400,37 @@ header{
     position: absolute;
     color: rgb(240,35,30);
 }
+
+#clock {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    margin: 20px auto 0 auto;
+    top: 315px;
+    left: 70px;
+    background: url(../images/clock.png);
+    list-style: none;
+    }
+
+#sec, #min, #hour {
+    position: absolute;
+    width: 20px;
+    height: 400px;
+    top: -25px;
+    left: 163px;
+    }
+
+#sec {
+    background: url(../images/sechand.png);
+    z-index: 3;
+    }
+
+#min {
+    background: url(../images/minhand.png);
+    z-index: 2;
+    }
+
+#hour {
+    background: url(../images/hourhand.png);
+    z-index: 1;
+    }
