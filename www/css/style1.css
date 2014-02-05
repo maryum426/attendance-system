@@ -150,13 +150,13 @@ src: url(chalkboard-bold.ttf);
 	top: 149px;
 }
 .ios-btn {
-	-webkit-appearance: none;
+    
         border-radius: 25px;
         -webkit-border-radius: 25px;
-        -moz-border-radius: 25px;
-        -webkit-box-sizing: border-box; /* Android â‰¤ 2.3, iOS â‰¤ 4 */
-        -moz-box-sizing: border-box; /* Firefox 1+ */
-        box-sizing: border-box;
+        
+/*        -webkit-box-sizing: border-box;  Android â‰¤ 2.3, iOS â‰¤ 4 
+        -moz-box-sizing: border-box;  Firefox 1+ 
+        box-sizing: border-box;*/
 }
 header{
 /*    left: 50px;*/
