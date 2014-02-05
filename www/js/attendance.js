@@ -332,7 +332,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     db.transaction(function(t){
                         console.log("This query called!");
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
-                        //t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
                     });
                 
             }
@@ -341,7 +341,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("Sync Data Called Checkout!");
                     db.transaction(function(t){
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
-                        //t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
+                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
                     });
                 
             }
@@ -480,7 +480,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             db.transaction(function(t){
                                                 console.log("My Query Home Called!");
                                                 current_pin = results[0].get("userPin");
-                                                t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){alert("Record Saved!");}), errorCB);
+                                                t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Record Saved!");}), errorCB);
                                             });
                                             if(i == result.rows.length){
                                                setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
@@ -538,7 +538,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             db.transaction(function(t){
                                                     console.log("My Query Home Called!");
                                                     current_pin = results[0].get("userPin");
-                                                    t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){alert("Record Saved!");}), errorCB);
+                                                    t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Record Saved!");}), errorCB);
                                                 });
                                             if(i == result.rows.length){
                                                 setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
@@ -651,7 +651,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                              db.transaction(function(t){
                                                  console.log("My Query Del local vf!");
                                                  current_pin = results[0].get("userPin");
-                                                 t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + current_pin , [], function(){alert("Record Deleted!");}, errorCB);
+                                                 t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + current_pin , [], function(){console.log("Record Deleted!");}, errorCB);
                                              });
                                              if(i == result.rows.length){
                                                  setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
@@ -703,7 +703,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                              db.transaction(function(t){
                                                  console.log("My Query Del local km!");
                                                  current_pin = results[0].get("userPin");
-                                                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + current_pin , [], function(){alert("Record Deleted!");}, errorCB);
+                                                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + current_pin , [], function(){console.log("Record Deleted!");}, errorCB);
                                              });
 
                                              if(i == result.rows.length){
@@ -739,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 28.")
+            console.log("Commit: Check sync 29.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -926,7 +926,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                                       console.log(virtualf + " saved successfully");
                                                       deleteLocalvf(userpin);
-                                                      syncDataCheckIn();
                                                   },
                                                   error:function (pSweet, error) {
                                                       console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1002,7 +1001,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
 
                                                           console.log(kuali + " saved successfully");
                                                           deleteLocalkm(userpin);
-                                                          syncDataCheckIn();
                                                       },
                                                       error:function (pSweet, error) {
                                                               console.log("saveRecord() -> " + error.code + " " + error.message);
