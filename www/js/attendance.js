@@ -414,11 +414,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
-                var checkStatus = new Date(); // Status : late,ontime
-                checkStatus.setHours(9);
-                checkStatus.setMinutes(30);
-                checkStatus.setSeconds(59);
-
                 var checkSDate = new Date(); //Start Date
                 checkSDate.setHours(00);
                 checkSDate.setMinutes(00);
@@ -428,18 +423,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 checkEDate.setHours(23);
                 checkEDate.setMinutes(59);
                 checkEDate.setSeconds(59);
-
-                var status;
-
-                console.log("Check Status: " + checkStatus.toString());
-                console.log("Current Date: " + currentDate.toString());
-
-                if ((currentDate < checkStatus || currentDate == checkStatus)){
-                    status = 'ontime';
-                }
-                else{
-                    status = 'late';
-                }
 
                var i=0;
                var j=0;

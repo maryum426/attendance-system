@@ -138,8 +138,8 @@ src: url(chalkboard-bold.ttf);
 }
 
 .main-wrapper {
-	width: 480px;
-	min-height: 777px;
+	width: 600px;
+	min-height: 1024px;
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
@@ -150,13 +150,12 @@ src: url(chalkboard-bold.ttf);
 	top: 149px;
 }
 .ios-btn {
-    
+	-webkit-appearance: none;
         border-radius: 25px;
         -webkit-border-radius: 25px;
-        
-/*        -webkit-box-sizing: border-box;  Android â‰¤ 2.3, iOS â‰¤ 4 
-        -moz-box-sizing: border-box;  Firefox 1+ 
-        box-sizing: border-box;*/
+        -webkit-box-sizing: border-box; /* Android â‰¤ 2.3, iOS â‰¤ 4 */
+        -moz-box-sizing: border-box; /* Firefox 1+ */
+        box-sizing: border-box;
 }
 header{
 /*    left: 50px;*/
@@ -312,8 +311,8 @@ header{
 
 #launch{
     position: absolute;
-    top: 58px;
-    left: 65px;
+    top: 90px;
+    left: 90px;
 }
 
 .pic_upload{
@@ -406,8 +405,9 @@ header{
     position: absolute;
     width: 350px;
     height: 350px;
-    top: 380px;
-    left: 70px;
+    margin: 20px auto 0 auto;
+    top: 400px;
+    left: 150px;
     background: url(../images/clock.png);
     list-style: none;
     }
