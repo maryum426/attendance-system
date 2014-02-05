@@ -464,7 +464,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     console.log("Record Found for: " + results[0].get("userPin"));
                                     console.log("Value of J: " + j);
                                     //Upload Picture to Parse
-                                    //uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
+                                    uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
                                     console.log("UserAvatar Uploaded: " + userAvatar);
 
                                     results[0].set("userAvatarIn",userAvatar);
@@ -522,7 +522,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     console.log("Record Found for: " + results[0].get("userPin"));
                                     console.log("Value of K: " + k);
                                     //Upload Picture to Parse
-                                    //uploadPicToParse(result.rows.item(k).userAvatarIn,"kmin");
+                                    uploadPicToParse(result.rows.item(k).userAvatarIn,"kmin");
                                     console.log("UserAvatar Uploaded: " + userAvatar);
 
                                     results[0].set("userAvatarIn",userAvatar);
@@ -636,7 +636,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                      console.log("Record Found for: " + results[0].get("userPin"));
                                      console.log("Value of J: " + j);
                                      //Upload Picture to Parse
-                                     //uploadPicToParse(result.rows.item(j).userAvatarOut,"kmout");
+                                     uploadPicToParse(result.rows.item(j).userAvatarOut,"kmout");
                                      console.log("UserAvatar Uploaded: " + userAvatar);
                                      results[0].set("userAvatarOut",userAvatar);
                                      results[0].set("checkOutTime",result.rows.item(j).checkOutTime);
@@ -689,7 +689,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                      console.log("Record Found for: " + results[0].get("userPin"));
                                      console.log("Value of K: " + k);
                                      //Upload Picture to Parse
-                                     //uploadPicToParse(result.rows.item(k).userAvatarOut,"kmout");
+                                     uploadPicToParse(result.rows.item(k).userAvatarOut,"kmout");
                                      console.log("UserAvatar Uploaded: " + userAvatar);
                                      results[0].set("userAvatarOut",userAvatar);
                                      results[0].set("checkOutTime",result.rows.item(k).checkOutTime);
@@ -739,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 30.")
+            console.log("Commit: Check sync 31.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
