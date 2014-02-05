@@ -739,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 27.")
+            console.log("Commit: Check sync 28.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -890,6 +890,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     console.log("Results Length: " + results.length);
                                     
                                       if (results.length == 0){
+                                          console.log("Results: 0 for VF");
                                             syncDataCheckIn();
                                       }
                                       else{
@@ -963,6 +964,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         console.log("Results Length: " + results.length);
                                         
                                         if (results.length == 0){
+                                            console.log("Results: 0 for KM");
                                                 syncDataCheckIn();
                                         }
                                         else{
