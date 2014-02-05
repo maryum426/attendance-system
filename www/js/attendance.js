@@ -332,7 +332,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     db.transaction(function(t){
                         console.log("This query called!");
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
+                        //t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedIn == 'false1')", [], querySyncIn, errorCB);
                     });
                 
             }
@@ -341,7 +341,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 console.log("Sync Data Called Checkout!");
                     db.transaction(function(t){
                         t.executeSql("SELECT * FROM VIRTUALFORCE WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
-                        t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
+                        //t.executeSql("SELECT * FROM KUALITATEM WHERE (uploadedOut == 'false2' AND uploadedIn == 'true1')", [], querySyncOut, errorCB);
                     });
                 
             }
@@ -739,7 +739,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 26.")
+            console.log("Commit: Check sync 27.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
