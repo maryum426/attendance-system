@@ -727,7 +727,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         //Upload Current Record to Parse
         var uploadParsePic = function(url){
-            console.log("Commit: Check sync 32.")
+            console.log("Commit: Working Online1.")
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
@@ -786,7 +786,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local vf when online!");
                                             t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!")}, errorCB);
                                         });
-                                        syncDataCheckIn();
+                                        //syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -834,7 +834,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                             console.log("My Query Up local km when online!");
                                             t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!")}, errorCB);
                                         });
-                                        syncDataCheckIn();    
+                                        //syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -879,7 +879,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     
                                       if (results.length == 0){
                                           console.log("Results: 0 for VF");
-                                            syncDataCheckIn();
+                                          alert("Oops .... Your Check-In wasn't saved!");
+                                            //syncDataCheckIn();
                                       }
                                       else{
                                             time2 = results[0].get("checkInTime");
@@ -917,7 +918,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                             console.log("My Query Del local vf!");
                                                             t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!")}, errorCB);
                                                       });
-                                                      syncDataCheckIn();
+                                                      //syncDataCheckIn();
                                                   },
                                                   error:function (pSweet, error) {
                                                       console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -956,7 +957,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         
                                         if (results.length == 0){
                                             console.log("Results: 0 for KM");
-                                                syncDataCheckIn();
+                                            alert("Oops .... Your Check-In wasn't saved!");
+                                            //syncDataCheckIn();
                                         }
                                         else{
                                                 time2 = results[0].get("checkInTime");
@@ -996,7 +998,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                                 console.log("My Query Del local km!");
                                                                 t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!")}, errorCB);
                                                           });
-                                                          syncDataCheckIn();
+                                                          //syncDataCheckIn();
                                                       },
                                                       error:function (pSweet, error) {
                                                               console.log("saveRecord() -> " + error.code + " " + error.message);
