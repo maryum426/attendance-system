@@ -4,7 +4,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-        <link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
         <meta http-equiv="cache-control" content="cache" />
         <script src="phonegap.js"></script>
        
@@ -39,10 +39,8 @@
                 function onDeviceReady() {
                     // Register the event listener
                     document.addEventListener("backbutton", onBackKeyDown, false);
-                    setMessages(checkin)
-                //$(document).ready(function(){
+                    setMessages(checkin);
                     takePicture();
-                //});
                 }
                 Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var checkin,check;
@@ -64,12 +62,12 @@
 
                 if (current < checkStatus){
                     $('#background').attr('src','images/background-3.jpg');
-                    $('.pic_upload').css({'top':'145px'});
+                    $('.pic_upload').css({'top':'110px'});
                 }
                 else if (current == checkStatus || current > checkStatus){
                     $('#background').attr('src','images/background-3.1.jpg');
                     $('.pic-text').css({'color':'#fff'});
-                    $('.pic_upload').css({'top':'145px'});
+                    $('.pic_upload').css({'top':'110px'});
                 }
                
                 function onBackKeyDown() {
