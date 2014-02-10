@@ -170,7 +170,7 @@ header{
 /*    left: 50px;*/
     position: absolute;
     top: 20px;
-    width: 466px;
+    width: 100%;
 }
 .user-name{
     height: 85px;
@@ -179,10 +179,10 @@ header{
     text-align: center;
     color: rgb(32,114,255);
 /*    top: 10px;*/
-    width: 445px;  
+    width: 350px;  
     margin: 0 auto;
     font-family: HelveticaNeue-Light;
-    font-size: 37px;
+    font-size: 32px;
 }
 .main-btn-in {
 	font-family: HelveticaNeue-Light;
@@ -240,7 +240,7 @@ header{
 
 .welcome-text{
     font-family: HelveticaNeue-Light;
-    font-size: 37px;
+    font-size: 32px;
 /*    position: absolute;
     left: 78px;*/
     color: rgb(240,35,30);
@@ -342,8 +342,8 @@ header{
     width: auto;
     height: 215px;
     position: absolute;
-    top: 3%;
-    left: 25%;
+    top: 2.5%;
+    left: 22%;
 }
 
 #home-div{
