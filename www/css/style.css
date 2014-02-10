@@ -174,7 +174,7 @@ header{
 }
 .user-name{
     height: 85px;
-    left: 78px;
+    left: 4%;
     position: absolute;
     text-align: center;
     color: rgb(32,114,255);
@@ -223,8 +223,8 @@ header{
 }
 .code-btn-cancel {
 	position: absolute;
-	bottom: 95px;
-	left: 10px;
+	bottom: 2%;
+	left: 2%;
 	background-color: #92D933;
 	background-image: url("../images/back-icon.png");
 	border: medium solid;
@@ -312,14 +312,14 @@ header{
 #login{
     display:none;
     position: absolute;
-    top: 65px;
-    left: 35px;
+    top: 10%;
+    left: 9%;
 }
 
 #launch {
     position: absolute;
-    top: 45px;
-    left: 62px;
+    top: 15%;
+    left: 28%;
 }
 
 .pic_upload{
@@ -331,7 +331,7 @@ header{
     inset #fff 0 0 0 5px;
     position: absolute;
     top: 115px;
-    left: 125px;
+    left: 26%;
 /*     padding: 100px;*/
      overflow: hidden;
 }
@@ -339,10 +339,10 @@ header{
 #my_image{
 /*    display: block;*/
     width: auto;
-    height: 234px;
+    height: 217px;
     position: absolute;
-    top: 5px;
-    left: 50px;
+    top: 2%;
+    left: 4%;
 }
 
 #home-div{
@@ -355,11 +355,11 @@ header{
 
 .welcome-message{
     font-family: HelveticaNeue-Light;
-    font-size: 15px;
+    font-size: 14px;
     position: absolute;
     color: rgb(240,35,30);
-    top: 684px;
-    left: 205px;
+    top: 515px;
+    left: 160px;
 }
 
 .send-email{
@@ -372,31 +372,36 @@ header{
 .time{
     font-family: HelveticaNeue-Light;
     font-size: 60px;
-    position: absolute;
+/*    position: absolute;*/
     color: rgb(240,35,30);
-    top: 480px;
-    left: 152px;
+/*    top: 385px;
+    left: 105px;*/
+    width: 225px;
+    margin: 0 auto;
 }
 
 .check-text{
     font-family: HelveticaNeue-Light;
     font-size: 45px;
-    position: absolute;
-    top: 430px;
-    left: 100px;
+/*    position: absolute;
+    top: 340px;
+    left: 65px;*/
+    width: 400px;
+    margin: 0% auto;
+    padding-top: 72%;
 }
 
 .btn-holder2{
     display: none;
     position: absolute;
-    top: 295px;
-    left: 132px;
+    top: 38%;
+    left: 28%;
 }
 
 #snap-text{
     position: absolute;
-    top: 270px;
-    left: 15px;
+    top: 35%;
+    left: 3%;
     width: 100%;
 }
 
@@ -413,8 +418,8 @@ header{
     width: 350px;
     height: 350px;
     margin: 20px auto 0 auto;
-    top: 300px;
-    left: 65px;
+    top: 40%;
+    left: 15%;
     background: url(../images/clock.png);
     list-style: none;
     }
