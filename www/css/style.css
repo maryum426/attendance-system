@@ -147,8 +147,8 @@ body {
 }
 
 .main-wrapper {
-	width: 600px;
-	min-height: 1024px;
+	width: 480px;
+	min-height: 777px;
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
