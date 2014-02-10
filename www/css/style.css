@@ -314,13 +314,13 @@ header{
     display:none;
     position: absolute;
     top: 10%;
-    left: 9%;
+    left: 8%;
 }
 
 #launch {
     position: absolute;
     top: 15%;
-    left: 28%;
+    left: 27%;
 }
 
 .pic_upload{
@@ -342,8 +342,8 @@ header{
     width: auto;
     height: 215px;
     position: absolute;
-    top: 2%;
-    left: 20%;
+    top: 3%;
+    left: 25%;
 }
 
 #home-div{
@@ -420,7 +420,7 @@ header{
     height: 350px;
     margin: 20px auto 0 auto;
     top: 40%;
-    left: 15%;
+    left: 13%;
     background: url(../images/clock.png);
     list-style: none;
     }
