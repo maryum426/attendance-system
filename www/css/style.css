@@ -147,8 +147,8 @@ body {
 }
 
 .main-wrapper {
-	width: 480px;
-	min-height: 777px;
+	width: 600px;
+	min-height: 1024px;
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
@@ -174,12 +174,13 @@ header{
 }
 .user-name{
     height: 85px;
-    left: 4%;
-    position: absolute;
+/*    left: 4%;
+    position: absolute;*/
     text-align: center;
     color: rgb(32,114,255);
-    top: 10px;
+/*    top: 10px;*/
     width: 445px;  
+    margin: 0 auto;
     font-family: HelveticaNeue-Light;
     font-size: 37px;
 }
@@ -339,10 +340,10 @@ header{
 #my_image{
 /*    display: block;*/
     width: auto;
-    height: 217px;
+    height: 215px;
     position: absolute;
     top: 2%;
-    left: 4%;
+    left: 20%;
 }
 
 #home-div{
