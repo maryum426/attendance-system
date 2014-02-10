@@ -35,16 +35,11 @@
             <script>
                 
                 document.addEventListener("deviceready", onDeviceReady, false);
-
-                function onDeviceReady() {
-                    // Register the event listener
-                    document.addEventListener("backbutton", onBackKeyDown, false);
-                    setMessages(checkin);
-                    takePicture();
-                }
-                Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
                 var checkin,check;
                 var loc = window.location.search.substring(1),i, val, params = loc.split("&");
+                function onDeviceReady() {
+                    
+               
                     for (i=0;i<params.length;i++) {
                         val = params[i].split("=");
                         if (val[0] == "checkin") {
@@ -54,6 +49,13 @@
                             check = unescape(val[1]);
                         }
                     }
+                    // Register the event listener
+                    document.addEventListener("backbutton", onBackKeyDown, false);
+                    setMessages(checkin);
+                    takePicture();
+                }
+                Parse.initialize("oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs","7AtLcq4907OUmsLMpZcv0y4fgrZhUKSvv8iz9ncz");
+                
                 var current = new Date();
                 var checkStatus = new Date();
                 checkStatus.setHours(17);
