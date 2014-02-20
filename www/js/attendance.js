@@ -15,14 +15,35 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
       
        
         
+        
         // This function will only be called once, at the start of the day to insert the records and email 
         //previous day's report. 
         function launch(){
-            
+            var endTime;
             $('#launch').attr('disabled','disabled');
             $('#launch').css({'opacity':'0.4'});
             
-            sendEmail();
+            var query = new Parse.Query("TimeConfig");
+            query.find({
+                success:function (results) {
+                    console.log("Result in VF found");
+
+                    console.log("EndTime: " + results[0].get("endTime"));
+                    
+                    endTime = results[0].get("endTime");
+                    window.localStorage.setItem("endTime",endTime);
+                    sendEmail();
+                  
+                },
+                error:function (pSweet, error) {
+                    console.log("saveRecord() -> " + error.code + " " + error.message);
+                    console.log("Some Exception.");
+                    window.location = "index.html";
+                }
+
+            });
+
+            
            
         }
         
@@ -56,7 +77,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
        
         // Query the success callback
         //Result Found! Now check "CheckIn/Out status"
-        function querySuccess(tx, results) {
+       function querySuccess(tx, results) {
             
             console.log("Returned rows = " + results.rows.length);
             
@@ -349,23 +370,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         function uploadPicToParse(pic3,sync_flag){
             
-            //console.log("Here in Pic Parse");
-            var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
-
-            var checkSDate = new Date(); //Start Date
-            checkSDate.setHours(00);
-            checkSDate.setMinutes(00);
-            checkSDate.setSeconds(00);
-
-            var checkEDate = new Date(); //End Date
-            checkEDate.setHours(23);
-            checkEDate.setMinutes(59);
-            checkEDate.setSeconds(59); 
-            
-            
             pic3 = pic3.substring(pic3.indexOf(',')+1);
             var jsonData = { "base64":pic3,"_ContentType":"image/jpeg" };
             var blob = JSON.stringify(jsonData);
@@ -434,9 +438,39 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                     if ((result.rows.item(i).userpin).substr(0,1) == '1'){ //Virtual Force
                            console.log("Called for VF!");
                            console.log("UserPin to find: " + result.rows.item(i).userpin);
+                           
+                           
+                           //Upload Picture to Parse
+                           uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
+                           
+                            //Upload Record to Parse
+                           $.ajax({
+                            type: 'POST',
+                            headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
+                            url: "https://api.parse.com/1/VirtualForce",
+                            data: '{"userAvatarIn":'+ userAvatar+',"checkInTime":'+ result.rows.item(j).checkInTime+',"department":'+ result.rows.item(j).department +',"status":'+ result.rows.item(j).status +',"check":"checkin"}'+'where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
+                            contentType: "application/json",
+                            success: function(data) {
+                                db.transaction(function(t){
+                                    console.log("My Query Home Called!");
+                                    j++;
+                                    current_pin = result.rows.item(i).userpin;
+                                    t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Record Saved!");}), errorCB);
+                                });
+                                if(i == result.rows.length){
+                                   setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                }
 
-                           //Upload Record to Parse
-                            var query = new Parse.Query("VirtualForce");
+                            },
+                            error: function(data){
+                                var obj = jQuery.parseJSON(data);
+                                console.log(obj.error);
+                                console.log("Some Exception.");
+                                window.location = "index.html";
+                            }
+                          });
+                          
+                            /*var query = new Parse.Query("VirtualForce");
                             query.equalTo("userPin", result.rows.item(i).userpin);
                             query.greaterThanOrEqualTo( "createdAt", checkSDate );
                             query.lessThanOrEqualTo("createdAt", checkEDate);
@@ -488,7 +522,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                     window.location = "index.html";
                                 }
 
-                            });
+                            });*/
 
                     }
                     else if ((result.rows.item(i).userpin).substr(0,1) == '2'){ //Kualitatem
@@ -574,11 +608,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 var currentDate = new Date();
                 var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
 
-                var checkStatus = new Date(); // Status : late,ontime
-                checkStatus.setHours(9);
-                checkStatus.setMinutes(30);
-                checkStatus.setSeconds(59);
-
                 var checkSDate = new Date(); //Start Date
                 checkSDate.setHours(00);
                 checkSDate.setMinutes(00);
@@ -588,17 +617,6 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                 checkEDate.setHours(23);
                 checkEDate.setMinutes(59);
                 checkEDate.setSeconds(59);
-
-                var status;
-                console.log("Check Status: " + checkStatus.toString());
-                console.log("Current Date: " + currentDate.toString());
-
-                if ((currentDate < checkStatus || currentDate == checkStatus)){
-                    status = 'ontime';
-                }
-                else{
-                    status = 'late';
-                }
 
                 console.log("Query Results: " + result.rows.length);
 
@@ -731,10 +749,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
+            var eTime = window.localStorage.getItem("endTime");
+            eTime = eTime.split(':');
+            
             var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
+            checkStatus.setHours(eTime[0]);
+            checkStatus.setMinutes(eTime[1]);
+            checkStatus.setSeconds(00);
             
             var checkSDate = new Date(); //Start Date
             checkSDate.setHours(00);
@@ -784,10 +805,10 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //Update local record.
                                         db.transaction(function(t){
                                             console.log("My Query Up local vf when online!");
-                                            t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!");window.location = "index.html";}, errorCB);
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for VF!");}, errorCB);
                                         });
                                         
-                                        //syncDataCheckIn();
+                                        syncDataCheckIn();
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -833,9 +854,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                         //Upload local record
                                         db.transaction(function(t){
                                             console.log("My Query Up local km when online!");
-                                            t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!");window.location = "index.html";}, errorCB);
+                                            t.executeSql("UPDATE KUALITATEM SET uploadedIn = 'true1' WHERE userpin ==" + userpin , [], function(){console.log("Record Successfully Updated for KM!");}, errorCB);
                                         });
-                                        //syncDataCheckIn();    
+                                        syncDataCheckIn();    
                                     },
                                     error:function (pSweet, error) {
                                         console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -881,7 +902,7 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                       if (results.length == 0){
                                           console.log("Results: 0 for VF");
                                           alert("Oops .... Your Check-In wasn't saved!");
-                                            //syncDataCheckIn();
+                                            syncDataCheckIn();
                                       }
                                       else{
                                             time2 = results[0].get("checkInTime");
@@ -917,9 +938,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                       console.log(virtualf + " saved successfully");
                                                       db.transaction(function(t){
                                                             console.log("My Query Del local vf!");
-                                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!");window.location = "index.html";}, errorCB);
+                                                            t.executeSql("DELETE FROM VIRTUALFORCE WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!");}, errorCB);
                                                       });
-                                                      //syncDataCheckIn();
+                                                      syncDataCheckIn();
                                                   },
                                                   error:function (pSweet, error) {
                                                       console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -997,9 +1018,9 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                                                           console.log(kuali + " saved successfully");
                                                           db.transaction(function(t){
                                                                 console.log("My Query Del local km!");
-                                                                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!");window.location = "index.html";}, errorCB);
+                                                                t.executeSql("DELETE FROM KUALITATEM WHERE userpin ==" + userpin , [], function(){ console.log("Record Deleteed!");}, errorCB);
                                                           });
-                                                          //syncDataCheckIn();
+                                                          syncDataCheckIn();
                                                       },
                                                       error:function (pSweet, error) {
                                                               console.log("saveRecord() -> " + error.code + " " + error.message);
@@ -1511,10 +1532,13 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
             var currentDate = new Date();
             var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
             
+            var eTime = window.localStorage.getItem("endTime");
+            eTime = eTime.split(':');
+            
             var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
+            checkStatus.setHours(eTime[0]);
+            checkStatus.setMinutes(eTime[1]);
+            checkStatus.setSeconds(00);
             
             var checkSDate = new Date(); //Start Date
             checkSDate.setHours(00);
@@ -1589,36 +1613,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
         
         
         var uploadFinal = function(){
-             console.log("FucntionUpload!");
-            var currentDate = new Date();
-            var currentTime = (currentDate.toDateString()+', '+ currentDate.getHours() + ':' + currentDate.getMinutes()).toString();
+           console.log("FucntionUpload!");
             
-            var checkStatus = new Date(); // Status : late,ontime
-            checkStatus.setHours(9);
-            checkStatus.setMinutes(30);
-            checkStatus.setSeconds(59);
-            
-            var checkSDate = new Date(); //Start Date
-            checkSDate.setHours(00);
-            checkSDate.setMinutes(00);
-            checkSDate.setSeconds(00);
-            
-            var checkEDate = new Date(); //End Date
-            checkEDate.setHours(23);
-            checkEDate.setMinutes(59);
-            checkEDate.setSeconds(59);
-            
-            var status;
-            //console.log("Check Status: " + checkStatus.toString());
-            //console.log("Current Date: " + currentDate.toString());
-            
-            if ((currentDate < checkStatus || currentDate == checkStatus)){
-                status = 'ontime';
-            }
-            else{
-                status = 'late';
-            }
-
            //URL Parsing get checkin value
            var loc = window.location.search.substring(1),i, val, params = loc.split("&");
                for (i=0;i<params.length;i++) {
