@@ -439,17 +439,21 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                            console.log("Called for VF!");
                            console.log("UserPin to find: " + result.rows.item(i).userpin);
                            
-                           
+                           var qs = JSON.stringify({
+                               "userPin":result.rows.item(i).userpin,
+                               "createdAt":{"$gte":checkSDate},
+                               "createdAt":{"$lte":checkSDate}
+                           });
                            //Upload Picture to Parse
                            uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
-                           console.log("REST API 1")
+                           console.log("REST API 2")
                             //Upload Record to Parse
                            $.ajax({
                             type: 'GET',
                             headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
                             url: "https://api.parse.com/1/VirtualForce",
                             async: false,
-                            data: 'where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
+                            data: 'where='+ qs,
                             contentType: "application/json",
                             success: function(data) {
                                 var id = data.objectId;
