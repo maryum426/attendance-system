@@ -446,11 +446,15 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                            });
                            //Upload Picture to Parse
                            uploadPicToParse(result.rows.item(j).userAvatarIn,"vfin");
-                           console.log("REST API 3")
+                           console.log("REST API 4")
                             //Upload Record to Parse
                            $.ajax({
                             type: 'GET',
-                            headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
+                            beforeSend: function(request) {
+                            request.setRequestHeader("X-Parse-Application-Id", 'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs');
+                            request.setRequestHeader("X-Parse-REST-API-Key", 'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp');
+                            request.setRequestHeader("Content-Type", 'application/json');
+                            },
                             url: "https://api.parse.com/1/VirtualForce",
                             async: false,
                             data: 'where={"createdAt":{"$gte":"2014-02-20T00:00:00Z"},"createdAt":{"$lte":"2014-02-20T23:59:59Z"}}',
