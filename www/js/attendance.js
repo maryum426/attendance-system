@@ -445,23 +445,41 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                            
                             //Upload Record to Parse
                            $.ajax({
-                            type: 'POST',
+                            type: 'GET',
                             headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
                             url: "https://api.parse.com/1/VirtualForce",
                             async: false,
-                            data: '{"userAvatarIn":'+ userAvatar+',"checkInTime":'+ result.rows.item(j).checkInTime+',"department":'+ result.rows.item(j).department +',"status":'+ result.rows.item(j).status +',"check":"checkin" , where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
+                            data: '{where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
                             contentType: "application/json",
                             success: function(data) {
-                                db.transaction(function(t){
-                                    console.log("My Query Home Called!");
-                                    j++;
-                                    current_pin = result.rows.item(i).userpin;
-                                    t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Record Saved!");}), errorCB);
-                                });
-                                if(i == result.rows.length){
-                                   setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
-                                }
+                                var id = data.objectId;
+                                
+                                $.ajax({
+                                    type: 'PUT',
+                                    headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
+                                    url: "https://api.parse.com/1/VirtualForce"+id,
+                                    async: false,
+                                    data: '{"userAvatarIn":'+ userAvatar+',"checkInTime":'+ result.rows.item(j).checkInTime+',"department":'+ result.rows.item(j).department +',"status":'+ result.rows.item(j).status +',"check":"checkin"}',
+                                    contentType: "application/json",
+                                    success: function(data) {
+                                        db.transaction(function(t){
+                                            console.log("My Query Home Called!");
+                                            j++;
+                                            current_pin = result.rows.item(i).userpin;
+                                            t.executeSql("UPDATE VIRTUALFORCE SET uploadedIn = 'true1' WHERE userpin ==" + current_pin , [], (function(){console.log("Record Saved!");}), errorCB);
+                                        });
+                                        if(i == result.rows.length){
+                                           setTimeout(function(){console.log("Done Syncing and Uploading VF.");window.location = "index.html";},1500)   
+                                        }
 
+                                    },
+                                    error: function(data){
+                                        var obj = jQuery.parseJSON(data);
+                                        console.log(obj.error);
+                                        console.log("Some Exception.");
+                                        window.location = "index.html";
+                                    }
+                                });
                             },
                             error: function(data){
                                 var obj = jQuery.parseJSON(data);
