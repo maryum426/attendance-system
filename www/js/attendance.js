@@ -448,7 +448,8 @@ var table = '<table style="border:1px solid #000;text-align: center;border-colla
                             type: 'POST',
                             headers: {'X-Parse-Application-Id':'oxdew7mMEtpnkypr0DLtpd5rPg7vFFlgo1VPBCJs','X-Parse-REST-API-Key':'U20mEfCfZxq1jNMOLLJkQCJieVSpekFDcHRXmLDp'},
                             url: "https://api.parse.com/1/VirtualForce",
-                            data: '{"userAvatarIn":'+ userAvatar+',"checkInTime":'+ result.rows.item(j).checkInTime+',"department":'+ result.rows.item(j).department +',"status":'+ result.rows.item(j).status +',"check":"checkin"}'+'where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
+                            async: false,
+                            data: '{"userAvatarIn":'+ userAvatar+',"checkInTime":'+ result.rows.item(j).checkInTime+',"department":'+ result.rows.item(j).department +',"status":'+ result.rows.item(j).status +',"check":"checkin"},where={"userPin":result.rows.item(i).userpin,"createdAt":{"$gte":checkSDate},"createdAt":{"$lte":checkEDate}}',
                             contentType: "application/json",
                             success: function(data) {
                                 db.transaction(function(t){
